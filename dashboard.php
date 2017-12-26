@@ -1462,7 +1462,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["holi_dest"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
-                                  <td>".$issueduser."</td>
+                                  <td>".$row["currently_worked_by"]."</td>
                                   <td>".$dateissued ."</td>
                                   <td>".$row["status"]."</td>
                                   <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='voucherwork.php?ref=".$row["ref_num"]."'>Manage Voucher</a></td>

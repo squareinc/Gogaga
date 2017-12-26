@@ -11,9 +11,7 @@ $removeClass = "";
 if(isset($_GET["ref"]))
 {
 
-
-
-if(isset($_POST["save"])) {
+ if(isset($_POST["save"])) {
 
 
     $status = 0; //intital status
@@ -549,6 +547,7 @@ $sql = "SELECT * FROM designdetails WHERE ghrno = ".$ref_value."";
 
 function picked_opt(name,desc)
         {
+          $('#search_image').attr('value',name);
           $('#search_image').val(name);
            $('#imgcontent').hide();
         }
