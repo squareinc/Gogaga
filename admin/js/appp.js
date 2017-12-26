@@ -46,6 +46,11 @@ app.config(function($routeProvider) {
     templateUrl : 'pages/pricecalc.php',
     controller  : 'PriceCalcController'
   })
+
+.when('/gstdefault', {
+    templateUrl : 'pages/gstdefault.php',
+    controller  : 'gstdefaultController'
+  })
 .when('/currencyconv', {
     templateUrl : 'pages/currencyconv.php',
     controller  : 'CurrencyController'
@@ -159,6 +164,9 @@ app.controller('MapsController', function($scope) {
 });
 app.controller('PriceCalcController', function($scope) {
   $scope.message = 'Hello from PriceCalcController';
+});
+app.controller('gstdefaultController', function($scope) {
+  $scope.message = 'Hello from gstdefaultController';
 });
 app.controller('CurrencyController', function($scope) {
   $scope.message = 'Hello from CurrencyController';

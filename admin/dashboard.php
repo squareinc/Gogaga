@@ -390,6 +390,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                             <div class="collapse" id="tool5">
                             <a href="#/pricecalc" class="list-group-item" style='padding-left:30px;'>Price Calculator</a>
                             <a href="#/currencyconv" class="list-group-item" style='padding-left:30px;'>Currency Converter</a>
+                            <a href="#/gstdefault" class="list-group-item" style='padding-left:30px;'>GST Setter</a>
 
                           </div>
 
@@ -2504,6 +2505,54 @@ else
 
             
 </script>
+
+
+<script type="text/ng-template" id="pages/gstdefault.php"> 
+              <h2>GST Setter</h2>
+
+              <?php 
+              //first query and get the current percenatage from itinerary_domestic
+              if(isset($_POST["gst"])){
+                //gst value is given from the input
+                //convert the given string value to int value
+                $gst = (int)$_POST["gst"];
+                $sql = "ALTER TABLE `itinerary_domestic` CHANGE `ser_tax_perc` `ser_tax_perc` INT(60) NOT NULL DEFAULT '$gst'";
+
+               if (($conn->query($sql))== true) {
+                 //success..
+                //update the international itinerary too.
+                $sql = "ALTER TABLE `itinerary_inter` CHANGE `ser_tax_perc` `ser_tax_perc` INT(60) NOT NULL DEFAULT '$gst'";
+                  if (($conn->query($sql))== true){
+                    echo "<p>success</p>";
+                  }
+
+               }else{
+                echo "<p>Error</p>";
+               }
+              }
+              
+
+
+              ?>
+             
+<div class ='row'>               
+<div class="col-md-6">
+<form method="POST" action="">
+  <div class="form-group">
+      <label><b>GST%</b></label>
+      <input type="number" name="gst" id="gst" class="form-control"><br>
+      <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+</form>
+</div>
+
+</div>
+
+<br>
+            
+</script>
+
+
           
 <script type="text/ng-template" id="pages/currencyconv.php"> 
               <h2>Currency Calculator</h2>
