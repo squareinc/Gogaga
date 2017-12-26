@@ -50,6 +50,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
       $no_of_adults = test_input($_POST["third_10"]);
       $no_of_childs = test_input($_POST["third_11"]);
       $no_of_infants = test_input($_POST["third_12"]);
+
+   
+      $totalPersonsCount = (int)$no_of_adults+(int)$no_of_childs+(int)$no_of_infants;
+
       $childage = $_POST["childage"];
 
       //Mode of Travel
@@ -163,8 +167,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                     }
 
 
-                    $sql = "INSERT INTO flights_info (ghrno,sno) 
-                            VALUES ('$ref_num',$sno)";
+                    $sql = "INSERT INTO flights_info (ghrno,sno,airtrav) 
+                            VALUES ('$ref_num',$sno,'$totalPersonsCount')";
                         if(($conn->query($sql))== true)
                         {                       
                              // echo "Flights  Done<br>";
