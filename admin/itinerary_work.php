@@ -2121,11 +2121,15 @@ if($ref_type=='International')
 
 
        <div class='row'>
-              <div class ='col-md-5 col-md-push-5'>
+              <div class ='col-md-4 col-md-push-8'>
                 <button type="submit" name='submit_but' class="btn btn-primary">Save</button>
                 <?php echo "&nbsp;&nbsp;&nbsp;&nbsp;
 
                  ";?>
+
+                 <?php echo "
+
+                  <a class='btn btn-success btn-md' id='proceedDesign' role='button' target='_blank' href='../designitinerary.php?ref=".$ref_value."'>Proceed to Design Itinerary</a>";?>
               </div>
         </div>
             
