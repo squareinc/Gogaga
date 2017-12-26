@@ -838,9 +838,9 @@ $service_content = "";
        <div class='row'>
               <div class ='col-md-6 col-md-offset-5'>
                 <button type="submit" name='save' id='save' ref='<?php echo $rec_ref; ?>' class="btn btn-success">Save</button>
-                <button type="submit" name='submitf' id='view' class="btn btn-warning" disabled="disabled">View</button>
-                <button type="submit" name='pdf' id='pdf' class="btn btn-danger" disabled="disabled">Save to PDF</button>
-                <button type="button" name='confirm' id='confirm' data-toggle="modal" data-target="#myModal" class="btn btn-primary" disabled="disabled">Confirm</button>
+                <button type="submit" name='submitf' id='view' class="btn btn-warning" target="_blank" disabled="disabled">View</button>
+                <button type="submit" name='pdf' id='pdf' target="_blank" class="btn btn-danger" disabled="disabled">Save to PDF</button>
+                <button type="button" name='confirm' id='confirm' target="_blank" data-toggle="modal" data-target="#myModal" class="btn btn-primary" disabled="disabled">Confirm</button>
                 
               </div>
               <center><p id='status'></p></center>
