@@ -861,14 +861,16 @@ if($removeClass == "removed"){
   $('#confirm').removeClass('disabled');
 </script>";
 }
+if (isset($_GET["saved"])) {
+  if($_GET["saved"] == "true"){
+    //saved i.e, clicked
+    echo "<script>
+    $('#view').attr('disabled',false);
+    $('#pdf').attr('disabled',false);
+    $('#confirm').attr('disabled',false);
+    </script>";
+  }
 
-if($_GET["saved"] == "true"){
-  //saved i.e, clicked
-  echo "<script>
-  $('#view').attr('disabled',false);
-  $('#pdf').attr('disabled',false);
-  $('#confirm').attr('disabled',false);
-  </script>";
 }
 
 ?>
