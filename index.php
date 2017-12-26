@@ -137,7 +137,7 @@ include "config.php";
 
 
 
-        <a href="forgot_password.html"><small>Forgot password?</small></a>
+        <a href="forgot/forgot.php"><small>Forgot password?</small></a>
         
         <a href="http://www.gogagaholidays.com/" style="margin-top: 10px;" class="btn btn-sm btn-white btn-block">Visit Gogagaholidays.com</a>
       </form>

@@ -1,14 +1,21 @@
 <?php
-if(!class_exists('PHPMailer')) {
-    require('phpmailer/class.phpmailer.php');
-	require('phpmailer/class.smtp.php');
-}
+	
+   // require('mailer/class.phpmailer.php');
+	//require('mailer/class.smtp.php');
+	require('mailer/PHPMailerAutoload.php');
 
-require_once("mail_configuration.php");
+	require_once("mail_configuration.php");
+
 
 $mail = new PHPMailer();
 
-$emailBody = "<div>" . $user["username"] . ",<br><br><p>Click this link to recover your password<br><a href='" . PROJECT_HOME . "php-forgot-password-recover-code/reset_password.php?name=" . $user["username"] . "'>" . PROJECT_HOME . "php-forgot-password-recover-code/reset_password.php?name=" . $user["username"] . "</a><br><br></p>Regards,<br> Admin.</div>";
+/*if(class_exists('PHPMailer')){
+	echo "class exists!";
+}else{
+	echo "class not exists!";
+}*/
+
+$emailBody = "<div>" . $user["userid"] . ",<br><br><p>Click this link to recover your password<br><a href='" . PROJECT_HOME . "reset_password.php?name=" . $user["userid"] . "'>" . PROJECT_HOME . "reset_password.php?name=" . $user["userid"] . "</a><br><br></p>Regards,<br> Admin.</div>";
 
 $mail->IsSMTP();
 $mail->SMTPDebug = 0;
@@ -27,6 +34,9 @@ $mail->AddAddress($user["mailid"]);
 $mail->Subject = "Forgot Password Recovery";		
 $mail->MsgHTML($emailBody);
 $mail->IsHTML(true);
+
+$error_message = "";
+$success_message = "";
 
 if(!$mail->Send()) {
 	$error_message = 'Problem in Sending Password Recovery Email';

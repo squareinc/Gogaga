@@ -1,10 +1,10 @@
 <?php
 define("PROJECT_HOME","http://test.gogagaholidays.in/forgot/");
 
-define("PORT", "465"); // port number
+define("PORT", "25"); // port number
 define("MAIL_USERNAME", "admin@gogagaholidays.in"); // smtp usernmae
 define("MAIL_PASSWORD", "gogaga12345."); // smtp password
-define("MAIL_HOST", "cp-30.webhostbox.net"); // smtp host
+define("MAIL_HOST", "mail.gogagaholidays.in"); // smtp host
 define("MAILER", "smtp");
 
 define("SENDER_NAME", "Admin");

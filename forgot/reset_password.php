@@ -2,8 +2,10 @@
 include "../config.php";
 	if(isset($_POST["reset-password"])) {
 		//$conn = mysqli_connect("localhost", "root", "", "blog_samples");
-		$sql = "UPDATE `login` SET `password` = '" . md5($_POST["member_password"]). "' WHERE `member_name` = '" . $_GET["name"] . "'";
+		$sql = "UPDATE `login` SET `password` = '" . md5($_POST["member_password"]). "' WHERE `userid` = '" . $_GET["name"] . "'";
 		$result = mysqli_query($conn,$sql);
+		//echo $sql;
+		//echo $result;
 		$success_message = "Password is reset successfully.";
 		
 	}
