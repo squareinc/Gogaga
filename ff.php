@@ -195,7 +195,10 @@ if($ref_type=="International")
  
 
 
-
+        $startDate = "";
+        $endDate = "";
+        $k = 1;
+        $numberOfRows = 0;
 
         /* START OF PRINT WORK*/
          $sql = "SELECT * FROM hotels_inter WHERE ghrnno = '$ref_value'";
@@ -203,8 +206,17 @@ if($ref_type=="International")
         $res = $conn->query($sql) ;
         if ($res->num_rows) 
         {     
+          $numberOfRows = $res->num_rows;   
            while($row = $res->fetch_assoc()) 
            {      
+                  
+                  if($k == 1){
+                   $startDate = $row["checkindate"];
+                  }
+
+                  if($k == $numberOfRows){
+                    $endDate = $row["checkoutdate"];
+                  }     
                   $hotels.="
                             <tr style='font-size:12px;'>
                             <td>".$row["hotel"]."</td>
@@ -215,6 +227,7 @@ if($ref_type=="International")
                         </tr>
 
                   ";
+                  $k++;
 
 
             }
@@ -330,13 +343,29 @@ else
 
         }// End of IF num rows for Itinerary inter  
 
+
+        $startDate = "";
+        $endDate = "";
+        $k = 1;
+        $numberOfRows = 0;
   $sql = "SELECT * FROM hotels_domestic WHERE ghrno = '$ref_value'";
 
         $res = $conn->query($sql) ;
         if ($res->num_rows) 
-        {     
+        {  
+          $numberOfRows = $res->num_rows;   
            while($row = $res->fetch_assoc()) 
            {      
+                  
+                  if($k == 1){
+                   $startDate = $row["checkindate"];
+                  }
+
+                  if($k == $numberOfRows){
+                    $endDate = $row["checkoutdate"];
+                  }
+
+
                   $hotels.="
                             <tr style='font-size:12px;'>
                             <td>".$row["hotel"]."</td>
@@ -347,6 +376,7 @@ else
                         </tr>
 
                   ";
+                  $k++;
 
 
             }
@@ -801,10 +831,25 @@ tr
                      <th style='width:400px;'>TRIP START DATE</th>
                      <th>TRIP END DATE</th>
                </tr>
+               <?php
+               if($startDate!=""){
+                //start date exists
+                //make it a correct date format
+                $startDate = date_format(date_create($startDate),"d-M-Y");
+                
+               }
+               if($endDate!=""){
+                //start date exists
+                //make it a correct date format
+                $endDate = date_format(date_create($endDate),"d-M-Y");
+                
+               }
 
+
+               ?>
                <tr>
-                  	<td style='width:400px;'><?php echo "$date_of_travel";?></td>
-                    <td><?php echo "$return_date_of_travel";?></td>
+                  	<td style='width:400px;'><?php echo "$startDate";?></td>
+                    <td><?php echo "$endDate";?></td>
                </tr>
 
                 <tr>
@@ -1035,11 +1080,15 @@ if($calc_chosed_by == "By Person")
                           
                     $servicename = $row["servicename"];
                     $serviceprice = $row["serviceprice"];
-
-                    $service_content.=" <tr>
+                    
+                     if($serviceprice != ""){
+                      $serviceprice = $serviceprice."INR";
+                      $service_content.=" <tr>
                                           <th>".$servicename."</th>  
-                                          <td>".$serviceprice."INR</td>
+                                          <td>".$serviceprice."</td>
                                         </tr>";
+                    }
+                    
                    }
 
                 }else{
@@ -1093,11 +1142,14 @@ else
                           
                     $servicename = $row["servicename"];
                     $serviceprice = $row["serviceprice"];
-
-                    $service_content.=" <tr>
+                    if($serviceprice != ""){
+                      $serviceprice = $serviceprice."INR";
+                      $service_content.=" <tr>
                                           <th>".$servicename."</th>  
-                                          <td>".$serviceprice."INR</td>
+                                          <td>".$serviceprice."</td>
                                         </tr>";
+                    }
+                    
                    }
 
                 }else{
