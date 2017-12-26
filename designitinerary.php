@@ -526,14 +526,6 @@ $sql = "SELECT * FROM designdetails WHERE ghrno = ".$ref_value."";
 <script type="text/javascript" src='js/app.js'></script>
 
 
-  <script type="text/javascript">
-  history.pushState({ page: 1 }, "title 1", "#nbb");
-    window.onhashchange = function (event) {
-        window.location.hash = "nbb";
-
-    };
-
-  </script>
   <script type="text/javascript" src="js/getpreviousdata.js"></script>
   <script type="text/javascript" src="js/formactioncontentchanger.js"></script>
 <style type="text/css">

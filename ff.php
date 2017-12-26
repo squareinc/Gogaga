@@ -637,13 +637,7 @@ if(isset($_POST["submitf"])) {
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script> 
 <script src="jquery-2.2.1.js"></script>
-  <script type="text/javascript">
-  history.pushState({ page: 1 }, "title 1", "#nbb");
-    window.onhashchange = function (event) {
-        window.location.hash = "nbb";
 
-    };
-  </script>
 	<style>@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');</style>
 <style type="text/css">
 .* h1 h2 h3 h4 p div tr th table{
