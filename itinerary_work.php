@@ -1456,26 +1456,26 @@ echo "
                 <div class='col-md-2 col-md-push-1' id='transportvendornvehicle' style='border-left: 2px solid #e6e6ec;'>
                     <div class='form-group'>
                          <label for='currencyamount'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vehicle Description &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                         <input type='text' class='form-control' placeholder='Enter Vehicle Description' id='trandesc' name='transp_vehicle' value='".$transp_vehicle."' aria-label='...'";?>
+                         <textarea class='form-control' placeholder='Enter Vehicle Description' id='trandesc' name='transp_vehicle' cols='35' value='".$transp_vehicle."' aria-label='...'";?>
 
                          <?php 
                           if(empty($transp))
                             echo " disabled ";
 
-                         echo ">
+                         echo "></textarea>
                       </div>
                 
 
                      
                     <div class='form-group'>
                          <label for='transp_vendor_details'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vendor Details &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br>
-                         <input type='text' class='form-control' placeholder='Enter Vendor Details' id='transp_vendor_details' name='transp_vendor_details' value='".$transp_vendor_details."' aria-label='...'";?>
+                         <textarea class='form-control' placeholder='Enter Vendor Details' id='transp_vendor_details' cols='35' name='transp_vendor_details' value='".$transp_vendor_details."' aria-label='...'";?>
 
                          <?php 
                           if(empty($transp))
                             echo " disabled ";
 
-                         echo ">
+                         echo "></textarea>
                       </div>
                   </div>
 
