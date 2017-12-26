@@ -2,7 +2,7 @@
 require("config.php");
 session_start();
     $ref_type=$_SESSION["ref_type"];
-    $ref_value=$_SESSION["ref_value"];
+    //$ref_value=$_SESSION["ref_value"];
 
 
 $removeClass = "";
@@ -10,6 +10,7 @@ $removeClass = "";
 
 if(isset($_GET["ref"]))
 {
+  $ref_value = $_GET["ref"];
 
  if(isset($_POST["save"])) {
 
@@ -39,7 +40,9 @@ if(isset($_GET["ref"]))
         {     
            while($row = $res->fetch_assoc()) 
            {      
+                  //mysql
                   $imgdesc = $row["imgdesc"];
+                  $imgdesc = mysqli_real_escape_string($conn,$imgdesc);
                   $holidesc = $imgdesc;
 
             }
@@ -47,16 +50,24 @@ if(isset($_GET["ref"]))
       }
         
 
-
-      // Code for inserting design itinerary details 
-        $sql ="UPDATE  designdetails  SET  
+  // Code for inserting design itinerary details 
+        $sql ="UPDATE designdetails SET  
                pckgtitle = '".$holiarea."', imgname = '".$search_image."' , imgdesc = '".$imgdesc."', pckghl = '".$pckg."',
                pckgincl = '".$inclusion."', pckgexcl = '".$exclusion."', honeyincl = '".$honeyincl."' WHERE ghrno = '".$ref_value."' ";
+
+
       if($conn->query($sql) == true)
       {
          //success in updating the designdetails 
         //$response_array["status"] == "success";
+
+        /*$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+      
+        fwrite($myfile, $sql);
+        fclose($myfile);*/
+
         $status = 1;
+
       }
       else
       { 
@@ -186,9 +197,6 @@ if(isset($_GET["ref"]))
 
 
   }
-
-
-
 
 
 
