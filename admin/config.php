@@ -1,9 +1,9 @@
  <?php
  // define variables and set to empty values
 $servername = "localhost";
-$username = "root";
-$password = "";
-$db_name  = "gogaga3";
+$username = "gogagx2b_test";
+$password = "78600786";
+$db_name  = "gogagx2b_test";
 // Create connection
 
 

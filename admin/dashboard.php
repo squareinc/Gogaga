@@ -702,7 +702,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                       {
                         $sql1= "SELECT * FROM agent_form_data
                         WHERE formstatus = 'confirmed'
-                        ORDER BY payment_status DESC";
+                        ORDER BY payment_status ASC";
                         unset($_GET["search_case"]);
                       }
 
