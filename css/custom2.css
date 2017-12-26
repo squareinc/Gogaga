@@ -1,0 +1,55 @@
+body{
+	background-color: #f3f3f4 !important;
+}
+
+fieldset{
+	background: #fff none repeat scroll 0 0;
+    border: 1px solid #c5c9cc;
+    box-sizing: border-box;
+    margin: 0 auto 0;
+    padding: 20px;
+    width: 100%;
+} 
+
+
+.lineheading{
+    font-size: 20px;
+    border-bottom: 1px solid #dddde2;
+  }
+
+  input{
+  	 border-radius: 0px !important;
+  }
+
+  .input-group-addon{
+  	background-color: #00bcd4 !important;
+  	border: none !important;
+  	border-radius: 0px !important;
+  	color: #fff !important;
+  }
+
+  .panel-primary {
+    border-color: #00bcd4 !important;
+}
+
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #00bcd4 !important;
+    border-color: #00bcd4 !important;
+  }
+
+.glyphicon-calendar{
+  display: none !important;
+}
+
+select[name="meall[]"]{
+  width: 100% !important;
+}
+
+
+
+select[name="paidstatus[]"]>option, select[name="flightstatus[]"]>option, select[name="transpstatus"]>option{
+  background-color: #fff;
+  color: black;
+  padding: 3px;
+}
