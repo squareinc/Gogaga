@@ -62,3 +62,8 @@ button
 h3{
   text-align: center !important;
 }
+
+
+select{
+  padding-right: 15px !important;
+}
