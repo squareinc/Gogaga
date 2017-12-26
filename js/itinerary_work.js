@@ -15,6 +15,7 @@
                     }*/
 
 
+
                     //flights
 
                     $('.flighttype').each(function(){
@@ -490,3 +491,18 @@ $(document).on("click","#proceedDesign",function(){
 });
 
 
+ //remove the flight row on clicking the remove button
+$(document).on("click",".removeAir",function(){
+
+  // sessionStorage.clickcount = 0;
+  var row = $(this).closest("tr");   // Finds the closest row <tr>
+  console.log("got this row: "+row);
+  $(row).remove();
+  
+});
+
+
+
+                   
+
+              

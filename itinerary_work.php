@@ -509,6 +509,7 @@ $(function(){
                                       + '<option>No Breakfast, No Lunch, No Dinner</option>'
                                     + ' </select>'
                                +'</td><td><input type="text" name="price[]" size="3"></td>'
+                               +'<td><button type="button" class="btn btn-danger btn-sm removeAir"><span class="glyphicon glyphicon-remove"></span></button></td>'
 
                              +'</tr>'
  );
@@ -531,6 +532,7 @@ $(function(){
                                +'<td><input type="text" placeholder="Enter Price in INR" name="airprice[]" size="15"></td>'
                                +'<td><input type="text" placeholder="Baggage Weight" name="baggageweight[]" size="5"></td>'
                                +'<td><input type="text" placeholder="Baggage Price" name="baggageprice[]" size="6"></td>'
+                               +'<td><button type="button" class="btn btn-danger btn-sm removeAir"><span class="glyphicon glyphicon-remove"></span></button></td>'
                              +'</tr>');
 
  });
@@ -560,6 +562,7 @@ $(function(){
                                       + '<option>No Breakfast, No Lunch, No Dinner</option>'
                                     + ' </select>  '
                                +'</td><td><input type="text" name="price[]" size="8"></td>'
+                               +'<td><button type="button" class="btn btn-danger btn-sm removeAir"><span class="glyphicon glyphicon-remove"></span></button></td>'
                              +'</tr>'
 
  );
