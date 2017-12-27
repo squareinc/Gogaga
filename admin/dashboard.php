@@ -491,7 +491,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 
  <div class="col-md-2 col-sm-4">
-      <div class="card card-inverse" style="float:left;position:relative;right:20px;padding:20px;background-color:#4D4948;height:365px;border-radius:5px;width:200px; border-color: #333;">
+      <div class="card card-inverse" style="float:left;position:relative;right:20px;padding:20px;background-color:#f1c40f;height:365px;border-radius:5px;width:200px; border-color: #333;">
         <div class="card-block">
           <?php
               $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
