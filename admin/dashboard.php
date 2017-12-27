@@ -242,6 +242,8 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 <!-- fancybox JS library -->
 <script src="../js/jquery.fancybox.js"></script>
 
+<script type="text/javascript" src="js/deleteitinerary.js"></script>
+
 <script type="text/javascript">
   $('#notifbut').click(function(e)
   {
@@ -2642,6 +2644,8 @@ else
 
 </div>
 <br>
+
+       
                    
 <?php
 
@@ -2713,7 +2717,7 @@ else
                                   {
                                     
                                     echo "
-                                    <td><a class='btn btn-danger btn-sm' role='button' href='smashit.php?q=".$row["ref_num"]."'>Delete</a></td>
+                                    
                                   </tr>";
                                   }
                                   else{
@@ -2786,9 +2790,9 @@ else
                         }
                       else
                       {
-                        $sql1= "SELECT * FROM agent_form_data
-                        WHERE formstatus = 'smashed'
-                        ORDER BY ref_num DESC";
+                        $sql1= "SELECT * FROM agent_form_data a LEFT JOIN deleted_itineraries d ON a.ref_num = d.ghrno
+                        WHERE a.formstatus = 'smashed'
+                        ORDER BY a.ref_num DESC";
                         unset($_GET["search_param_smashed"]);
                       }
 
@@ -2808,8 +2812,9 @@ else
                                   <th>Duration</th>
                                   <th>Type</th>
                                   <th></th>
-                                  <th>Currently worked by</th>
+                                  
                                   <th></th>
+                                  <th>Reason</th>
                                 </tr>";
                                
                       while($row = $res->fetch_assoc()) 
@@ -2824,8 +2829,9 @@ else
                                   <td>".$row["duration"]."</td>
                                   <td>".$row["holi_type"]."</td>
                                   <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_itinerary.php?q=".$row["ref_num"]."'>View</a></td>
-                                  <td>".$row["currently_worked_by"]."</td>
+                                  
                                   <td><a class='btn btn-danger btn-sm' role='button' href='smashit.php?qr=".$row["ref_num"]."'>Restore</a></td>
+                                  <td>".$row["reason"]."</td>
 
                                 </tr>";
 
@@ -2875,7 +2881,41 @@ else
   </div><!-- /.col-lg-6 -->
 
 </div>
-<br>                   
+<br>     
+
+<!-- Button trigger modal -->
+
+
+            <div class="modal fade" id="deleteitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="documnent">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+              </div>
+              <div class="modal-body">
+                <p >Dear User, You are about to Delete the package,</p><p>please provide a valid reason, before confirming.</p>
+                <div class="form-group">
+                  <label for="deletereason"><b>Reason:</b></label><br>
+                  <textarea name="deletereason" id="deletereason" placeholder="Enter Reason for Deleting itinerary" cols="50" rows="6" autofocus required></textarea>
+                </div>
+                
+                <b><p id="pagetitleinmodal"></p></b>
+                <p id="pagetitledeleteError"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="submitReason" class="btn btn-warning pull-left" onClick="#">Submit Reason</button>
+                <a href='#' type="button" id="pagedeleteYes" class="btn btn-danger" disabled="disabled">Delete</a>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+      <br>
+      <br>              
 
                      <?php
                      /*
@@ -2926,6 +2966,7 @@ else
                                   <th>Duration</th>
                                   <th>Form Received on</th>
                                   <th>Currently worked by</th>
+                                  <th>View</th>
                                   <th>Delete</th>
                                 </tr>";
                                
@@ -2944,9 +2985,9 @@ else
                                   <td>".$row["duration"]."</td>
                                   <td>".$datesent."</td>
                                   <td>".$row["currently_worked_by"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_itinerary.php?q=".$row["ref_num"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_itinerary.php?q=".$row["ref_num"]."'>View Form</a></td>
                                   
-                                  <td><a class='btn btn-danger btn-sm' role='button' href='smashit.php?q=".$row["ref_num"]."'>Delete</a></td>
+                                  <td><button type='button' name='deleteit' id='deleteit' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#deleteitModal' role='button' onclick='passRefValue(".$row["ref_num"].");'>Delete</button></td>
 
                                 </tr>";
 

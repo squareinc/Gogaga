@@ -91,9 +91,9 @@ if(isset($_GET["q"]))
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
 <link rel="stylesheet" type="text/css" href="css/form.css" />
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/3/paper/bootstrap.min.css">
 
   </head>
 <body>
@@ -115,7 +115,7 @@ if(isset($_GET["q"]))
 
       <fieldset class='partnerdetails1'>
           
-          <h1><span class='glyphicon glyphicon-user' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Partner Details</h1>
+          <h3><span class='glyphicon glyphicon-user' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Partner Details</h3>
           <hr class='hr'>
 
            <div class='col-md-10 col-md-push-1'>
@@ -170,7 +170,7 @@ if(isset($_GET["q"]))
 
        <br>
       <fieldset class='customerdetails2'>
-          <h1><span class='glyphicon glyphicon-user' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Customer Details</h1>
+          <h3><span class='glyphicon glyphicon-user' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Customer Details</h3>
           <hr class='hr'>
            <div class='col-md-10 col-md-push-1'>
               <div class ='row'>
@@ -229,7 +229,7 @@ if(isset($_GET["q"]))
 
 
         <fieldset class='holidaydetails3'>
-            <h1><span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Holiday Details</h1>
+            <h3><span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Holiday Details</h3>
             <hr class='hr'>
              <div class='col-md-10 col-md-push-1'>
                 <div class ='row'>
@@ -433,7 +433,7 @@ echo "
 
 
       <fieldset class='modeoftravel4'>
-          <h1><span class='glyphicon glyphicon-plane' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Mode of Travel</h1>
+          <h3><span class='glyphicon glyphicon-plane' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Mode of Travel</h3>
           <hr class='hr'>
            <div class='col-md-10 col-md-push-1'>
               
@@ -483,7 +483,7 @@ echo "
 
 
       <fieldset class='accomodationdetails5'>
-          <h1> <span class='glyphicon glyphicon-bed' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp; Accomodation Details</h1>
+          <h3> <span class='glyphicon glyphicon-bed' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp; Accomodation Details</h3>
           <hr class='hr'>
            <div class='col-md-10 col-md-push-1'>
               
