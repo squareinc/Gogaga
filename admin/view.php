@@ -942,11 +942,15 @@ if($calc_chosed_by == "By Person")
       <td><?php echo "$fl_cost";?> INR</td>
     </tr>
 
-    <tr>
-      <th style="font-size: 10px;">INCLUSIVE OF BAGGAGE COST</th>
-      <td style="font-size: 11px;"><?php echo "$baggagecost";?> INR</td>
-    </tr>
+    <?php
+    if($baggagecost!=""||0){
+    echo "<tr>
+      <th style='font-size: 10px;'>INCLUSIVE OF BAGGAGE COST</th>
 
+      <td style='font-size: 11px;'><?php echo ".$baggagecost.";?> INR</td>
+    </tr>";
+}
+?>
 <?php
     $service_content = "";
  $sql = "SELECT * FROM additional_prices WHERE ghrno = '$ref_value' ORDER BY sno";
