@@ -2328,7 +2328,7 @@ if($type='Admin' || $type='Accounts')
 
                     {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
                                   <tr>
-                                 <th>GHRN NO</th>
+                                  <th>GHRN NO</th>
                                   <th>Customer Name</th>
                                   <th>Destination</th>
                                   <th>Travel Start Date</th>
@@ -2337,12 +2337,19 @@ if($type='Admin' || $type='Accounts')
                                   <th>Status</th>
                                   <th></th>
                                 </tr>";
-                               
+                               $color = "";
                       while($row = $res->fetch_assoc()) 
                           {
                               $dateissued = date_create($row["issuedon"]);
                               $dateissued = date_format($dateissued,"d-M-Y");
-                              echo " <tr>
+
+                              $downloaded = $row["downloaded"];
+                              if($downloaded == "yes"){
+                                $color = "background-color: #f1c40f";
+                              }else{
+                                $color = "background-color: #fff";
+                              }
+                              echo " <tr style='".$color."'>
                                   <td>GHRN".(5000+$row["ref_num"])."</td>
                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["holi_dest"]."</td>
