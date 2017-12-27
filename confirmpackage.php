@@ -9,6 +9,8 @@ if(isset($_GET["qr"]))
 	$cur_year = date("Y");
 	$cur_month = date("m");
 
+	$confirmeddate = date('Y-m-d');
+
    $sql = "SELECT * FROM agent_form_data 
    			WHERE ref_num = '".$ref_value."'";
    $res = $conn->query($sql);
@@ -108,7 +110,7 @@ if(isset($_GET["qr"]))
 				                            {
 
 				                            	 $sql ="UPDATE agent_form_data 	
-				                                   SET formstatus = 'confirmed'
+				                                   SET formstatus = 'confirmed', confirmeddate = '$confirmeddate'
 				                                   WHERE ref_num = '".$ref_value."'
 				                                    ";
 						                            if(($conn->query($sql))== true)
@@ -214,7 +216,7 @@ if(isset($_GET["qr"]))
 				                            {
 
 				                            	 $sql ="UPDATE agent_form_data 	
-				                                   SET formstatus = 'confirmed'
+				                                   SET formstatus = 'confirmed', confirmeddate = '$confirmeddate'
 				                                   WHERE ref_num = '".$ref_value."'
 				                                    ";
 						                            if(($conn->query($sql))== true)

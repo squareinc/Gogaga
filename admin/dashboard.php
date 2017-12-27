@@ -720,9 +720,14 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                     {     echo " <div class='table-responsive'> <table class='table table-hover table-bordered table-list' style='background-color: white;'>
                                   <tr>
                                   <th>GHRN NO</th>
-                                  <th>Client Name</th>
-                                  <th>Destination</th>
+                                  <th>Confirmed Date</th>
                                   <th>Trip Start Date</th>
+                                  <th>Client Name</th>
+                                  <th>Contact No.</th>
+                                  <th>Total Package Cost</th>
+                                  <th>Pending Payment</th>
+                                  <th>Destination</th>
+                                  
                                   <th>Payment Status</th>
                                   <th>Voucher Status</th>
                                   <th>Agent Commission</th>
@@ -733,14 +738,54 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                
                       while($row = $res->fetch_assoc()) 
                           {
-                             
+                              $totalPackageCost = ""; 
+                              $refNum = $row["ref_num"];
+                              $pendingPayment = "";
+                              $creditedAmount = "";
+                              
+                              $GHRN_number = 5000+(int)$refNum;
+                              $GHRN_number = "GHRN".$GHRN_number;
+
+                              $sqlTrans = "SELECT SUM(CREDIT) AS creditedamount FROM transactions WHERE GHRN_number = '".$GHRN_number."'"; 
+
+                              $resTrans = $conn->query($sqlTrans) ;
+                                if ($resTrans->num_rows){
+                                  while($rowTrans = $resTrans->fetch_assoc()){
+                                    $creditedAmount = $rowTrans["creditedamount"];
+                                  }
+                                }
+
+
                               if($row["holi_type"] == "Domestic")
                               {
                                 $dest_place = "<p style='color:red'>".$row["holi_dest"]."</p>";
+                                $sql2= "SELECT totcostfl FROM itinerary_domestic d INNER JOIN agent_form_data a ON d.ghrnno = a.ref_num
+                                 WHERE a.formstatus = 'confirmed' AND a.ref_num = '".$refNum."'";
+                                 $res2 = $conn->query($sql2) ;
+                                 if ($res2->num_rows){
+                                  while($row2 = $res2->fetch_assoc()) 
+                                    {
+                                      $totalPackageCost = $row2["totcostfl"];
+                                      $pendingPayment = (int)$totalPackageCost-(int)$creditedAmount;
+
+                                    }
+                                 }
+                      
                               }
                               elseif($row["holi_type"]  == "International")
                               {
                                 $dest_place = "<p style='color:blue;'>".$row["holi_dest"]."</p>";
+                                 $sql3 = "SELECT totcostfl FROM itinerary_inter d INNER JOIN agent_form_data a ON d.ghrno = a.ref_num
+                                 WHERE a.formstatus = 'confirmed' AND a.ref_num = '".$refNum."'";
+                                 //echo $sql3;
+                                 $res3 = $conn->query($sql3);
+                                 if ($res3->num_rows){
+                                  while($row3 = $res3->fetch_assoc()) 
+                                    {
+                                      $totalPackageCost = $row3["totcostfl"];
+                                      $pendingPayment = (int)$totalPackageCost-(int)$creditedAmount;
+                                    }
+                                 }
                               }
 
                               $pst = $row["payment_status"];
@@ -778,9 +823,14 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
                               echo " <tr>
                                   <td>GHRN".(5000+$row["ref_num"])."</td>
-                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
-                                  <td>".$dest_place."</td>
+                                  <td>".$row["confirmeddate"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
+                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
+                                  <td>".$row["contact_phone"]."</td>
+                                  <td>".(int)$totalPackageCost."</td>
+                                  <td>".$pendingPayment."</td>
+                                  <td>".$dest_place."</td>
+                                  
                                   <td>".$pst."</td>
                                   <td>".$vst."</td>
                                   <td>".$agentst."</td>
@@ -2684,12 +2734,13 @@ else
                                   <th>GHRN NO</th>
                                   <th>Customer Name</th>
                                   <th>Destination</th>
+                                  <th>Sent Date</th>
                                   <th>Start Date</th>
                                   <th>End Date</th>
                                   <th>Employee</th>
                                   <th>Actions</th>
                                   <th></th>
-                                  <th>Status</th>
+                                  
                                 </tr>";
                                
                              $color = "";
@@ -2707,6 +2758,7 @@ else
                                   <td>GHRN".(5000+$row["ref_num"])."</td>
                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["holi_dest"]."</td>
+                                  <td>".$row["senttocustomerdate"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
                                   <td>".$row["return_date_of_travel"]."</td>
                                   <td>".$row["username"]."</td>
@@ -2722,7 +2774,7 @@ else
                                   }
                                   else{
                                     echo "
-                                    <td>Confirmed</td>
+                                    
                                   </tr>";
                                   }
 
