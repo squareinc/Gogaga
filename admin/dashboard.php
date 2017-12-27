@@ -694,8 +694,11 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                         if(isset($_GET["search_case"]))
                         {   
                           $search_case = $_GET["search_case"];
+                          $search_case = explode("N", $search_case);
+                          $ref_param = (int)$search_case[1];
+                          $ref_param = $ref_param - 5000;
                           $sql1 = "SELECT * FROM agent_form_data WHERE
-                          formstatus = 'confirmed' and ref_num = '$search_case'
+                          formstatus = 'confirmed' and ref_num = '$ref_param'
                           ORDER BY ref_num DESC";   
                         }
                       else
@@ -2256,9 +2259,11 @@ if($type='Admin' || $type='Accounts')
                         if(isset($_GET["search_voucher"]))
                         {   
                           $search_voucher = $_GET["search_voucher"];
-                          $sql1 = "SELECT * FROM vouchertable WHERE
-                          ref_num LIKE '%$search_voucher%' 
-                          ORDER BY ref_num DESC";   
+                          $search_voucher = explode("N", $search_voucher);
+                          $ref_param = (int)$search_voucher[1];
+                          $ref_param = $ref_param - 5000;
+                          
+                          $sql1 = "SELECT * FROM vouchertable v INNER JOIN agent_form_data a ON v.ref_num=a.ref_num WHERE v.ref_num LIKE '%$ref_param%' ORDER BY v.ref_num DESC";   
                         }
                       else
                       {
@@ -2645,16 +2650,16 @@ else
                         {   
 
                           $search_param_submitted = $_GET["search_param_submitted"];
-                          $param_ref = (int)$search_param_submitted;
+                          $search_param_submitted = explode("N", $search_param_submitted);
+                          $param_ref = (int)$search_param_submitted[1];
                           $param_ref = $param_ref - 5000;
 
-
-
+                  
 
                           $sql1 = "SELECT * FROM agent_form_data INNER JOIN login WHERE
                           (agent_form_data.currently_worked_by = login.userid) and
                           (formstatus != 'pending' and formstatus != 'smashed') and 
-                          (holi_dest LIKE '%".$search_param_submitted."%' or ref_num LIKE '%".$param_ref."%')  
+                          (ref_num LIKE '%".$param_ref."%')  
                           ORDER BY ref_num DESC";   
 
                         }
@@ -2773,10 +2778,10 @@ else
                         if(isset($_GET["search_param_smashed"]))
                         {   
                           $search_param_smashed = $_GET["search_param_smashed"];
+                          $param_ref = (int)$search_param_smashed;
                           $sql1 = "SELECT * FROM agent_form_data WHERE
                           (formstatus = 'smashed') and 
-                          (holi_dest LIKE '%".$search_param_smashed."%'
-                          or ref_num LIKE '%".$search_param_smashed."%')  
+                          (ref_num LIKE '%".$param_ref."%')  
                           ORDER BY ref_num DESC";   
                         }
                       else
@@ -2889,14 +2894,14 @@ else
 
 
                           $search_param_pending = $_GET["search_param_pending"];
-                          $param_ref = (int)$search_param_pending;
-                          $param_ref = $param_ref - 5000;
+                          $search_param_pending = explode("N", $search_param_pending);
+                          $ref_param = (int)$search_param_pending[1];
+                          $ref_param = $ref_param - 5000;
 
 
                           $sql1 = "SELECT * FROM agent_form_data WHERE
                           (formstatus = 'pending') and 
-                          (ref_num LIKE '%".$param_ref."%'
-                          or holi_dest LIKE '%".$search_param_pending."%')  
+                          (ref_num LIKE '%".$ref_param."%')  
                           ORDER BY ref_num DESC";   
                         }
                       else
