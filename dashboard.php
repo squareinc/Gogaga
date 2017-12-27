@@ -1821,7 +1821,7 @@ else
                                   <td>".$row["date_of_travel"]."</td>
                                   <td>".$row["return_date_of_travel"]."</td>
                                   <td>".$row["username"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='itinerary_submitview.php?q=".$row["ref_num"]."&r=".$row["holi_type"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='admin/view.php?q=".$row["ref_num"]."&r=".$row["holi_type"]."'>View</a></td>
                                   <td><a class='btn btn-danger btn-sm' role='button' href='edit_agentform.php?q=".$row["ref_num"]."'>Modify</a></td>";
                                   /*if($row["formstatus"] == "confirmed")
                                     echo "
@@ -2103,7 +2103,7 @@ else
                                   <td>".$row["return_date_of_travel"]."</td>
                                   <td>".$row["duration"]."</td>
                                   <td>".$datesent."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_itinerary.php?q=".$row["ref_num"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_itinerary.php?q=".$row["ref_num"]."'>View Form</a></td>
                                   <td><a class='btn btn-success btn-sm' role='button' href='edit_agentform.php?q=".$row["ref_num"]."'>Create</a></td>
                                   <td>".$row["currently_worked_by"]."</td>
 
