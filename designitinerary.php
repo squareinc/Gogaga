@@ -304,7 +304,7 @@ $sql = "SELECT * FROM designdetails WHERE ghrno = ".$ref_value."";
                                                     <div class='col-md-3'>
                                                     <div class='form-group'>
                                                       <label for='itmeal'>Meal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal' value='".$meal."' aria-label='...'>
+                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal".$z."' value='".$meal."' aria-label='...'>
                                                     </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class='col-md-3'>
@@ -345,7 +345,7 @@ $sql = "SELECT * FROM designdetails WHERE ghrno = ".$ref_value."";
                                                     <div class='col-md-3'>
                                                     <div class='form-group'>
                                                       <label for='itmeal'>Meal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal' value='".$meal."' aria-label='...'>
+                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal".$z."' value='".$meal."' aria-label='...'>
                                                     </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class='col-md-3'>
@@ -427,7 +427,7 @@ $sql = "SELECT * FROM designdetails WHERE ghrno = ".$ref_value."";
                                                     <div class='col-md-3'>
                                                     <div class='form-group'>
                                                       <label for='itmeal'>Meal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal' value='".$meal."' aria-label='...'>
+                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal".$z."' value='".$meal."' aria-label='...'>
                                                     </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class='col-md-3'>
@@ -471,7 +471,7 @@ $sql = "SELECT * FROM designdetails WHERE ghrno = ".$ref_value."";
                                                     <div class='col-md-3'>
                                                     <div class='form-group'>
                                                       <label for='itmeal'>Meal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal' value='".$meal."' aria-label='...'>
+                                                      <input type='text' class='form-control' name='itmeal[]'  id='itmeal".$z."' value='".$meal."' aria-label='...'>
                                                     </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class='col-md-3'>

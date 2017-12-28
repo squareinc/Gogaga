@@ -20,12 +20,16 @@ function getPreviousData(refno){
 							//get the target element and put the data
 							var day = "#ittitle"+k; //holds day value
 							var description = "#itdesc"+k; //holds description value
+							var meal = "#itmeal"+k; //holds meal value
 
 							console.log(day);
 							console.log(description);
+							console.log(meal);
 
 							$(day).val(data[i].title);
 							$(description).val(data[i].description);
+							$(meal).val(data[i].mealplan);
+
 							//fits the data into DOM elements using JQUERY.
 						}
 					}
