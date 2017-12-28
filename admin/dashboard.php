@@ -632,6 +632,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                 $color = "#3498db";
                               }else if($row["formstatus"] == "smashed"){
                                 $color = "#f1c40f";
+                                $row["formstatus"] = "deleted";
                               }
 
                               echo " <tr style='background-color: $color; color: #fff;'>
