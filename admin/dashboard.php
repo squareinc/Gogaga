@@ -216,7 +216,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--CSS Tags-->
-  <link rel="icon" href="images/logo_icon.png"/>
+  <link rel="icon" href="../images/logo_icon.png"/>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -3104,19 +3104,20 @@ var chart = new CanvasJS.Chart("chartContainer", {
     itemclick: toogleDataSeries
   },
   data: [{
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Itineraries Quoted",
     markerType: "square",
     xValueFormatString: "DD MMM, YYYY",
-    color: "#F08080",
+    color: "#0275d8",
     dataPoints: <?php echo "$dataPoints_itineraries_quoted";?>
   },
   {
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Itineraries Converted",
     lineDashType: "dash",
+    color: "#d9534f",
     dataPoints: <?php echo "$dataPoints_itineraries_converted";?>
   }]
 });
@@ -3151,19 +3152,20 @@ var chart1 = new CanvasJS.Chart("chartContainer1", {
     itemclick: toogleDataSeries
   },
   data: [{
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Volume Quoted",
     markerType: "square",
     xValueFormatString: "DD MMM, YYYY",
-    color: "#F08080",
+    color: "#f1c40f",
     dataPoints: <?php echo "$dataPoints_volume_quoted";?>
   },
   {
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Volume Converted",
     lineDashType: "dash",
+    color: "#5cb85c",
     dataPoints: <?php echo "$dataPoints_volume_converted";?>
   }]
 });

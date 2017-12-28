@@ -196,7 +196,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--CSS Tags-->
-  <link rel="icon" href="images/logo_icon.png"/>
+  <link rel="icon" href="../images/logo_icon.png"/>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -561,7 +561,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
  <div class="col-md-3 col-sm-4">
 
 
-    <div class='progress_bar' style='background-color:white;margin-left:10px; width:200px;border-radius:5px;height:365px;position:relative;right:35px;padding:10px;'>
+    <div class='progress_bar' style='background-color:#f1c40f;margin-left:10px; width:200px;border-radius:5px;height:365px;position:relative;right:35px;padding:10px;'>
     <h4 style='font-weight:bold;text-align:center;'></h4>
 
             <div class="progress blue">
@@ -571,9 +571,9 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                 <span class="progress-right">
                     <span class="progress-bar"></span>
                 </span>
-                <div class="progress-value"> <?php
+                <div class="progress-value" style="background-color: #f1c40f; font-family: 'Lato';top: -3%;"> <?php
                               date_default_timezone_set('Asia/Kolkata');
-                              echo "  <h3 style='padding-top:25px;text-align:center;'>" . date("h:i a")."</h3>";
+                              echo "  <h3 style='padding-top:25px;text-align:center;'>" . date("h:i A")."</h3>";
                               ?></div>
             </div>
             <h5 style='text-align:center;'>
@@ -2163,19 +2163,20 @@ var chart = new CanvasJS.Chart("chartContainer", {
     itemclick: toogleDataSeries
   },
   data: [{
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Itineraries Quoted",
     markerType: "square",
     xValueFormatString: "DD MMM, YYYY",
-    color: "#F08080",
+    color: "#0275d8",
     dataPoints: <?php echo "$dataPoints_itineraries_quoted";?>
   },
   {
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Itineraries Converted",
     lineDashType: "dash",
+    color: "#d9534f",
     dataPoints: <?php echo "$dataPoints_itineraries_converted";?>
   }]
 });
@@ -2210,19 +2211,20 @@ var chart1 = new CanvasJS.Chart("chartContainer1", {
     itemclick: toogleDataSeries
   },
   data: [{
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Volume Quoted",
     markerType: "square",
     xValueFormatString: "DD MMM, YYYY",
-    color: "#F08080",
+    color: "#f1c40f",
     dataPoints: <?php echo "$dataPoints_volume_quoted";?>
   },
   {
-    type: "line",
+    type: "column",
     showInLegend: true,
     name: "Total Volume Converted",
     lineDashType: "dash",
+    color: "#5cb85c",
     dataPoints: <?php echo "$dataPoints_volume_converted";?>
   }]
 });
