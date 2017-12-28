@@ -1,5 +1,5 @@
 <?php
-define("PROJECT_HOME","http://gogagaholidays.in/Gogaga/forgot/");
+define("PROJECT_HOME","http://gogagaholidays.in/forgot/");
 
 define("PORT", "25"); // port number
 define("MAIL_USERNAME", "admin@gogagaholidays.in"); // smtp usernmae
