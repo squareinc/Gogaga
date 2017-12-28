@@ -1477,7 +1477,7 @@ echo "
                           if(empty($transp))
                             echo " disabled ";
 
-                         echo "></textarea>
+                         echo ">".$transp_vehicle."</textarea>
                       </div>
                 
 
@@ -1490,7 +1490,7 @@ echo "
                           if(empty($transp))
                             echo " disabled ";
 
-                         echo "></textarea>
+                         echo ">".$transp_vendor_details."</textarea>
                       </div>
                   </div>
 
