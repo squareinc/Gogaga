@@ -3,7 +3,7 @@ include "../config.php";
 
 if(isset($_POST["transubmit"]))
 {
-$Transaction_date = $_POST["tran_year"]."-".$_POST["tran_mon"]."-".$_POST["tran_date"];
+$Transaction_date = $_POST["tran_date"];
 $msg=1;
 				/*
 				 $date = date("d-m-Y");

@@ -244,6 +244,12 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 <script type="text/javascript" src="js/deleteitinerary.js"></script>
 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+
 <script type="text/javascript">
   $('#notifbut').click(function(e)
   {
@@ -1767,6 +1773,8 @@ if($type='Admin' || $type='Accounts')
 
 
 <script type="text/ng-template" id="pages/newtran.php"> 
+
+
               <h2>New Transactions</h2>
 
         
@@ -1778,26 +1786,28 @@ if($type='Admin' || $type='Accounts')
 
               <div class="form-group">
                 <label for="trans_date">Transaction Date</label><br>
-                    <select id="day_start" name="tran_date" style='height:40px;' required> 
+
+                <input type="text" class="pull-right" style="background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;" name="trans_date" id="trans_date" value="2018-02-15" size="10">
+                    <!-- <select id="day_start" name="tran_date" style='height:40px;' required> 
                                            <?php 
-                                                $x=1;
+                                              /*  $x=1;
                                                 
                                               while($x <= 31) 
                                               {
                                                 echo "<option>".$x."</option>";
                                                 $x++;
-                                              } 
+                                              } */
                                             ?>       
                                   </select> 
                         
                                   <select id="month_start" name="tran_mon" style='height:40px;' required> 
                                             <?php
-                                                $y=array("Jan", "Feb", "Mar", "Apr",
+                                               /* $y=array("Jan", "Feb", "Mar", "Apr",
                                                 "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
                                                   for ($i=0; $i <=11; $i++) { 
                                                         echo "<option value ='".($i+1)."'>".$y[$i]."</option>";    
-                                                     }
+                                                     }*/
                                                      
                                             ?>         
                                   </select>  
@@ -1805,19 +1815,19 @@ if($type='Admin' || $type='Accounts')
                                   <select id="year_start" name="tran_year" style='height:40px;' required> 
                                             
                                               <?php 
-                                                $x=date("Y");
+                                               /* $x=date("Y");
                                                 $y=$x+10;
                                               while($x <= $y) 
                                               {
                                                 echo "<option>".$x."</option>";
                                                 $x++;
-                                              } 
+                                              } */
                                             ?>
 
                                          
 
                                   </select>
-
+ -->
               </div>
 
               <div class="form-group">
@@ -3218,6 +3228,33 @@ function toogleDataSeries(e){
    
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src='js/appp.js'></script>
+
+<script type="text/javascript">
+  
+  $(document).on("focus", "input[name='trans_date']", function() {
+
+
+     //hotels checkindate daterangepicker          
+  $("input[name='trans_date']").daterangepicker({
+        singleDatePicker: true,
+        startDate: moment(),
+        showDropdowns: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    }, 
+    function(start, end, label) {
+        var years = moment().diff(start, 'years');
+        console.log("Year:" + years);
+        //change the selected date range of that picker
+
+    });
+
+});
+
+
+
+</script>
 
 </body>
 </html>
