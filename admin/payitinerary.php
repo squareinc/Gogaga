@@ -181,7 +181,10 @@ $sqlset ="UPDATE agent_form_data
 							//successfully updated status to paid in domestic hotels
 						}
 
-				header('Location:dashboard.php#/case');
+				//header('Location:dashboard.php#/case');
+						$location = "Location:issuevoucher.php?qr=".$refnum."&rt=".$reftype;
+
+				header($location);
 			}
 			else
 				echo "Not Paid successfully";
