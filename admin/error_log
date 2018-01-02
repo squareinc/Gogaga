@@ -6095,3 +6095,4 @@
 [02-Jan-2018 05:54:17 Etc/GMT] PHP Notice:  Undefined offset: 3 in /home/gogagx2b/public_html/admin/view.php on line 463
 [02-Jan-2018 05:54:17 Etc/GMT] PHP Notice:  Undefined offset: 4 in /home/gogagx2b/public_html/admin/view.php on line 456
 [02-Jan-2018 05:54:17 Etc/GMT] PHP Notice:  Undefined offset: 4 in /home/gogagx2b/public_html/admin/view.php on line 463
+[02-Jan-2018 06:59:56 Etc/GMT] PHP Notice:  Undefined index: tran_date in /home/gogagx2b/public_html/admin/trans_setting.php on line 6
