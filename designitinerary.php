@@ -109,6 +109,9 @@ if(isset($_GET["ref"]))
                         $itdate = $_POST['itdate'][$key];
                         $itdesc = $_POST['itdesc'][$key];
 
+                        $itdesc = mysqli_real_escape_string($conn,$itdesc);
+                        
+
                         $date = date_create($itdate);
                         $date = date_format($date,"Y-m-d");
                         
