@@ -1166,7 +1166,7 @@ echo "
                          <th> ROOM STD</th>
                          <th>NO.ROOMS</th>
                          <th> NO.NIGHTS</th>
-                         <th> MEAL PLAN</th>
+                         <!-- <th> MEAL PLAN</th> -->
                          <th> PRICES</th>
                          <th>STATUS</th>
                          
@@ -1248,7 +1248,7 @@ if($ref_type=='International')
                         <th>ROOM STD</th>
                         <th>CHECK-IN DATE</th>
                         <th>CHECK-OUT DATE</th>
-                       <th>MEAL PLAN</th>
+                       <!-- <th>MEAL PLAN</th> -->
                        <th>PRICES</th>
                        <th>STATUS</th>
                       </tr>
