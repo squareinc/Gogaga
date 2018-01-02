@@ -17,6 +17,7 @@ if(isset($_SESSION["ref_value"]))
  {
       $ref_value=$_SESSION["ref_value"];
       $ref_type=$_SESSION["ref_type"];
+      $schitinerary = "";
   } 
 
   $pricing_set =""; 
@@ -1135,32 +1136,7 @@ echo "
             
             <br><br>
             
-            <fieldset class='third_set'>
-              <p class='lineheading'>Meal plan</p>
-                <div class='col-md-9 col-md-push-1'>
-                    <div class='form-check'>
-                    <label class='form-check-label'>
-                    ";?>
-                      <input class='form-check-input' type='radio' name='meal_plan' value='Breakfast' <?php if($meal=="Breakfast") echo 'checked="true"';?>>
-                      <?php echo"Breakfast
-                    </label>
-                  </div>
-                  <br>
-                  <div class='form-check'>
-                    <label class='form-check-label'>";?>
-                      <input class='form-check-input' type='radio' name='meal_plan' value='Breakfast,Lunch or Dinner' <?php if($meal=="Breakfast,Lunch or Dinner") echo 'checked="true"';?>>
-                      <?php echo"Breakfast,Lunch or Dinner
-                    </label>
-                  </div>
-                  <br>
-                  <div class='form-check'>
-                    <label class='form-check-label'>";?>
-                      <input class='form-check-input' type='radio' name='meal_plan' value='Breakfast,Lunch and Dinner' <?php if($meal=="Breakfast,Lunch and Dinner") echo 'checked="true"';?>>
-                      <?php echo"Breakfast,Lunch and Dinner
-                    </label>
-                  </div>
-                </div>    
-            </fieldset>
+         
             
             <br><br>
       
@@ -1329,6 +1305,100 @@ if($ref_type=='International')
 <?php 
 }
 ?> 
+
+   <fieldset class='third_set'>
+              <p class='lineheading'>Meal plan</p>
+                <div class='col-md-9 col-md-push-1'>
+                    <div class='form-check'>
+                    <label class='form-check-label'>
+                    
+                      <input class='form-check-input' type='radio' name='meal_plan' value='Breakfast' <?php if($meal=="Breakfast") echo 'checked="true"';?>>
+                      <?php echo"Breakfast
+                    </label>
+                  </div>
+                  <br>
+                  <div class='form-check'>
+                    <label class='form-check-label'>";?>
+                      <input class='form-check-input' type='radio' name='meal_plan' value='Breakfast,Lunch or Dinner' <?php if($meal=="Breakfast,Lunch or Dinner") echo 'checked="true"';?>>
+                      <?php echo"Breakfast,Lunch or Dinner
+                    </label>
+                  </div>
+                  <br>
+                  <div class='form-check'>
+                    <label class='form-check-label'>";?>
+                      <input class='form-check-input' type='radio' name='meal_plan' value='Breakfast,Lunch and Dinner' <?php if($meal=="Breakfast,Lunch and Dinner") echo 'checked="true"';?>>
+                      <?php echo"Breakfast,Lunch and Dinner" ?>
+                    </label>
+                  </div>
+                </div>    
+            
+
+    <?php
+
+    $query = "SELECT * FROM itdaywise WHERE ghrnno = '".$ref_value."' ORDER BY rowno ";
+    $result = mysqli_query($conn,$query);
+          $cntt = 1;
+          $z = 1; //new holder
+       if(mysqli_num_rows($result) > 0){
+     
+      while($row=mysqli_fetch_assoc($result)){
+        $title = $row["title"];
+        $hotel = $row["hotelname"];
+        $meal = $row["mealplan"];
+        $date = $row["date"];
+
+        $schitinerary.="
+                      <div class ='row'>
+                          <div class='col-md-3'>  
+                          <label for='day'>
+                          <b style='font-size:19px;color:red;'>DAY ".$cntt++." </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+                          
+                          </div>
+                          <div class='col-md-3'>
+                          <div class='form-group'>
+                            <label for='ithotel'>Hotel &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                               <input type='text' class='form-control' name='ithotel[]'  id='ithotel' value='".$hotel."' aria-label='...'>
+                          </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </div>
+                          <div class='col-md-3'>
+                          <div class='form-group'>
+                            <label for='itmeal'>Meal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <input type='text' class='form-control' name='itmeal[]'  id='itmeal".$z."' value='".$meal."' aria-label='...'>
+                          </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </div>
+                          <div class='col-md-3'>
+                          <div class='form-group'>
+                            <label for='itdate'>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                               <input type='text' class='form-control' name='itdate[]'  id='itdate' value='".$date."' aria-label='...'>
+                          </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           </div>
+                        
+                        </div><hr>";
+
+
+      }
+  }else{
+    $schitinerary = "";
+  }
+
+
+                                
+
+    ?>
+
+      
+    
+        <div class='col-md-9 col-md-push-1' id='itcontainer'>
+           <br>
+      
+          <?php echo "$schitinerary";?>
+        </div>
+        
+                        
+          
+      </fieldset>
+
+<br><br>
 
 <fieldset class='fifth_set' >
       <p class='lineheading'>Flight Details</p>
