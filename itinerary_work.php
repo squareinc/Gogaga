@@ -1191,7 +1191,7 @@ echo "
 ?>
 
 
-<!--Domestic hotel fieldset-->
+<!--Domestic hotel fieldsets-->
 <?php 
 if($ref_type=='International')
 {
