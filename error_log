@@ -1197,3 +1197,9 @@
 [02-Jan-2018 07:07:52 Etc/GMT] PHP Notice:  Undefined index: cust_lastname in /home/gogagx2b/public_html/dashboard.php on line 501
 [02-Jan-2018 07:07:52 Etc/GMT] PHP Notice:  Undefined index: holi_dest in /home/gogagx2b/public_html/dashboard.php on line 502
 [02-Jan-2018 07:07:52 Etc/GMT] PHP Notice:  Undefined index: itcreated in /home/gogagx2b/public_html/dashboard.php on line 503
+[02-Jan-2018 07:08:58 Etc/GMT] PHP Notice:  Undefined index: formstatus in /home/gogagx2b/public_html/dashboard.php on line 496
+[02-Jan-2018 07:08:58 Etc/GMT] PHP Notice:  Undefined index: ref_num in /home/gogagx2b/public_html/dashboard.php on line 500
+[02-Jan-2018 07:08:58 Etc/GMT] PHP Notice:  Undefined index: cust_firstname in /home/gogagx2b/public_html/dashboard.php on line 501
+[02-Jan-2018 07:08:58 Etc/GMT] PHP Notice:  Undefined index: cust_lastname in /home/gogagx2b/public_html/dashboard.php on line 501
+[02-Jan-2018 07:08:58 Etc/GMT] PHP Notice:  Undefined index: holi_dest in /home/gogagx2b/public_html/dashboard.php on line 502
+[02-Jan-2018 07:08:58 Etc/GMT] PHP Notice:  Undefined index: itcreated in /home/gogagx2b/public_html/dashboard.php on line 503
