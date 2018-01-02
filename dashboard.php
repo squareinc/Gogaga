@@ -1823,7 +1823,8 @@ else
                                   <td>".$row["return_date_of_travel"]."</td>
                                   <td>".$row["username"]."</td>
                                   <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='admin/view.php?q=".$row["ref_num"]."&r=".$row["holi_type"]."'>View</a></td>
-                                  <td><a class='btn btn-danger btn-sm' role='button' href='edit_agentform.php?q=".$row["ref_num"]."'>Modify</a></td>";
+                                  <td><a class='btn btn-danger btn-sm' role='button' href='edit_agentform.php?q=".$row["ref_num"]."'>Modify</a></td>
+                                  <td><a class='btn btn-warning btn-sm' role='button' href='duplicate_form.php?q=".$row["ref_num"]."'>Duplicate</a></td>";
                                   /*if($row["formstatus"] == "confirmed")
                                     echo "
                                     <td>&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-ok' style='padding-right:15px;' aria-hidden='true'></span></td>
