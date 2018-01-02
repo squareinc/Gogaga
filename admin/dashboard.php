@@ -1907,47 +1907,8 @@ if($type='Admin' || $type='Accounts')
 
                <div class="form-group">
               <label for="trandate">Transaction Date</label><br>
-               <select id="day_start" name="tran_date" style='height:40px;'> 
-                                           <?php 
-                                                $x=1;
-                                                echo "<option value='a'></option>";
-                                                
-                                              while($x <= 31) 
-                                              {
-                                                echo "<option>".$x."</option>";
-                                                $x++;
-                                              } 
-                                            ?>       
-                                  </select> 
-                        
-                                  <select id="month_start" name="tran_mon" style='height:40px;'> 
-                                            <?php
-                                                $y=array("Jan", "Feb", "Mar", "Apr",
-                                                "May","Jun","Jul","Aug","Sept","Oct","Nov","Dec");
-                                                         echo "<option value='a'></option>";
-                                                  for ($i=0; $i <11; $i++) { 
-                                                        echo "<option value ='".($i+1)."'>".$y[$i]."</option>";    
-                                                     }
-                                                     
-                                            ?>         
-                                  </select>  
-                        
-                                  <select id="year_start" name="tran_year" style='height:40px;'> 
-                                            
-                                              <?php 
-                                                $x=date("Y");
-                                                $y=$x+10;
-                                               echo "<option value='a'></option>";
-                                              while($x <= $y) 
-                                              {
-                                                echo "<option>".$x."</option>";
-                                                $x++;
-                                              } 
-                                            ?>
-
-                                         
-
-                                  </select>
+              <input type="text" class="pull-right" style="background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;" name="trans_date" id="trans_date" value="2018-02-15" size="10">
+               
               </div>
 
               <div class="form-group">
