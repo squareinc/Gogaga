@@ -136,7 +136,7 @@ elseif (isset($_POST["editsubmit"]))
 {
 	$msgfor ="";
 if($_POST["tran_date"]!='a' && $_POST["tran_mon"]!='a' && $_POST["tran_year"]!='a')	
-	$Transaction_date = $_POST["tran_year"]."-".$_POST["tran_mon"]."-".$_POST["tran_date"];
+	$Transaction_date = $_POST["trans_date"];
 else
 	$Transaction_date = date("Y-m-d");
 
