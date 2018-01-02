@@ -36,7 +36,7 @@
           </a>
            <ul class="treeview-menu">
             <li><a href="requestform.php">Raise a Request</a></li>
-            <li><a href="#">Upload a competitive quote</a></li>
+            <li><a href="uploadquotation.php">Upload a competitive quote</a></li>
           </ul>
         </li>
 
