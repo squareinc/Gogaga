@@ -500,8 +500,8 @@ $(function(){
                                +'<td><input type="text" name="roomstnd[]" size="7"></td>'
                                +'<td><input type="text" name="rooms[]" size="3"></td>'
                                +'<td><input type="text" name="nights[]" size="3"></td>'
-                                     + '<td>'
-                                    + ' <select name="meall[]">'
+                                     + '<td><input type="text" name="price[]" size="3"></td><td>'
+                                    + ' <select name="meall[]" class="hidden">'
                                       + '<option>Breakfast,Lunch, Dinner</option>'
                                       + '<option>No Breakfast, Lunch, Dinner</option>'
                                       + '<option>Breakfast, No Lunch, Dinner</option>'
@@ -511,7 +511,7 @@ $(function(){
                                       + '<option>No Breakfast, Lunch, No Dinner</option>'
                                       + '<option>No Breakfast, No Lunch, No Dinner</option>'
                                     + ' </select>'
-                               +'</td><td><input type="text" name="price[]" size="3"></td>'
+                               +'</td>'
                                +'<td><button type="button" class="btn btn-danger btn-sm removeAir"><span class="glyphicon glyphicon-remove"></span></button></td>'
 
                              +'</tr>'
@@ -553,8 +553,8 @@ $(function(){
                                +'<td><input type="text" name="roomstnd[]" size="7"></td>'
                                +'<td><input type="text" class="pull-right" style="background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;" name="checkin[]" placeholder="2017-09-01" size="7"></td>'
                                +'<td><input type="text" class="pull-right" style="background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;" name="checkout[]" placeholder="2017-09-21" size="7"></td>'
-                                     + '<td>'
-                                    + ' <select name="meall[]">'
+                                     + '<td><input type="text" name="price[]" size="8"></td><td>'
+                                    + ' <select name="meall[]" class="hidden">'
                                      + '<option>Breakfast,Lunch, Dinner</option>'
                                       + '<option>No Breakfast, Lunch, Dinner</option>'
                                       + '<option>Breakfast, No Lunch, Dinner</option>'
@@ -564,7 +564,7 @@ $(function(){
                                       + '<option>No Breakfast, Lunch, No Dinner</option>'
                                       + '<option>No Breakfast, No Lunch, No Dinner</option>'
                                     + ' </select>  '
-                               +'</td><td><input type="text" name="price[]" size="8"></td>'
+                               +'</td>'
                                +'<td><button type="button" class="btn btn-danger btn-sm removeAir"><span class="glyphicon glyphicon-remove"></span></button></td>'
                              +'</tr>'
 
@@ -721,8 +721,10 @@ $(function(){
                                <td><input type='text' name='roomstnd[]'  value='".$row["roomstandard"]."'size='7'></td>
                                <td><input type='text' class='pull-right' style='background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;' name='checkin[]'  value='".$row["checkindate"]."'value='".$row["location"]."' size='7' ></td>
                                <td><input type='text' class='pull-right' style='background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;' name='checkout[]' size='7'value='".$row["checkoutdate"]."' ></td>
-                                <td>
-                                <select name='meall[]'>
+                                
+                               <td><input type='text' name='price[]' value='".$row["prices"]."' size='8'></td>
+                               <td>
+                                <select name='meall[]' class='hidden'>
                                                <option ".$m_0.">Breakfast,Lunch, Dinner</option>
                                                 <option ".$m_1.">No Breakfast, Lunch, Dinner</option>
                                                 <option ".$m_2.">Breakfast, No Lunch, Dinner</option>
@@ -733,7 +735,6 @@ $(function(){
                                                 <option ".$m_7.">No Breakfast, No Lunch, No Dinner</option>>
                                  </select>   
                                 </td>
-                               <td><input type='text' name='price[]' value='".$row["prices"]."' size='8'></td>
                              </tr>
 
                         ";
@@ -826,8 +827,11 @@ $(function(){
                                          <td><input type='text' name='roomstnd[]' value='".$row["roomstandard"]."' size='7'></td>
                                          <td><input type='text' name='rooms[]' value='".$row["rooms"]."' size='3' ></td>
                                          <td><input type='text' name='nights[]' value='".$row["nights"]."' size='3' ></td>
-                                          <td>
-                                           <select name='meall[]'>
+                                          
+                                           
+                                         <td><input type='text'  name='price[]' value='".$row["prices"]."' size='3'></td>
+                                         <td>
+                                         <select name='meall[]' class='hidden'>
                                                 <option ".$m_0.">Breakfast,Lunch, Dinner</option>
                                                 <option ".$m_1.">No Breakfast, Lunch, Dinner</option>
                                                 <option ".$m_2.">Breakfast, No Lunch, Dinner</option>
@@ -838,7 +842,6 @@ $(function(){
                                                 <option ".$m_7.">No Breakfast, No Lunch, No Dinner</option>
                                            </select>  
                                           </td>
-                                         <td><input type='text'  name='price[]' value='".$row["prices"]."' size='3'></td>
                                          
                                 </tr>
 
@@ -1129,7 +1132,7 @@ echo "
                         <th>ROOM STANDARD</th>
                          <th>NO.ROOMS</th>
                          <th> NO.NIGHTS</th>
-                         <th> MEAL PLAN</th>
+                        <!--  <th> MEAL PLAN</th> -->
                          <th> PRICE</th>
                          
                       </tr>
@@ -1154,8 +1157,10 @@ echo "
                                          <td><input type='text' name='roomstnd[]' size='7'></td>
                                          <td><input type='text' name='rooms[]' size='3' required></td>
                                          <td><input type='text' name='nights[]' size='3' required></td>
+                                         
+                                         <td><input type='text' name='price[]' size='3'></td>
                                           <td>
-                                           <select name='meall[]'>
+                                           <select name='meall[]' class='hidden'>
                                               <option>Breakfast,Lunch, Dinner</option>
                                                 <option>No Breakfast, Lunch, Dinner</option>
                                                 <option>Breakfast, No Lunch, Dinner</option>
@@ -1166,7 +1171,6 @@ echo "
                                                 <option>No Breakfast, No Lunch, No Dinner</option>
                                            </select>  
                                           </td>
-                                         <td><input type='text' name='price[]' size='3'></td>
                                          
                                 </tr>
                                 ";
@@ -1205,7 +1209,7 @@ if($ref_type=='International')
                         <th>ROOM STANDARD</th>
                         <th>CHECK-IN DATE</th>
                         <th>CHECK-OUT DATE</th>
-                       <th>MEAL PLAN</th>
+                       <!--    -->
                        <th>PRICE</th>
                       </tr>
 
@@ -1225,8 +1229,10 @@ if($ref_type=='International')
                                <td><input type='text' name='roomstnd[]' size='7'></td>
                                <td><input type='text' class='pull-right' style='background: #fff; cursor: pointer;  width: 100%; margin-bottom: 10px; name='checkin[]' placeholder='2017-09-01' size='7' required></td>
                                <td><input type='text' class='pull-right' style='background: #fff; cursor: pointer;  width: 100%; margin-bottom: 10px; name='checkout[]' size='7' placeholder='2017-09-21' required></td>
-                                <td>
-                                <select name='meall[]'>
+                                
+                               <td><input type='text' name='price[]' size='8'></td>
+                               <td>
+                                <select name='meall[]' class='hidden'>
                                       <option>Breakfast,Lunch, Dinner</option>
                                       <option>No Breakfast, Lunch, Dinner</option>
                                       <option>Breakfast, No Lunch, Dinner</option>
@@ -1237,7 +1243,6 @@ if($ref_type=='International')
                                       <option>No Breakfast, No Lunch, No Dinner</option>
                                  </select>   
                                 </td>
-                               <td><input type='text' name='price[]' size='8'></td>
                              </tr>";
 
 
