@@ -46,9 +46,8 @@ session_start();
         
 
       /* START OF PRINT WORK*/
-        $sql = "SELECT * FROM agent_form_data INNER JOIN login
-                WHERE ref_num = '$ref_value' AND agent_form_data.currently_worked_by = login.userid
-                ";
+      $sql = "SELECT * FROM agent_form_data a INNER JOIN login l ON a.currently_worked_by = l.userid WHERE a.ref_num = '$ref_value'";
+      
         $res = $conn->query($sql) ;
         if ($res->num_rows) 
         {     
