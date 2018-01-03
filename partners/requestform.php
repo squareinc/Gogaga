@@ -130,6 +130,16 @@ include "admin-sidebar.php";
               </div>      
               <br>
 
+            <div class="form-group hidden">
+                    <label class="col-sm-4">Partner type <span class='redmark'>*</span>
+                   </label>
+
+                   <div class="col-sm-8">
+                   <input type="text" class="form-control" size='40' name='first_2' value="<?php if(isset($type)) echo $type; ?>" required readonly>
+                   </div>  
+              </div>      
+              <br>
+
 
              
             

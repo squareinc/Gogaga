@@ -17,6 +17,87 @@ if(isset($_SESSION["ref_value"]))
  {
       $ref_value=$_SESSION["ref_value"];
       $ref_type=$_SESSION["ref_type"];
+
+      $partnersno = "";
+      $partnertype = "";
+
+      $superpartnername = "";
+      $holidaypartnername = "";
+      $salespartnername = "";
+      //get sno of partner
+      //here sales_partner_name = sno & holi_partner_name = partnertype
+
+      $sql1= "SELECT sales_partner_name, holi_partner_name FROM agent_form_data
+              WHERE ref_num ='".$_SESSION["ref_value"]."'   
+              ";
+      $res = $conn->query($sql1);
+         if ($res->num_rows) 
+         {  
+           if($row = $res->fetch_assoc()){
+            $partnersno = $row["sales_partner_name"];
+            $partnertype = $row["holi_partner_name"];
+           }
+        }
+
+        if($partnersno != "" && $partnertype != ""){
+          switch ($partnertype) {
+            case "salespartner":
+              //need to get his holiday partner and super partner
+                $sql = "SELECT s.name AS superpartnername, h.name AS holidaypartnername, sl.name AS salespartnername from salespartners sl 
+                  inner join holidaypartners h on (sl.holiday_partner_sno = h.sno)
+                  inner join superpartners s on (h.super_partner_sno = s.sno) 
+                  where sl.sno = '".$partnersno."'";
+
+                 $res = $conn->query($sql);
+                 if ($res->num_rows) 
+                 {  
+                   if($row = $res->fetch_assoc()){
+                    $superpartnername = $row["superpartnername"];
+                    $holidaypartnername = $row["holidaypartnername"];
+                    $salespartnername = $row["salespartnername"];
+
+                   }
+                }   
+
+              break;
+              case "holidaypartner":
+            //need to get his super partner
+              $sql = "SELECT s.name AS superpartnername, h.name AS holidaypartnername from holidaypartners h 
+                inner join superpartners s on (h.super_partner_sno = s.sno) 
+                where h.sno = '".$partnersno."'";
+
+               $res = $conn->query($sql);
+               if ($res->num_rows) 
+               {  
+                 if($row = $res->fetch_assoc()){
+                  $superpartnername = $row["superpartnername"];
+  
+                 }
+              }   
+
+            break;
+
+          case "superpartner":
+            //need to get only his name
+              $sql = "SELECT s.name AS superpartnername
+                      where s.sno = '".$partnersno."'";
+
+               $res = $conn->query($sql);
+               if ($res->num_rows) 
+               {  
+                 if($row = $res->fetch_assoc()){
+                  $superpartnername = $row["superpartnername"];
+  
+                 }
+              }   
+
+            break;
+            
+            default:
+              # code...
+              break;
+          }
+        } 
   } 
 
   $pricing_set =""; 
@@ -992,7 +1073,19 @@ $baggagecost = 0;
 			        
 
 }
- 
+ if($salname == ""){
+  //salname is empty so input from the agent form data
+  $salname = $salespartnername;
+ }
+ if($holiname == ""){
+  //salname is empty so input from the agent form data
+  $holiname = $holidaypartnername;
+ }
+ if($supname == ""){
+  //salname is empty so input from the agent form data
+  $supname = $superpartnername;
+ }
+
 echo " 
 <form ng-app='mynapp' ng-controller='myctrl' action='' method='POST' class='form-inline'>
 <br>
