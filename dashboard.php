@@ -18,6 +18,8 @@ else
       if($handle_type=="Both")
     {
         header("location:admin/dashboard.php");
+    }else if ($handle_type=="none"){
+        header("location:partners/dashboard.php");
     }
 
 
