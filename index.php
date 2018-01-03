@@ -83,14 +83,38 @@ include "config.php";
                               $_SESSION['password']=$password;
                               $_SESSION['type']= $row["type"];  
                               $_SESSION['handle_type']= $row["handle_type"];
-                              if($row["type"] == "Member")                     
+                              switch ($row["type"]) {
+                                case "Member":
+                                  header("location:dashboard.php");
+                                  break;
+                                case "Admin":
+                                  header("location:admin/dashboard.php");
+                                  break;
+                                case "Accounts":
+                                  header("location:admin/dashboard.php");
+                                  break;
+                                case "superpartner":
+                                  header("location:partners/dashboard.php");
+                                  break;
+                                case "holidaypartner":
+                                  header("location:partners/dashboard.php");
+                                  break;
+                                case "salespartner":
+                                  header("location:partners/dashboard.php");
+                                  break;
+                                
+                                default:
+                                  header("location:index.php");
+                                  break;
+                              }
+                             /* if($row["type"] == "Member")                     
                                  header("location:dashboard.php");
                               elseif ($row["type"]=="Admin") {
                                  header("location:admin/dashboard.php");
                                }
                                elseif ($row["type"]=="Accounts") {
                                  header("location:admin/dashboard.php");
-                               }
+                               }*/
                             }
                             else
                             {
