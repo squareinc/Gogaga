@@ -1,4 +1,16 @@
 <?php 
+include "../config.php";
+session_start();
+
+if(!isset($_SESSION["userid"]))
+{
+  header('Location:index.php');
+}else{
+    $userid = $_SESSION["userid"];
+    $username = $_SESSION['username'];
+    $password = $_SESSION["password"];
+    $type = $_SESSION["type"];
+}
 
 include "admin-header.php";
 include "admin-sidebar.php";

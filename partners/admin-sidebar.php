@@ -64,8 +64,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Currency Converter</a></li>
-            <li><a href="#">Maps</a></li>
+            <li><a href="currencyconverter.php">Currency Converter</a></li>
+            <li><a href="https://www.google.com/maps" target="_blank">Maps</a></li>
           </ul>
         </li>
 
@@ -76,7 +76,7 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Pending Statements</a></li>
+            
             <li><a href="#">Issued Statements</a></li>
           </ul>
         </li>
