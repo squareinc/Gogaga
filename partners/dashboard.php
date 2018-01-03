@@ -5,7 +5,7 @@ session_start();
 
 if(!isset($_SESSION["userid"]))
 {
-  header('Location:index.php');
+  header('Location:../index.php');
 }else{
     $userid = $_SESSION["userid"];
     $username = $_SESSION['username'];
@@ -45,7 +45,7 @@ include "admin-sidebar.php";
             <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Total Itineraries Quoted</span>
+              <span class="info-box-text">Total Itineraries Requested</span>
               <span class="info-box-number">90</span>
             </div>
             <!-- /.info-box-content -->
@@ -58,7 +58,7 @@ include "admin-sidebar.php";
             <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Total Itineraries Converted</span>
+              <span class="info-box-text">Total Itineraries Received</span>
               <span class="info-box-number">10</span>
             </div>
             <!-- /.info-box-content -->
@@ -75,7 +75,7 @@ include "admin-sidebar.php";
             <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Total Volume <span style="opacity: 0;">xyz</span> Quoted</span>
+              <span class="info-box-text">Total Volume <span style="opacity: 0;">xyz</span> Received</span>
               <span class="info-box-number">95,000</span>
             </div>
             <!-- /.info-box-content -->

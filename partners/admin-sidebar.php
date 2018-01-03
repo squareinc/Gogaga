@@ -51,9 +51,9 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Requested Itineraries</a></li>
-            <li><a href="#">Received Itineraries</a></li>
-            <li><a href="#">Confirmed Itineraries</a></li>
+            <li><a href="requesteditineraries.php">Requested Itineraries</a></li>
+            <li><a href="receiveditineraries.php">Received Itineraries</a></li>
+            <li><a href="confirmeditineraries.php">Confirmed Itineraries</a></li>
           </ul>
         </li>
 
