@@ -54,15 +54,15 @@ else
 
 
                
-               $tot_itq1 =$tot_itq1 +$row['itq1'];$tot_itc1 =$tot_itc1 +$row['itc1'];$tot_ivq1 =$tot_ivq1 +$row['ivq1'];$tot_ivc1 =$tot_ivc1 +$row['ivc1'];$pr1 =$pr1 +$row['pr1'];
-               $tot_itq2 =$tot_itq2 +$row['itq2'];$tot_itc2 =$tot_itc2 +$row['itc2'];$tot_ivq2 =$tot_ivq2 +$row['ivq2'];$tot_ivc2 =$tot_ivc2 +$row['ivc2'];$pr2 =$pr2 +$row['pr2'];
-               $tot_itq3 =$tot_itq3 +$row['itq3'];$tot_itc3 =$tot_itc3 +$row['itc3'];$tot_ivq3 =$tot_ivq3 +$row['ivq3'];$tot_ivc3 =$tot_ivc3 +$row['ivc3'];$pr3 =$pr3 +$row['pr3'];
-               $tot_itq4 =$tot_itq4 +$row['itq4'];$tot_itc4 =$tot_itc4 +$row['itc4'];$tot_ivq4 =$tot_ivq4 +$row['ivq4'];$tot_ivc4 =$tot_ivc4 +$row['ivc4'];$pr4 =$pr4 +$row['pr4'];
-               $tot_itq5 =$tot_itq5 +$row['itq5'];$tot_itc5 =$tot_itc5 +$row['itc5'];$tot_ivq5 =$tot_ivq5 +$row['ivq5'];$tot_ivc5 =$tot_ivc5 +$row['ivc5'];$pr5 =$pr5 +$row['pr5'];
-               $tot_itq6 =$tot_itq6 +$row['itq6'];$tot_itc6 =$tot_itc6 +$row['itc6'];$tot_ivq6 =$tot_ivq6 +$row['ivq6'];$tot_ivc6 =$tot_ivc6 +$row['ivc6'];$pr6 =$pr6 +$row['pr6'];
-               $tot_itq7 =$tot_itq7 +$row['itq7'];$tot_itc7 =$tot_itc7 +$row['itc7'];$tot_ivq7 =$tot_ivq7 +$row['ivq7'];$tot_ivc7 =$tot_ivc7 +$row['ivc7'];$pr7 =$pr7 +$row['pr7'];
-               $tot_itq8 =$tot_itq8 +$row['itq8'];$tot_itc8 =$tot_itc8 +$row['itc8'];$tot_ivq8 =$tot_ivq8 +$row['ivq8'];$tot_ivc8 =$tot_ivc8 +$row['ivc8'];$pr8 =$pr8 +$row['pr8'];
-               $tot_itq9 =$tot_itq9 +$row['itq9'];$tot_itc9 =$tot_itc9 +$row['itc9'];$tot_ivq9 =$tot_ivq9 +$row['ivq9'];$tot_ivc9 =$tot_ivc9 +$row['ivc9'];$pr9 =$pr9 +$row['pr9'];
+               $tot_itq1 =$tot_itq1 +$row['itq01'];$tot_itc1 =$tot_itc1 +$row['itc01'];$tot_ivq1 =$tot_ivq1 +$row['ivq01'];$tot_ivc1 =$tot_ivc1 +$row['ivc01'];$pr1 =$pr1 +$row['pr01'];
+               $tot_itq2 =$tot_itq2 +$row['itq02'];$tot_itc2 =$tot_itc2 +$row['itc02'];$tot_ivq2 =$tot_ivq2 +$row['ivq02'];$tot_ivc2 =$tot_ivc2 +$row['ivc02'];$pr2 =$pr2 +$row['pr02'];
+               $tot_itq3 =$tot_itq3 +$row['itq03'];$tot_itc3 =$tot_itc3 +$row['itc03'];$tot_ivq3 =$tot_ivq3 +$row['ivq03'];$tot_ivc3 =$tot_ivc3 +$row['ivc03'];$pr3 =$pr3 +$row['pr03'];
+               $tot_itq4 =$tot_itq4 +$row['itq04'];$tot_itc4 =$tot_itc4 +$row['itc04'];$tot_ivq4 =$tot_ivq4 +$row['ivq04'];$tot_ivc4 =$tot_ivc4 +$row['ivc04'];$pr4 =$pr4 +$row['pr04'];
+               $tot_itq5 =$tot_itq5 +$row['itq05'];$tot_itc5 =$tot_itc5 +$row['itc05'];$tot_ivq5 =$tot_ivq5 +$row['ivq05'];$tot_ivc5 =$tot_ivc5 +$row['ivc05'];$pr5 =$pr5 +$row['pr05'];
+               $tot_itq6 =$tot_itq6 +$row['itq06'];$tot_itc6 =$tot_itc6 +$row['itc06'];$tot_ivq6 =$tot_ivq6 +$row['ivq06'];$tot_ivc6 =$tot_ivc6 +$row['ivc06'];$pr6 =$pr6 +$row['pr06'];
+               $tot_itq7 =$tot_itq7 +$row['itq07'];$tot_itc7 =$tot_itc7 +$row['itc07'];$tot_ivq7 =$tot_ivq7 +$row['ivq07'];$tot_ivc7 =$tot_ivc7 +$row['ivc07'];$pr7 =$pr7 +$row['pr07'];
+               $tot_itq8 =$tot_itq8 +$row['itq08'];$tot_itc8 =$tot_itc8 +$row['itc08'];$tot_ivq8 =$tot_ivq8 +$row['ivq08'];$tot_ivc8 =$tot_ivc8 +$row['ivc08'];$pr8 =$pr8 +$row['pr08'];
+               $tot_itq9 =$tot_itq9 +$row['itq09'];$tot_itc9 =$tot_itc9 +$row['itc09'];$tot_ivq9 =$tot_ivq9 +$row['ivq09'];$tot_ivc9 =$tot_ivc9 +$row['ivc09'];$pr9 =$pr9 +$row['pr09'];
                $tot_itq10 =$tot_itq10 +$row['itq10'];$tot_itc10 =$tot_itc10 +$row['itc10'];$tot_ivq10 =$tot_ivq10 +$row['ivq10'];$tot_ivc10 =$tot_ivc10 +$row['ivc10'];$pr10 =$pr10 +$row['pr10'];
                $tot_itq11 =$tot_itq11 +$row['itq11'];$tot_itc11 =$tot_itc11 +$row['itc11'];$tot_ivq11 =$tot_ivq11 +$row['ivq11'];$tot_ivc11 =$tot_ivc11 +$row['ivc11'];$pr11 =$pr11 +$row['pr11'];
                $tot_itq12 =$tot_itq12 +$row['itq12'];$tot_itc12 =$tot_itc12 +$row['itc12'];$tot_ivq12 =$tot_ivq12 +$row['ivq12'];$tot_ivc12 =$tot_ivc12 +$row['ivc12'];$pr12 =$pr12 +$row['pr12'];
