@@ -501,6 +501,29 @@ $(document).on("click",".removeAir",function(){
   
 });
 
+function getHolidayPartner(val) {
+  $.ajax({
+  type: "POST",
+  url: "get_holiday_partner.php",
+  data:'sno='+val,
+  success: function(data){
+    $("#holidaypartner").html(data);
+    $("#salespartner").html("<option value=''>Select Sales Partner</option>");
+  }
+  });
+}
+
+function getSalesPartner(val) {
+  $.ajax({
+  type: "POST",
+  url: "get_sales_partner.php",
+  data:'sno='+val,
+  success: function(data){
+    $("#salespartner").html(data);
+  }
+  });
+}
+
 
 
                    

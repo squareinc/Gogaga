@@ -119,7 +119,7 @@ if($ref_type=="International")
                                     ";
                             if(($conn->query($sql))== true)
                             {
-
+                             // echo "updated user monthy data";
                             }        
 
 
@@ -170,6 +170,12 @@ if($ref_type=="International")
                             if(($conn->query($sql))== true)
                             {
                               $ivquoted = $totcostfl;
+
+                              $myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+                              $
+                              fwrite($myfile, $sql);
+                              
+                              fclose($myfile);
                             }  
 
 
