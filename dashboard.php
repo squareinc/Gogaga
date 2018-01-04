@@ -1,11 +1,11 @@
 <?php
 
-include "../config.php";
+include "config.php";
 session_start();
 
 if(!isset($_SESSION["userid"]))
 {
-  header('Location:../index.php');
+  header('Location:index.php');
 }
 else
 {
@@ -15,70 +15,77 @@ else
     $type = $_SESSION["type"];
     $handle_type =$_SESSION["handle_type"];
 
-    if($handle_type!="Both")
+      if($handle_type=="Both")
     {
-        header("location:../dashboard.php");
+        header("location:admin/dashboard.php");
+    }else if ($handle_type=="none"){
+        header("location:partners/dashboard.php");
     }
 
 
-    //$sql= "SELECT SUM(itq) AS itqsum,SUM(itc) AS itcsum,SUM(ivq) AS ivqsum,SUM(ivc) AS ivcsum FROM user_monthly_data WHERE year = '".$current_yr."'  ";
-     $current_yr=date('Y');
-     $present_month = date('m');
-    
 
-      $total_itineraries_quoted =$total_itineraries_converted=$total_volume_quoted=$total_volume_converted=0;
-          
+      $current_yr=date('Y');
+
           $tot_itq1=$tot_itq2=$tot_itq3=$tot_itq4=$tot_itq5=$tot_itq6=$tot_itq7=$tot_itq8=$tot_itq9=$tot_itq10=$tot_itq11=$tot_itq12=0;
           $tot_itc1=$tot_itc2=$tot_itc3=$tot_itc4=$tot_itc5=$tot_itc6=$tot_itc7=$tot_itc8=$tot_itc9=$tot_itc10=$tot_itc11=$tot_itc12=0;
           $tot_ivq1=$tot_ivq2=$tot_ivq3=$tot_ivq4=$tot_ivq5=$tot_ivq6=$tot_ivq7=$tot_ivq8=$tot_ivq9=$tot_ivq10=$tot_ivq11=$tot_ivq12=0;
           $tot_ivc1=$tot_ivc2=$tot_ivc3=$tot_ivc4=$tot_ivc5=$tot_ivc6=$tot_ivc7=$tot_ivc8=$tot_ivc9=$tot_ivc10=$tot_ivc11=$tot_ivc12=0;
-          $pr1=$pr2=$pr3=$pr4=$pr5=$pr6=$pr7=$pr8=$pr9=$pr10=$pr11=$pr12=0; 
 
 
+      $total_itineraries_quoted =$total_itineraries_converted=$total_volume_quoted=$total_volume_converted=0;
 
+          $profile_totiq =  $profile_totic = $profile_totvq= $profile_totvc=0;
 
-
-
-     $sql= "SELECT * FROM user_monthly_data WHERE year =".$current_yr."";
+     $sql= "SELECT * FROM user_monthly_data WHERE userid = '".$userid."' AND year = ".$current_yr."  ";
      $res = $conn->query($sql);
       if ($res->num_rows) 
       {     
-         
+        if($row = $res->fetch_assoc()) 
+         {  
+           
 
-            while($row = $res->fetch_assoc()) 
-             {  
-               $total_itineraries_quoted = $total_itineraries_quoted + $row['itq'.$present_month];
-               $total_itineraries_converted = $total_itineraries_converted + $row['itc'.$present_month];
-               $total_volume_quoted = $total_volume_quoted + $row['ivq'.$present_month];
-               $total_volume_converted = $total_volume_converted + $row['ivc'.$present_month];
+            $present_month = date('m');
 
 
-               
-               $tot_itq1 =$tot_itq1 +$row['itq01'];$tot_itc1 =$tot_itc1 +$row['itc01'];$tot_ivq1 =$tot_ivq1 +$row['ivq01'];$tot_ivc1 =$tot_ivc1 +$row['ivc01'];$pr1 =$pr1 +$row['pr01'];
-               $tot_itq2 =$tot_itq2 +$row['itq02'];$tot_itc2 =$tot_itc2 +$row['itc02'];$tot_ivq2 =$tot_ivq2 +$row['ivq02'];$tot_ivc2 =$tot_ivc2 +$row['ivc02'];$pr2 =$pr2 +$row['pr02'];
-               $tot_itq3 =$tot_itq3 +$row['itq03'];$tot_itc3 =$tot_itc3 +$row['itc03'];$tot_ivq3 =$tot_ivq3 +$row['ivq03'];$tot_ivc3 =$tot_ivc3 +$row['ivc03'];$pr3 =$pr3 +$row['pr03'];
-               $tot_itq4 =$tot_itq4 +$row['itq04'];$tot_itc4 =$tot_itc4 +$row['itc04'];$tot_ivq4 =$tot_ivq4 +$row['ivq04'];$tot_ivc4 =$tot_ivc4 +$row['ivc04'];$pr4 =$pr4 +$row['pr04'];
-               $tot_itq5 =$tot_itq5 +$row['itq05'];$tot_itc5 =$tot_itc5 +$row['itc05'];$tot_ivq5 =$tot_ivq5 +$row['ivq05'];$tot_ivc5 =$tot_ivc5 +$row['ivc05'];$pr5 =$pr5 +$row['pr05'];
-               $tot_itq6 =$tot_itq6 +$row['itq06'];$tot_itc6 =$tot_itc6 +$row['itc06'];$tot_ivq6 =$tot_ivq6 +$row['ivq06'];$tot_ivc6 =$tot_ivc6 +$row['ivc06'];$pr6 =$pr6 +$row['pr06'];
-               $tot_itq7 =$tot_itq7 +$row['itq07'];$tot_itc7 =$tot_itc7 +$row['itc07'];$tot_ivq7 =$tot_ivq7 +$row['ivq07'];$tot_ivc7 =$tot_ivc7 +$row['ivc07'];$pr7 =$pr7 +$row['pr07'];
-               $tot_itq8 =$tot_itq8 +$row['itq08'];$tot_itc8 =$tot_itc8 +$row['itc08'];$tot_ivq8 =$tot_ivq8 +$row['ivq08'];$tot_ivc8 =$tot_ivc8 +$row['ivc08'];$pr8 =$pr8 +$row['pr08'];
-               $tot_itq9 =$tot_itq9 +$row['itq09'];$tot_itc9 =$tot_itc9 +$row['itc09'];$tot_ivq9 =$tot_ivq9 +$row['ivq09'];$tot_ivc9 =$tot_ivc9 +$row['ivc09'];$pr9 =$pr9 +$row['pr09'];
-               $tot_itq10 =$tot_itq10 +$row['itq10'];$tot_itc10 =$tot_itc10 +$row['itc10'];$tot_ivq10 =$tot_ivq10 +$row['ivq10'];$tot_ivc10 =$tot_ivc10 +$row['ivc10'];$pr10 =$pr10 +$row['pr10'];
-               $tot_itq11 =$tot_itq11 +$row['itq11'];$tot_itc11 =$tot_itc11 +$row['itc11'];$tot_ivq11 =$tot_ivq11 +$row['ivq11'];$tot_ivc11 =$tot_ivc11 +$row['ivc11'];$pr11 =$pr11 +$row['pr11'];
-               $tot_itq12 =$tot_itq12 +$row['itq12'];$tot_itc12 =$tot_itc12 +$row['itc12'];$tot_ivq12 =$tot_ivq12 +$row['ivq12'];$tot_ivc12 =$tot_ivc12 +$row['ivc12'];$pr12 =$pr12 +$row['pr12'];
+           $total_itineraries_quoted =  $row["itq".$present_month];
+           $total_itineraries_converted =  $row["itc".$present_month];
+           $total_volume_quoted =  $row["ivq".$present_month];
+           $total_volume_converted =  $row["ivc".$present_month];
+           
 
-              
 
-             }  
-                                        
+            
+           for ($i=1; $i <=12 ; $i++) { 
+             $profile_totiq = $profile_totiq + (int)$row['itq'.$i];
+             $profile_totic = $profile_totic + (int)$row['itc'.$i];
+             $profile_totvq = $profile_totvq + (int)$row['ivq'.$i];
+             $profile_totvc = $profile_totvc + (int)$row['ivc'.$i];
+           }
+
+
+                 $tot_itq1 =$row['itq01'];$tot_itc1 =$row['itc01'];$tot_ivq1 =$row['ivq01'];$tot_ivc1 =$row['ivc01'];
+                 $tot_itq2 =$row['itq02'];$tot_itc2 =$row['itc02'];$tot_ivq2 =$row['ivq02'];$tot_ivc2 =$row['ivc02'];
+                 $tot_itq3 =$row['itq03'];$tot_itc3 =$row['itc03'];$tot_ivq3 =$row['ivq03'];$tot_ivc3 =$row['ivc03'];
+                 $tot_itq4 =$row['itq04'];$tot_itc4 =$row['itc04'];$tot_ivq4 =$row['ivq04'];$tot_ivc4 =$row['ivc04'];
+                 $tot_itq5 =$row['itq05'];$tot_itc5 =$row['itc05'];$tot_ivq5 =$row['ivq05'];$tot_ivc5 =$row['ivc05'];
+                 $tot_itq6 =$row['itq06'];$tot_itc6 =$row['itc06'];$tot_ivq6 =$row['ivq06'];$tot_ivc6 =$row['ivc06'];
+                 $tot_itq7 =$row['itq07'];$tot_itc7 =$row['itc07'];$tot_ivq7 =$row['ivq07'];$tot_ivc7 =$row['ivc07'];
+                 $tot_itq8 =$row['itq08'];$tot_itc8 =$row['itc08'];$tot_ivq8 =$row['ivq08'];$tot_ivc8 =$row['ivc08'];
+                 $tot_itq9 =$row['itq09'];$tot_itc9 =$row['itc09'];$tot_ivq9 =$row['ivq09'];$tot_ivc9 =$row['ivc09'];
+                 $tot_itq10 =$row['itq10'];$tot_itc10 =$row['itc10'];$tot_ivq10 =$row['ivq10'];$tot_ivc10 =$row['ivc10'];
+                 $tot_itq11 =$row['itq11'];$tot_itc11 =$row['itc11'];$tot_ivq11 =$row['ivq11'];$tot_ivc11 =$row['ivc11'];
+                 $tot_itq12 =$row['itq12'];$tot_itc12 =$row['itc12'];$tot_ivq12 =$row['ivq12'];$tot_ivc12 =$row['ivc12'];
+
+
+
+        
 
 
          }
+      }
 
-
-  
-        
-           $dataPoints_itineraries_quoted = "[
+      
+            $dataPoints_itineraries_quoted = "[
                                           { x: new Date(".$current_yr.", 0, 1), y: ".$tot_itq1." },
                                           { x: new Date(".$current_yr.", 1, 1), y: ".$tot_itq2." },
                                           { x: new Date(".$current_yr.", 2, 1), y: ".$tot_itq3." },
@@ -138,40 +145,14 @@ else
                                           { x: new Date(".$current_yr.", 10,1), y: ".$tot_ivc11." },
                                           { x: new Date(".$current_yr.", 11,1), y: ".$tot_ivc12." }
                                           ]";
-                                          
-                    $profit_graphdata = "[
-                                          { x: new Date(".$current_yr.", 0, 1), y: ".$pr1." },
-                                          { x: new Date(".$current_yr.", 1, 1), y: ".$pr2." },
-                                          { x: new Date(".$current_yr.", 2, 1), y: ".$pr3." },
-                                          { x: new Date(".$current_yr.", 3, 1), y: ".$pr4."},
-                                          { x: new Date(".$current_yr.", 4, 1), y: ".$pr5." },
-                                          { x: new Date(".$current_yr.", 5, 1), y: ".$pr6." },
-                                          { x: new Date(".$current_yr.", 6, 1), y: ".$pr7." },
-                                          { x: new Date(".$current_yr.", 7, 1), y: ".$pr8." },
-                                          { x: new Date(".$current_yr.", 8, 1), y: ".$pr9." },
-                                          { x: new Date(".$current_yr.", 9,1), y: ".$pr10." },
-                                          { x: new Date(".$current_yr.", 10,1), y: ".$pr11." },
-                                          { x: new Date(".$current_yr.", 11,1), y: ".$pr12." }
-                                          ]";  
-                                          $avgprofit = $pr1+$pr2+$pr3+$pr4+$pr5+$pr6+$pr7+$pr8+$pr9+$pr10+$pr11+$pr12;            
-                                          $avgprofit = $avgprofit /12;
 
 
 
 
-
-
-
-
-
-
-
-
-         
- }    
+}
  $count_pending = 0;
 $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
-        WHERE formstatus = 'pending' ";
+        WHERE holi_type ='".$handle_type."' and formstatus = 'pending' ";
  $res = $conn->query($sql1);
   
       if($res->num_rows) 
@@ -184,7 +165,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
  $count_smashed = 0;
 $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
-        WHERE formstatus = 'smashed' ";
+        WHERE holi_type ='".$handle_type."' and formstatus = 'smashed' ";
  $res = $conn->query($sql1);
   
       if($res->num_rows) 
@@ -203,6 +184,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 
 
+
 ?>
 
 
@@ -213,7 +195,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 <head>
   <title>Dashboard</title>
 
-<meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--CSS Tags-->
   <link rel="icon" href="../images/logo_icon.png"/>
@@ -226,29 +208,21 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
-  <link rel="stylesheet" type="text/css" href="../css/gallery.css">
+  <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="css/gallery.css">
    <!--   <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
   <!--Script Tags-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script> 
 
 <!-- fancybox CSS library -->
-<link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css">
 
 
 <link rel="stylesheet" type="text/css" href="https://bootswatch.com/3/paper/bootstrap.min.css">
 
 <!-- fancybox JS library -->
-<script src="../js/jquery.fancybox.js"></script>
-
-<script type="text/javascript" src="js/deleteitinerary.js"></script>
-
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
+<script src="js/jquery.fancybox.js"></script>
 
 <script type="text/javascript">
   $('#notifbut').click(function(e)
@@ -261,6 +235,9 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 
 </script>
+
+<script type="text/javascript" src="admin/js/validation.min.js"></script>
+<script type="text/javascript" src="admin/js/ajax.js"></script>
 
 
 
@@ -363,11 +340,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 }
 </style>
 
-<script type="text/javascript" src="js/validation.min.js"></script>
-<script type="text/javascript" src="js/ajax.js"></script>
-
-
-</head>
+</head><!--#F3EDE9-->
 <body ng-app='myApp' ng-controller="DashboardController" style='background-color:#FAF7F6;'>
  <!--Top Nav Bar-->
 
@@ -391,20 +364,19 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                             <div class="collapse" id="itinerary5">
                               <a href="#/itsubmitted" class="list-group-item list-group-item" style='padding-left:30px;'>Submitted</a>
                               <a href="#/itpending" class="list-group-item list-group-item" style='padding-left:30px;'>Pending <span class="badge"><?php echo "$count_pending";?></span> </a>
-                              <a href='#/itsmashed' class='list-group-item list-group-item' style='padding-left:30px;'>Deleted <span class="badge"><?php echo "$count_smashed";?></span> </a>
-
+                              <a href="#/itsmashed" class="list-group-item list-group-item" style='padding-left:30px;'>Deleted <span class="badge"><?php echo "$count_smashed";?></span> </a>
                             </div>
+                    
+
                       <a href="javascript:void(0):#tool5" class="list-group-item list-group-item" data-toggle="collapse" data-parent="#MainMenu"><span class='glyphicon glyphicon-cog' style='padding-right:15px;' aria-hidden='true'></span>Tools<span class="caret" style='position:absolute;top:17px;right:30px;'></span></a>
                             <div class="collapse" id="tool5">
                             <a href="#/pricecalc" class="list-group-item" style='padding-left:30px;'>Price Calculator</a>
                             <a href="#/currencyconv" class="list-group-item" style='padding-left:30px;'>Currency Converter</a>
-                            <a href="#/gstdefault" class="list-group-item" style='padding-left:30px;'>GST Setter</a>
 
                           </div>
 
                         <a href="#/case" class="list-group-item"><span class='glyphicon glyphicon-file' style='padding-right:15px;' aria-hidden='true'></span>Case Status</a>
-                        
-
+                         
                           <a href="javascript:void(0):#partners" class="list-group-item list-group-item" data-toggle="collapse" data-parent="#MainMenu"><span class='glyphicon glyphicon-user' style='padding-right:15px;' aria-hidden='true'></span>Partners<span class="caret" style='position:absolute;top:17px;right:30px;'></span></a>
                             <div class="collapse" id="partners">
                             <a href="#/superpartner" class="list-group-item" style='padding-left:30px;'>Super Partners</a>
@@ -412,7 +384,6 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                             <a href="#/salespartner" class="list-group-item" style='padding-left:30px;'>Sales Partners</a>
 
                           </div>
-
 
                          <a href="#/clients" class="list-group-item"><span class='glyphicon glyphicon-briefcase' style='padding-right:15px;' aria-hidden='true'></span>Clients</a>
                         <a href="#/voucher" class="list-group-item"><span class='glyphicon glyphicon-search' style='padding-right:15px;' aria-hidden='true'></span>Vouchers</a>
@@ -455,7 +426,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
         </div>
       </div>
 
-       <div class="card card-inverse" style="float:left;padding:5px 10px 0px 17px;margin:10px;background-color:#0275d8;height:140px;width:250px; border-color: #333;">
+       <div class="card card-inverse" style="float:left;padding:5px 10px 0px 17px;margin:10px;background-color:#0275d8;height:140px;border-radius:0px;width:250px; border-color:2px solid white;">
         <div class="card-block">
           <h3 class="card-title" style="color: white;"><?php echo "$total_itineraries_converted";?></h3>
            <hr/>
@@ -464,7 +435,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
         </div>
       </div>
 
-       <div class="card card-inverse" style="float:left;padding:5px 10px 0px 17px;margin:10px;background-color:#5cb85c;height:140px;width:250px; border-color: #333;">
+       <div class="card card-inverse" style="float:left;padding:5px 10px 0px 17px;margin:10px;background-color:#5cb85c;height:140px;border-radius:0px;width:250px; border-color: #333;">
         <div class="card-block">
           <h3 class="card-title" style="color: white;"><?php echo "$total_volume_quoted";?></h3>
            <hr/>
@@ -473,7 +444,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
         </div>
       </div>
 
-       <div class="card card-inverse" style="float:left;padding:5px 10px 0px 17px;margin:10px;background-color:#d9534f;height:140px;width:250px; border-color: #333;">
+       <div class="card card-inverse" style="float:left;padding:5px 10px 0px 17px;margin:10px;background-color:#d9534f;height:140px;border-radius:0px;width:250px; border-color: #333;">
         <div class="card-block">
           <h3 class="card-title" style="color: white;"><?php echo "$total_volume_converted";?></h3>
            <hr/>
@@ -483,8 +454,101 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
       </div>
 
   </div>
+
 <br>
 <!--Second row-->
+
+<div class='col-md-11'>
+
+<div class ='row'>               
+<div class='col-md-3'></div> 
+  <div class='col-md-6 col-md-push-1' style='font-weight:bold;font-size:20px;'>LIST OF RECENT ITINERARIES</div>
+  <div class='col-md-3 col-md-push-1'><a href='dashboard.php#/itsubmitted'>View All</a></div> 
+
+  
+  </div>
+<br>
+                 <?php
+                    if($handle_type == "International")
+                     $sql = "SELECT * FROM agent_form_data AS a INNER JOIN itinerary_inter AS i
+                                ON i.ghrno = a.ref_num
+                                WHERE i.workedby = '".$userid."'
+                                LIMIT 6";
+                     elseif($handle_type == "Domestic")
+                     $sql = "SELECT * FROM agent_form_data AS a INNER JOIN itinerary_domestic AS i
+                                ON i.ghrnno = a.ref_num
+                                WHERE i.workedby = '".$userid."'
+                                LIMIT 6";
+                    else
+                      {}
+                    $res = $conn->query($sql);
+                    if ($res->num_rows) 
+                    {     echo "<table class='table table-hover table-bordered table-responsive' style='background-color: white;'>
+                                  <tr>
+                                    <th>GHRN number</th>
+                                    <th>Customer Name</th>
+                                    <th>Destination</th>
+                                    <th>Itinerary Created</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                  </tr>";
+                                  
+                      while($row = $res->fetch_assoc()) 
+                          {
+                              $formstatus = $row["formstatus"];
+
+                              echo " <tr>
+                                 
+                                  <td>GHRN".(5000+(int)$row["ref_num"] )."</td>
+                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]." </td>
+                                  <td>".$row["holi_dest"]."</td>
+                                  <td>".$row["itcreated"]."</td>
+                                  <td>".$formstatus."</td>";
+
+                              
+                                if($formstatus == "pending")
+                                   echo " 
+                                  <td><a class='btn btn-danger btn-sm' role='button' target='_blank' href='view_itinerary.php?q=".$row["ref_num"]."'><b>View Form Details</b></a></td>
+                                  </tr>";
+                                 elseif($formstatus == "submitted")
+                                   echo " 
+                                  <td><a class='btn btn-warning btn-sm' role='button' target='_blank' href='itinerary_submitview.php?q=".$row["ref_num"]." &r=".$row["holi_type"]."'><b>View Submitted Itinerary</b></a></td>
+                                  </tr>";
+                                  if($formstatus == "confirmed")
+                                   echo " 
+                                  <td><a class='btn btn-success btn-sm' role='button' target='_blank' href='casestatus.php?q=".$row["ref_num"]."&r=".$row["holi_type"]."'><b>View Case Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></a></td>
+                                  </tr>"; 
+
+
+                          }
+                          echo "</table><br><br>";
+                    }
+                    else
+                       echo "<table class='table table-hover table-responsive' style='background-color: white;'>
+                                  <tr>
+                                    <th>GHRN number</th>
+                                    <th>Customer Name</th>
+                                    <th>Destination</th>
+                                    <th>Itinerary Created</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                  
+                                  </tr>
+
+                                  </table>
+                                  <h4 style='text-align:center;'>No Previous Itineraries found</h4>
+                                  <br><br>";
+                              
+                       
+                    ?>
+
+</div>
+
+
+<!--Third row-->
+
+
 <div class='row'>
 
 <div class='col-md-9'>
@@ -496,38 +560,33 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 
 
- <div class="col-md-2 col-sm-4">
-      <div class="card card-inverse" style="float:left;position:relative;right:20px;padding:20px;background-color:#f1c40f;height:365px;border-radius:5px;width:200px; border-color: #333;">
-        <div class="card-block">
-          <?php
-              $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
-                       WHERE payment_status = 'unpaid' ";
-               $res = $conn->query($sql1);
-              
-                  if($res->num_rows) 
-                  {
-                    if($row = $res->fetch_assoc())
-                    {   
-                        $pendingpayments = $row["cntt"];
-                    } 
-                  }
-      
+ <div class="col-md-3 col-sm-4">
 
-          ?>
-          <h3 class="card-title" style="text-align:center;color: white;"><?php echo "$pendingpayments";?></h3>
-           <hr/>
-          <h4 class="card-text"  style="text-align:center;">
-                  <a href='dashboard.php#/case' style='color: white;'>Pending Payments</a>
-          </h4>
-         
-        </div>
 
-         <?php
-          date_default_timezone_set('Asia/Kolkata');
-              echo "<br><br><br><h3 style='text-align:center;color:white;'>" . date("h:i A")."</h3>";
-          ?>
-      </div>
+    <div class='progress_bar' style='background-color:#f1c40f;margin-left:10px; width:200px;border-radius:5px;height:365px;position:relative;right:35px;padding:10px;'>
+    <h4 style='font-weight:bold;text-align:center;'></h4>
 
+            <div class="progress blue">
+                <span class="progress-left">
+                    <span class="progress-bar"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar"></span>
+                </span>
+                <div class="progress-value" style="background-color: #f1c40f; font-family: 'Lato';top: -3%;"> <?php
+                              date_default_timezone_set('Asia/Kolkata');
+                              echo "  <h3 style='padding-top:25px;text-align:center;'>" . date("h:i A")."</h3>";
+                              ?></div>
+            </div>
+            <h5 style='text-align:center;'>
+            
+            </h5>
+
+
+<br>
+
+    </div
+   
 
 </div>
 
@@ -536,9 +595,8 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 
 </div>
+<br><br>
 
-
-<!--Third row-->
 <div class='row'>
 <br><br>
 <div class='col-md-11'>
@@ -549,24 +607,13 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 </div>
 <br>
-<!--Fourth row-->
+<br>
+<br>
 <br>
 
 
-<div class='row'>
-  
-  <div class='col-md-11'>
-      <div id='chartContainer2' style='margin-top:15px;height: 370px; width: 100%;'></div>
-  </div>
-</div>
-<br><br><br><br>
 
 </script>
-
-
-
-
-
 <script type="text/ng-template" id="pages/clients.php"> 
               <h2>Client Base</h2>
 
@@ -626,11 +673,11 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                     <th>Destination</th>
                                     <th>Status</th>
                                   </tr>";
-                                $color = "";  
+                                  $color = "";
                       while($row = $res->fetch_assoc()) 
                           {
                               
-                              if($row["formstatus"] == "confirmed"){
+                            if($row["formstatus"] == "confirmed"){
                                 $color = "#2ecc71";
                               }else if($row["formstatus"] == "pending"){
                                 $color = "#e74c3c";
@@ -641,6 +688,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                 $row["formstatus"] = "deleted";
                               }
 
+
                               echo " <tr style='background-color: $color; color: #fff;'>
                                  
                                   <td>".$row["cust_firstname"] ." ". $row["cust_lastname"]."</td>
@@ -650,7 +698,6 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                   <td>".$row["holi_type"]."</td>
                                   <td>".$row["holi_dest"]."</td>
                                   <td>".$row["formstatus"]."</td>
-                                  
                                   
 
                                 </tr>";
@@ -681,7 +728,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
       
       <div class="col-md-9">
       <input type="text" placeholder='Search by GHRN number...' size='300' name ='search_case' class="form-control" aria-label="...">
-     
+      <br>
       </div>
 
       <div class="col-md-3">
@@ -707,13 +754,13 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                           $ref_param = (int)$search_case[1];
                           $ref_param = $ref_param - 5000;
                           $sql1 = "SELECT * FROM agent_form_data WHERE
-                          formstatus = 'confirmed' and ref_num = '$ref_param'
+                          formstatus = 'confirmed' and holi_type = '$handle_type' and ref_num LIKE '%$ref_param%' 
                           ORDER BY ref_num DESC";   
                         }
                       else
                       {
                         $sql1= "SELECT * FROM agent_form_data
-                        WHERE formstatus = 'confirmed'
+                        WHERE formstatus = 'confirmed'  and holi_type = '$handle_type'
                         ORDER BY payment_status ASC";
                         unset($_GET["search_case"]);
                       }
@@ -727,73 +774,17 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                     {     echo " <div class='table-responsive'> <table class='table table-hover table-bordered table-list' style='background-color: white;'>
                                   <tr>
                                   <th>GHRN NO</th>
-                                  <th>Confirmed Date</th>
-                                  <th>Trip Start Date</th>
                                   <th>Client Name</th>
-                                  <th>Contact No.</th>
-                                  <th>Total Package Cost</th>
-                                  <th>Pending Payment</th>
                                   <th>Destination</th>
-                                  
                                   <th>Payment Status</th>
                                   <th>Voucher Status</th>
                                   <th>Agent Commission</th>
-                                  <th>Status</th>
-                                  <th>Cancel</th>
                                  
                                 </tr>";
                                
                       while($row = $res->fetch_assoc()) 
                           {
-                              $totalPackageCost = ""; 
-                              $refNum = $row["ref_num"];
-                              $pendingPayment = "";
-                              $creditedAmount = "";
-                              
-                              $GHRN_number = 5000+(int)$refNum;
-                              $GHRN_number = "GHRN".$GHRN_number;
-
-                              $sqlTrans = "SELECT SUM(CREDIT) AS creditedamount FROM transactions WHERE GHRN_number = '".$GHRN_number."'"; 
-
-                              $resTrans = $conn->query($sqlTrans) ;
-                                if ($resTrans->num_rows){
-                                  while($rowTrans = $resTrans->fetch_assoc()){
-                                    $creditedAmount = $rowTrans["creditedamount"];
-                                  }
-                                }
-
-
-                              if($row["holi_type"] == "Domestic")
-                              {
-                                $dest_place = "<p style='color:red'>".$row["holi_dest"]."</p>";
-                                $sql2= "SELECT totcostfl FROM itinerary_domestic d INNER JOIN agent_form_data a ON d.ghrnno = a.ref_num
-                                 WHERE a.formstatus = 'confirmed' AND a.ref_num = '".$refNum."'";
-                                 $res2 = $conn->query($sql2) ;
-                                 if ($res2->num_rows){
-                                  while($row2 = $res2->fetch_assoc()) 
-                                    {
-                                      $totalPackageCost = $row2["totcostfl"];
-                                      $pendingPayment = (int)$totalPackageCost-(int)$creditedAmount;
-
-                                    }
-                                 }
-                      
-                              }
-                              elseif($row["holi_type"]  == "International")
-                              {
-                                $dest_place = "<p style='color:blue;'>".$row["holi_dest"]."</p>";
-                                 $sql3 = "SELECT totcostfl FROM itinerary_inter d INNER JOIN agent_form_data a ON d.ghrno = a.ref_num
-                                 WHERE a.formstatus = 'confirmed' AND a.ref_num = '".$refNum."'";
-                                 //echo $sql3;
-                                 $res3 = $conn->query($sql3);
-                                 if ($res3->num_rows){
-                                  while($row3 = $res3->fetch_assoc()) 
-                                    {
-                                      $totalPackageCost = $row3["totcostfl"];
-                                      $pendingPayment = (int)$totalPackageCost-(int)$creditedAmount;
-                                    }
-                                 }
-                              }
+                             
 
                               $pst = $row["payment_status"];
                               if($pst == "paid")
@@ -802,7 +793,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                               }
                               elseif($pst == "unpaid")
                               {
-                                $pst = "<a class='btn btn-danger btn-sm' role='button' href='payitinerary.php?qr=".$row["ref_num"]."&t=".$row["holi_type"]."'>Pay</a>";
+                                $pst = "<b style='color:red'>Unpaid</b>";
                               }
                               //For vouchers
                               $vst = $row["voucher_status"];
@@ -815,34 +806,29 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                 $vst = "<b style='color:red'>Pending</b>";
                               }
 
-                              $agentst =$row["agent_com"];
-                              if($agentst == "confirmed")
+                               //For Agent commisions
+                              $acom = $row["agent_com"];
+                              if($acom == "confirmed")
                               {
-                                $agentst = "<b style='color:green'>Confirmed</b>";
+                                $acom = "<b style='color:green'>Confirmed</b>";
                               }
-                              elseif($agentst == "pending")
+                              elseif($acom == "pending")
                               {
-                               $agentst = "<a class='btn btn-danger btn-sm' role='button' href='agentconf.php?qr=".$row["ref_num"]."'>Pay</a>";
+                                $acom = "<b style='color:red'>Pending</b>";
                               }
 
-                              
+
+
 
 
                               echo " <tr>
                                   <td>GHRN".(5000+$row["ref_num"])."</td>
-                                  <td>".$row["confirmeddate"]."</td>
-                                  <td>".$row["date_of_travel"]."</td>
                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
-                                  <td>".$row["contact_phone"]."</td>
-                                  <td>".(int)$totalPackageCost."</td>
-                                  <td>".$pendingPayment."</td>
-                                  <td>".$dest_place."</td>
-                                  
+                                  <td>".$row["holi_dest"]."</td>
                                   <td>".$pst."</td>
                                   <td>".$vst."</td>
-                                  <td>".$agentst."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' href='../casestatus.php?q=".$row["ref_num"]."&r=".$row["holi_type"]."'>View</a></td>
-                                  <td><a class='btn btn-danger' href='revertToSubmitted.php?q=".$row["ref_num"]."' role='button'>Cancel</a></td>
+                                  <td>".$acom."</td>
+                                  
                                 </tr>";
 
                               
@@ -927,7 +913,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                   <td>".$row["name"]." </td>
                                   <td>".$row["phone"]."</td>
                                   <td>".$row["email"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_superpartner.php?q=".$row["suppartnercode"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_superpartner.php?q=".$row["suppartnercode"]."'>View</a></td>
                                 </tr>";
 
                           }
@@ -1006,7 +992,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                   <td>".$row["nameoncard"]." </td>
                                   <td>".$row["contact"]."</td>
                                   <td>".$row["email"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_holipartner.php?q=".$row["holipartner"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_holipartner.php?q=".$row["holipartner"]."'>View</a></td>
                                 </tr>";
 
                           }
@@ -1045,7 +1031,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 </div><br><br>
 
-                 <?php
+                    <?php
                     
                         if(isset($_GET["search_sale"]))
                         {   
@@ -1084,7 +1070,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                                   <td>".$row["salpartnername"]." </td>
                                   <td>".$row["phone"]."</td>
                                   <td>".$row["persmail"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_salespartner.php?q=".$row["salpartnercode"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_salespartner.php?q=".$row["salpartnercode"]."'>View</a></td>
                                 </tr>";
 
                           }
@@ -1095,227 +1081,6 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                        
                     ?>          
             
-</script>
-
-
-
-<script type="text/ng-template" id="pages/agentreport.php"> 
-              <h2>Agent Commission Reports</h2>
-<br><br>
-<div class='col-md-9'>
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Pending Commissions</h3>
-                </div>
-                <div class="panel-body">
-                    <div class='col-md-1 '><br>
-                         <span class='input-group-btn'>
-                          <a class='btn btn-primary btn-md' role='button' href='#/pendingcomm'>
-                          <span class='glyphicon glyphicon-log-in' style='padding-right:6px;' aria-hidden='true'></span> 
-                          Open
-                          </a>
-                         </span>
-                    </div>        
-                </div>
-              </div>
-
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Issued Statements</h3>
-                </div>
-                <div class="panel-body">
-                   <div class='col-md-1 '><br>
-                         <span class='input-group-btn'>
-                          <a class='btn btn-primary btn-md' role='button' href='#/issuedstat'>
-                          <span class='glyphicon glyphicon-log-in' style='padding-right:6px;' aria-hidden='true'></span> 
-                          Open
-                          </a>
-                         </span>
-                    </div> 
-                </div>
-              </div>
- </div>              
-
- </script>             
-
-
-<script type="text/ng-template" id="pages/pendingcomm.php"> 
-              <h2>Pending Commissions</h2>
-
-          <br>
- <div class ='row'>               
-
-  <div class="col-md-9">
-    <div class="input-group">
-      <form method='GET' action=''>
-      
-      <div class="col-md-9">
-      <input type="text" placeholder='Search Commission...' size='300' name ='search_pcomm' class="form-control" aria-label="...">
-      </div>
-
-      <div class="col-md-3">
-        <span class="input-group-btn">
-          <button class="btn btn-primary" type="submit">Search</button>
-        </span>
-
-      
-      </div>
-    
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-
-</div><br><br>
-
-                 <?php
-                    
-                        if(isset($_GET["search_pcomm"]))
-                        {   
-                          $search_pcomm = $_GET["search_pcomm"];
-                          $sql = "SELECT * FROM commissions 
-                          WHERE (status = 'pending') and (ghrno  LIKE '%".$search_pcomm."%'  
-                          or clientname LIKE '%".$search_pcomm."%' 
-                          or holitype LIKE '%".$search_pcomm."%' 
-                          or holidest LIKE '%".$search_pcomm."%'
-                          or sup LIKE '%".$search_pcomm."%'
-                          or hol LIKE '%".$search_pcomm."%'
-                          or sal LIKE '%".$search_pcomm."%') 
-                          ORDER BY sno DESC";   
-                        }
-                      else
-                      {
-                        $sql= "SELECT * FROM commissions WHERE status = 'pending' ORDER BY sno DESC";
-                        unset($_GET["search_pcomm"]);
-                      }
-                    
-                      $res = $conn->query($sql) ;
-                    if ($res->num_rows) 
-                    {     echo "<table class='table table-hover table-list' style='background-color: white;'>
-                                  <tr>
-                                    <th>Sno</th>
-                                    <th>Client Name</th>
-                                    <th>Holiday Type</th>
-                                    <th>Destination</th>
-                                    <th>Commission</th>
-                                    <th>Super Partner</th>
-                                    <th>Holiday Partner</th>
-                                    <th>Sales Partner</th>
-                                    <th></th>
-                                    <th></th>
-                                  </tr>";
-                                  $cnt_var=1;
-                      while($row = $res->fetch_assoc()) 
-                          {
-                              
-                              echo " <tr>
-                                  <td>".$cnt_var++."</td>
-                                  <td>".$row["clientname"]."</td>
-                                  <td>".$row["holitype"]." </td>
-                                  <td>".$row["holidest"]."</td>
-                                  <td><b style='color:red;'>".$row["commamt"]." INR</b></td>
-                                  <td>".$row["sup"]."</td>
-                                  <td>".$row["hol"]."</td>
-                                  <td>".$row["sal"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href=''>View</a></td>
-                                  <td><a class='btn btn-success btn-sm' role='button' target='_blank' href=''>Download</a></td>
-                                </tr>";
-
-                          }
-                    }
-                    else
-                      echo "No results found";
-                              
-                       
-                    ?> 
-            
-
-</script>
-
-<script type="text/ng-template" id="pages/issuedstat.php"> 
-              <h2>Issued Statements</h2>
-              <br>
- <div class ='row'>               
-
-  <div class="col-md-9">
-    <div class="input-group">
-      <form method='GET' action=''>
-      
-      <div class="col-md-9">
-      <input type="text" placeholder='Search Commission...' size='300' name ='search_pcomm' class="form-control" aria-label="...">
-      </div>
-
-      <div class="col-md-3">
-        <span class="input-group-btn">
-          <button class="btn btn-primary" type="submit">Search</button>
-        </span>
-
-      
-      </div>
-    
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-
-</div><br><br>
-
-                 <?php
-                    
-                        if(isset($_GET["search_pcomm"]))
-                        {   
-                          $search_pcomm = $_GET["search_pcomm"];
-                          $sql = "SELECT * FROM commissions 
-                          WHERE (status = 'confirmed') and (ghrno  LIKE '%".$search_pcomm."%'  
-                          or clientname LIKE '%".$search_pcomm."%' 
-                          or holitype LIKE '%".$search_pcomm."%' 
-                          or holidest LIKE '%".$search_pcomm."%'
-                          or sup LIKE '%".$search_pcomm."%'
-                          or hol LIKE '%".$search_pcomm."%'
-                          or sal LIKE '%".$search_pcomm."%' )
-                          ORDER BY sno DESC";   
-                        }
-                      else
-                      {
-                        $sql= "SELECT * FROM commissions WHERE status = 'confirmed' ORDER BY sno DESC";
-                        unset($_GET["search_pcomm"]);
-                      }
-                    
-                      $res = $conn->query($sql) ;
-                    if ($res->num_rows) 
-                    {     echo "<table class='table table-hover table-list' style='background-color: white;'>
-                                  <tr>
-                                    <th>Sno</th>
-                                    <th>Client Name</th>
-                                    <th>Holiday Type</th>
-                                    <th>Destination</th>
-                                    <th>Commission</th>
-                                    <th>Super Partner</th>
-                                    <th>Holiday Partner</th>
-                                    <th>Sales Partner</th>
-                                    <th></th>
-                                    <th></th>
-                                  </tr>";
-                                  $cnt_var=1;
-                      while($row = $res->fetch_assoc()) 
-                          {
-                              
-                              echo " <tr>
-                                  <td>".$cnt_var++."</td>
-                                  <td>".$row["clientname"]."</td>
-                                  <td>".$row["holitype"]." </td>
-                                  <td>".$row["holidest"]."</td>
-                                  <td><b style='color:red;'>".$row["commamt"]." INR</b></td>
-                                  <td>".$row["sup"]."</td>
-                                  <td>".$row["hol"]."</td>
-                                  <td>".$row["sal"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href=''>View</a></td>
-                                  <td><a class='btn btn-success btn-sm' role='button' target='_blank' href=''>Download</a></td>
-                                </tr>";
-
-                          }
-                    }
-                    else
-                      echo "No results found";
-                              
-                       
-                    ?> 
             
 </script>
 
@@ -1323,7 +1088,9 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
 <script type="text/ng-template" id="pages/profile.php"> 
               <h2>Profile</h2>
-             <?php
+             
+
+    <?php
 
      $sql= "SELECT * FROM login WHERE userid = '".$userid."'  ";
      $res = $conn->query($sql);
@@ -1335,22 +1102,21 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
           $joindate = date_format(date_create($row["joindate"]),"d-M-Y");
           $notif_count = $row["notif_count"];
           $user_contact = $row["contact"];
-          $refnums = $row["refnums"];
+          $userref =  $row["refnums"];
           $mailid = $row["mailid"];
           $profilepath = $row["profilepath"];
          }
       }   
 
-            
-          $profile_totiq =  $profile_totic = $profile_totvq= $profile_totvc=0;
 
-             ?>
+?>
+      
 <div class='row'>
         <div class='col-md-3'>
                 <div class="panel panel-default">
                 <div class="panel-body">
                   
-                    <?php echo " <img  src='../profile/".$profilepath."' width='100%' height='50%'>";?>
+                    <?php echo " <img  src='profile/".$profilepath."' width='100%' height='50%'>";?>
                 </div>
               </div>
                <div class="panel panel-default">
@@ -1426,11 +1192,11 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                 echo "<table class='table table-responsive'>
                     <tr>
                         <td>Role</td>
-                        <td>".$type."</td>
+                        <td>Employee</td>
                     </tr>
                     <tr>
                         <td>Department</td>
-                        <td>International & Domestic</td>
+                        <td>".$handle_type."</td>
                     </tr>
                     <tr>
                         <td>Date of Birth</td>
@@ -1441,9 +1207,10 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                         <td>".$user_contact."</td>
                     </tr>
                     <tr>
-                        <td>Reference Numbers</td>
-                        <td>".$refnums."</td>
+                        <td>Reference Number(s)</td>
+                        <td>".$userref."</td>
                     </tr>
+
                     <tr>
                         <td>Email ID</td>
                         <td>".$mailid."</td>
@@ -1466,635 +1233,6 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 </script>
 
 
-<?php
-if($type='Admin' || $type='Accounts')
-{
-
-?><script type="text/ng-template" id="pages/create_user.php"> 
-              <h2>Create User</h2>
-             
-<div class='container'>
-
-<div class='col-md-6'>
-
-              <form method='POST' action='account_settings.php'>
-              <div class="form-group">
-                <label for="ad_username">Enter Full name</label>
-                <input type="text" class="form-control" name='ad_username' id="ad_username" placeholder="Ex.Prashanth Kethavarupu" required>
-              </div>
-
-              <div class="form-group">
-              <label for="ad_type">Choose Type:</label>
-                <select class="form-control" name='ad_type' id="ad_type" required>
-                  <option>Member</option>
-                  <?php
-                    if(!empty($userid) && $type == 'Admin')
-                        echo "<option>Accounts</option>";
-                  ?>
-                </select>
-              </div>
-              <div class="form-group">
-              <label for="ad_handletype">Choose User Type:</label>
-                <select class="form-control" name='ad_handletype' id="ad_handletype" required>
-                  <option>International</option>
-                  <option>Domestic</option>
-                  <option>Both</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="ad_userid">Enter User ID </label>
-                <input type="text" class="form-control" id="ad_userid" name='ad_userid' placeholder="Ex. user@gogagaholidays.in" required>
-              </div> 
-              
-
-              <button type="submit" class="btn btn-primary" name='crac'>Create Account</button>
-              <br><br><br><br><br>
-          </form>
-</div>
-<div class='col-md-2'>
-         
-
-</div>
-
-<div class='col-md-4'>
-         
-
-</div>
-</div>
-
-           
-</script>
-
-<script type="text/ng-template" id="pages/fintran.php"> 
-              <h2>Financial Transactions</h2>
-
-                     <?php
-                          $limit=200;
-
-                           $from_date = "";
-                        if(isset($_GET["search_tran"]))
-                        { 
-                            if(isset($_GET["from_date"])){
-                                if($_GET["from_date"]!='D' && $_GET["from_mon"]!='M' && $_GET["from_year"]!='Y') 
-                                $from_date = $_GET["from_year"]."-".$_GET["from_mon"]."-".$_GET["from_date"];
-                              else
-                                $from_date = "2000-1-1";
-                   
-
-                              if($_GET["to_date"]!='D' && $_GET["to_mon"]!='M' && $_GET["to_year"]!='Y') 
-                                $to_date = $_GET["to_year"]."-".$_GET["to_mon"]."-".$_GET["to_date"];
-                              else
-                                $to_date = date("Y-m-d");
-
-
-                                $from_date = date_create($from_date);
-                                $from_date=  date_format($from_date,"Y-m-d");
-                                $to_date = date_create($to_date);
-                                $to_date=  date_format($to_date,"Y-m-d");
-                            }
-
-
-                          $search_tran = $_GET["search_tran"];
-                          $sql = "SELECT * FROM transactions
-                          WHERE ";
-                          if(!empty($from_date))
-                          $sql.="(Transaction_date >= '$from_date' and Transaction_date <= '$to_date') and ";
-
-                          $sql.="GHRN_number LIKE '%".$search_tran."%' 
-                          ORDER BY Transaction_number DESC
-                          LIMIT $limit
-                          ";
-                            
-                          $_SESSION['search_tran_val']=$_GET["search_tran"];
-                        }
-                      else
-                      {
-                       $sql= "SELECT * FROM transactions 
-                       ORDER BY Transaction_number DESC
-                       LIMIT $limit
-                       ";
-                        unset($_GET["search_tran"]);
-                      }
-
-
-      
-      $res = $conn->query($sql) ;
-      if ($res->num_rows) 
-      {    
-
-
-        $table_records =$res->num_rows;
-        $sdtb = "danger";
-
-        if($table_records >100 && $table_records <280)
-              $sdtb = "warning";
-        elseif($table_records< 100)
-              $sdtb = "success";  
-                
-
-          $table_head = "<div class='table-responsive'> <table id='trantable' class='table table-hover table-bordered table-stripped table-list' style='background-color: white;'>";
-          
-          $table_tran = " 
-                   <tr style='font-size:12px;'>
-                      <th>Transaction number</th>
-                      <th>Transaction Date </th>
-                      <th>GHRN Number</th>
-                      <th>Transaction Particulars</th>
-                      <th>Transaction type</th>
-                      <th>Credit</th>
-                      <th>Debit</th>
-                      <th>Balance</th>
-
-                  </tr>";
-                     $credit_tot=$debit_tot =0;
-       while($row = $res->fetch_assoc()) 
-      {    $date=date_create($row["Transaction_date"]);
-            $dfor=  date_format($date,"d-M-Y");
-          $table_tran.="<tr style='font-size:12px;'>
-              <td>".$row["Transaction_number"]."</td>
-              <td>".$dfor."</td>
-              <td>".$row["GHRN_number"]."</td>
-              <td>".$row["Transaction_particulars"]."</td>
-              <td>".$row["Transaction_type"]."</td>
-              <td>".$row["Credit"]."</td>
-              <td>".$row["Debit"]."</td>
-              <td>".(int)$row["Balance"]."/-</td>
-            </tr>
-            ";
-            $credit_tot = $credit_tot + (int)$row["Credit"];
-            $debit_tot = $debit_tot +(int)$row["Debit"];
-      }
-           $table_tran.="<tr style='font-size:12px;'>
-              <td style='border:none;background-color:#FAF7F6;'></td>
-              <td style='border:none;background-color:#FAF7F6;'></td>
-              <td style='border:none;background-color:#FAF7F6;'></td>
-              <td style='border:none;background-color:#FAF7F6;'></td>
-              <td style='border:none;background-color:#FAF7F6;'></td>
-              <td><b style='color:green;'>".(int)$credit_tot."</b></td>
-              <td><b style='color:red;'>".(int)$debit_tot."</b></td>
-              <td style='border:none;background-color:#FAF7F6;'></td>
-            </tr>
-            ";
-      $_SESSION['table_data'] =$table_tran;
-
-      $table_tran.= "</table></div>";
-
-      }
-      else
-      { 
-        $sdtb="danger";
-        $table_records ="0";
-        $table_head="";
-        $table_tran="";
-        
-      }
-   $form_page ="
-                   <div class ='row'>               
-                        <div class='col-md-12'>
-                              
-                                <form method='GET' action=''>
-                                  <div class='row'>
-                                    <div class='col-md-6'>
-                                      <div class='input-group'>
-                                          <input type='text' placeholder='Search Transactions by GHRN number' size='300' name ='search_tran' class='form-control' aria-label='...'>
-                                      </div>
-                                    </div>
-                                    
-                                    <div class='col-md-1'>
-                                        <span class='input-group-btn'>
-                                          <button class='btn btn-primary' type='submit'>Search</button>
-                                        </span>
-                                    </div>
-                                  </div>  
-                                
-
-                                <div class='row'>
-                                     <div  class='col-md-3' style='padding-left:30px;'><br>
-                                       <label for='trandate'>From</label>
-                                        <select name='from_date' style='height:40px;' > 
-                                          <option value='D'>D</option> <option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option><option value='21'>21</option><option value='22'>22</option><option value='23'>23</option><option value='24'>24</option><option value='25'>25</option><option value='26'>26</option><option value='27'>27</option><option value='28'>28</option><option value='29'>29</option><option value='30'>30</option><option value='31'>31</option>       
-                                        </select> 
-                                    
-                                        <select name='from_mon' style='height:40px;' > 
-                                          <option value='M'>M</option><option value='1'>Jan</option><option value='2'>Feb</option><option value='3'>Mar</option><option value='4'>Apr</option><option value='5'>May</option><option value='6'>Jun</option><option value='7'>Jul</option><option value='8'>Aug</option><option value='9'>Sep</option><option value='10'>Oct</option><option value='11'>Nov</option>         
-                                          <option value='12'>Dec</option>
-                                        </select>  
-                                  
-                                        <select name='from_year' style='height:40px;' > 
-                                          <option value='Y'>Y</option>
-                                          ";
-
-                                          
-                                                $y=date("Y");
-                                                $x=2010;
-                                              while($x <= $y) 
-                                              {
-                                               $form_page .= "<option>".$x."</option>";
-                                                $x++;
-                                              } 
-                                         
-
-                                  $form_page.="</select>
-                                     </div>
-                                      
-                                    <div class='col-md-5'><br>
-                                      <label for='trandate'>To</label>
-                                        <select name='to_date' style='height:40px;' > 
-                                          <option value='D'>D</option> <option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option><option value='21'>21</option><option value='22'>22</option><option value='23'>23</option><option value='24'>24</option><option value='25'>25</option><option value='26'>26</option><option value='27'>27</option><option value='28'>28</option><option value='29'>29</option><option value='30'>30</option><option value='31'>31</option>       
-                                        </select> 
-                                    
-                                        <select name='to_mon' style='height:40px;' > 
-                                          <option value='M'>M</option><option value='1'>Jan</option><option value='2'>Feb</option><option value='3'>Mar</option><option value='4'>Apr</option><option value='5'>May</option><option value='6'>Jun</option><option value='7'>Jul</option><option value='8'>Aug</option><option value='9'>Sep</option><option value='10'>Oct</option><option value='11'>Nov</option>         
-                                          <option value='12'>Dec</option>
-                                        </select>  
-                                  <select name='to_year' style='height:40px;' > 
-                                          <option value='Y'>Y</option>
-                                          ";
-
-                                          
-                                                $y=date("Y");
-                                                $x=2010;
-                                              while($x <= $y) 
-                                              {
-                                               $form_page .= "<option>".$x."</option>";
-                                                $x++;
-                                              } 
-                                         
-
-                                  $form_page.="</select>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;<a target='_blank' href='alltrans.php'>View All</a>
-                                     </div>
-
-                                    <div class='col-md-1'>
-                                    <br>
-                                        <span class='input-group-btn'>
-                                          <a class='btn btn-".$sdtb." btn-sm' role='button' href='downloadtable.php'>
-                                          <span class='glyphicon glyphicon-download-alt' style='padding-right:6px;' aria-hidden='true'></span> PDF</a>
-                                        </span>
-                                    </div>
-                                    
-                                    <div class='col-md-1'><br>
-                                       <span class='input-group-btn'>
-                                            <a class='btn btn-primary btn-sm' role='button' href='#/newtran'>
-                                            <span class='glyphicon glyphicon-pencil' style='padding-right:6px;' aria-hidden='true'></span> New</a>
-                                       </span>
-                                    </div>
-
-                                    <div class='col-md-1 '><br>
-                                       <span class='input-group-btn'>
-                                           <a class='btn btn-danger btn-sm' role='button' href='#/edittran'>
-                                           <span class='glyphicon glyphicon-edit' style='padding-right:6px;' aria-hidden='true'></span> Edit</a>
-                                       </span>
-                                    </div>
-                                  </div>
-
-                                  </form>
-                                                         
-                            </div><!-- /col-md-12 -->
-                          </div><!-- row -->
-                        ";
-
-
-
-
-      echo "$form_page";
-
-      echo "<div class='row'>
-            <div class='col-md-6'><b style='color:red;'>$table_records</b> rows found</div>
-
-      </div><br>";
-      echo "$table_head $table_tran";
-?>
-
- </script>                   
-
-
-<script type="text/ng-template" id="pages/newtran.php"> 
-
-
-              <h2>New Transactions</h2>
-
-        
-<div class='container'>
-
-<div class='col-md-6'>
-
-              <form method='POST' action='trans_setting.php'>
-
-              <div class="form-group">
-                <label for="trans_date">Transaction Date</label><br>
-
-                <input type="text" class="pull-right" style="background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;" name="trans_date" id="trans_date" value="2018-02-15" size="10">
-                    <!-- <select id="day_start" name="tran_date" style='height:40px;' required> 
-                                           <?php 
-                                              /*  $x=1;
-                                                
-                                              while($x <= 31) 
-                                              {
-                                                echo "<option>".$x."</option>";
-                                                $x++;
-                                              } */
-                                            ?>       
-                                  </select> 
-                        
-                                  <select id="month_start" name="tran_mon" style='height:40px;' required> 
-                                            <?php
-                                               /* $y=array("Jan", "Feb", "Mar", "Apr",
-                                                "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-
-                                                  for ($i=0; $i <=11; $i++) { 
-                                                        echo "<option value ='".($i+1)."'>".$y[$i]."</option>";    
-                                                     }*/
-                                                     
-                                            ?>         
-                                  </select>  
-                        
-                                  <select id="year_start" name="tran_year" style='height:40px;' required> 
-                                            
-                                              <?php 
-                                               /* $x=date("Y");
-                                                $y=$x+10;
-                                              while($x <= $y) 
-                                              {
-                                                echo "<option>".$x."</option>";
-                                                $x++;
-                                              } */
-                                            ?>
-
-                                         
-
-                                  </select>
- -->
-              </div>
-
-              <div class="form-group">
-                <label for="trans_part">Transaction Particulars</label>
-                <input type="text" class="form-control" name='trans_part'  placeholder="Enter Transaction Particulars" id="trans_part" required>
-              </div>
-
-              <div class="form-group">
-              <label for="transtype">Regular Transaction</label>
-              <input type="text" class="form-control" name='transtype' placeholder="Enter Transaction type" id="transtype">
-               
-              </div>
-              <div class="form-group">
-              <label for="ghrnnumber">Towards GHRN Number</label>
-                <input type="text" class="form-control" name='ghrnnumber' placeholder="Enter GHRN number" id="ghrnnumber">
-              </div>
-
-              <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="number" class="form-control" id="amount" name='amount' placeholder="Enter Amount in rupees" required>
-              </div> 
-               <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="tran1" value="credit" required>
-                     Credit
-                    </label>
-                  </div>
-                  <br>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="tran1" value="debit" required>
-                      Debit
-                    </label>
-                  </div>
-                  <br>
-              <button type="submit" name='transubmit' class="btn btn-primary">Upload Transaction</button>
-              <br><br><br><br><br>
-          </form>
-</div>
-<div class='col-md-2'>
-         
-
-</div>
-
-<div class='col-md-4'>
-         
-
-</div>
-</div>
-
-
-
-</script>
-
-<script type="text/ng-template" id="pages/edittran.php"> 
-              <h2>Edit Transactions</h2>
-
-        
-<div class='container'>
-
-<div class='col-md-6'>
-
-              <form method='POST' action='trans_setting.php'>
-
-              <div class="form-group">
-              <label for="transnumber">Transaction Number * </label>
-              <input type="text" class="form-control" name='transnum' placeholder="Enter Transaction Number" id="transnumber" required>
-              </div>
-              <hr>
-              <div class='alert alert-info' role='alert'>
-              <strong>Note</strong>: Only Entered Fields will be reflected.
-            </div>
-              <div class="form-group">
-              <label for="ghrnnumber">GHRN Number</label>
-                <input type="text" class="form-control" name='ghrnnumber' placeholder="Enter GHRN number" id="ghrnnumber">
-              </div>
-
-               <div class="form-group">
-              <label for="trandate">Transaction Date</label><br>
-              <input type="text" class="pull-right" style="background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;" name="trans_date" id="trans_date" value="2018-02-15" size="10">
-               
-              </div>
-
-              <div class="form-group">
-                <label for="trans_part">Transaction Particulars</label>
-                <input type="text" class="form-control" name='trans_part'  placeholder="Enter Transaction Particulars" id="trans_part">
-              </div>
-
-              <div class="form-group">
-              <label for="transtype">Transaction type</label>
-              <input type="text" class="form-control" name='transtype' placeholder="Enter Transaction type" id="transtype">
-               
-              </div>
-              <!--
-              <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="text" class="form-control" id="amount" name='amount' placeholder="Enter Amount in rupees">
-              </div> 
-              <hr>
-              <b>Change Transaction Method</b>
-              <br><br>
-               <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="tran1" value="credit">
-                     Credit
-                    </label>
-                  </div>
-                  <br>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="tran1" value="debit">
-                      Debit
-                    </label>
-                  </div>
-                  -->
-                  <br>
-              <button type="submit" name='editsubmit' class="btn btn-primary">Edit Transaction</button>
-             <!-- <button type="submit" name='delsubmit' class="btn btn-danger">Delete Transaction</button>-->
-              <br><br><br><br><br>
-          </form>
-</div>
-<div class='col-md-2'>
-         
-
-</div>
-
-<div class='col-md-4'>
-         
-
-</div>
-</div>
-
-
-
-</script>
-             
-
-
-
-
-
-
-
-
-
-
-<script type="text/ng-template" id="pages/account_settings.php"> 
-              <h2>Account Settings</h2>
-              
-<div class ='row'>               
-
-  <div class="col-md-9">
-    <div class="input-group">
-      <form method='GET' action=''>
-      
-      <div class="col-md-9">
-      <input type="text" placeholder='Search user account...' size='300' name ='search_param_acc' class="form-control" aria-label="...">
-      </div>
-
-      <div class="col-md-3">
-        <span class="input-group-btn">
-          <button class="btn btn-primary" type="submit">Search</button>
-        </span>
-      </div>
-      </form>
-    
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-
-</div>
-<br>
-
-                     <?php
-
-                    
-                        if(isset($_GET["search_param_acc"]))
-                        {   
-                          $search_param_acc = $_GET["search_param_acc"];
-                          $sql3 = "SELECT * FROM login
-                          WHERE username  LIKE '%".$search_param_acc."%'
-                          or userid LIKE '%".$search_param_acc."%'  
-                          or handle_type LIKE '%".$search_param_acc."%'
-                          or type LIKE '%".$search_param_acc."%'  
-                          ORDER BY type";   
-                        }
-                      else
-                      {
-                        $sql3= "SELECT * FROM login  
-                        ORDER BY type";
-                        unset($_GET["search_param_acc"]);
-                      }
-
-                      $res = $conn->query($sql3) ;
-                    if ($res->num_rows) 
-                    {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
-                                  <tr>
-                                  <th>S.no</th>
-                                  <th>User name</th>
-                                  <th>Type</th>
-                                  <th>User Type</th>
-                                  <th>User ID</th>
-                                  <th></th>
-                                  <th></th> 
-                                </tr>";
-                       
-                              $i=1;    
-                      while($row = $res->fetch_assoc()) 
-                        {    if($row["acc_status"]=="Active")
-                                {$kval="danger";$but = "Disable";}
-                             else
-                                {$kval="success";$but="Enable";}   
-                            
-
-                             if(!empty($userid))
-                             {       
-
-
-                                $button_val ="<form action='account_settings.php' method='POST'>
-                                                        <input type='hidden' name='endis' value='".$but."'>
-                                                        <input type='hidden' name='endisuser' value='".$row["userid"]."'>
-                                                        <span class='input-group-btn'>
-                                                          <button class='btn btn-".$kval."' type='submit'>".$but."</button>
-                                                        </span>
-                                              </form>";
-                                if($row["type"] != 'Admin')           
-                                  echo "<tr>
-                                      <td>".$i."</td>
-                                      <td>".$row["username"]."</td>
-                                      <td>".$row["type"]."</td>
-                                      <td>".$row["handle_type"]."</td>
-                                      <td>".$row["userid"]."</td>
-                                      <td><a class='btn btn-primary btn-sm' role='button' href='reset.php?uid=".$row["userid"]."'>RESET PWD</a></td>
-                                      <td>".$button_val."</td>
-                                    </tr>";
-                                    $i++;
-
-                              
-
-
-
-
-
-                              }     
-                          }
-                          echo "</table></div>";
-                    }
-                    else
-                      echo " No results found";
-                              
-                       
-
-
-
-                      ?>
-
-
-
-            
-</script>
-
-
-<?php
-}
-
-?>
-
-
 <script type="text/ng-template" id="pages/settings.php"> 
               <h2>Settings</h2>
   
@@ -2102,21 +1240,20 @@ if($type='Admin' || $type='Accounts')
 
 <div class='col-md-6'>
 
-              <form method='POST' action='../settings.php' enctype="multipart/form-data">
+              <form method='POST' action='settings.php' enctype="multipart/form-data">
+
               <div class="form-group">
                <div class='alert alert-info' role='alert'>
                   <strong>Note</strong>: Only Entered Fields will be reflected.
               </div>
-
               <div class="form-group">
-                <label for="transnumber">User name </label>
-                <input type="text" class="form-control" name='newusername' placeholder="Enter Username" id="newusername">
+              <label for="transnumber">User name </label>
+              <input type="text" class="form-control" name='newusername' placeholder="Enter Username" id="newusername">
               </div>
               <div class="form-group">
               <label for="fileToUpload">Profile Picture : </label>
               <input type="file" class="form-control" name='fileToUpload' id="fileToUpload">
               </div>
-
               <div class="form-group">
                 <label for="newpwd">User password </label>
                 <input type="password" class="form-control" name='newpwd' placeholder="Enter password" id="newpwd">
@@ -2132,8 +1269,8 @@ if($type='Admin' || $type='Accounts')
               </div>
 
               <div class="form-group">
-                <label for="refnums">Reference number(s) </label>
-                <input type="text" class="form-control" name='refnums' placeholder="Enter Reference number(s)" id="refnums">
+                <label for="refnums">GHRN number(s) </label>
+                <input type="text" class="form-control" name='refnums' placeholder="Enter GHRN NO(s)" id="refnums">
               </div>
                
                <div class="form-group">
@@ -2249,9 +1386,10 @@ if($type='Admin' || $type='Accounts')
 </div>
 
 </script>
+
 <script type="text/ng-template" id="pages/voucher.php"> 
               <h2>Vouchers</h2>
-
+ 
 <br>
 <div class ='row'>               
 
@@ -2286,19 +1424,22 @@ if($type='Admin' || $type='Accounts')
                           $search_voucher = explode("N", $search_voucher);
                           $ref_param = (int)$search_voucher[1];
                           $ref_param = $ref_param - 5000;
-                          
-                          $sql1 = "SELECT * FROM vouchertable v INNER JOIN agent_form_data a ON v.ref_num=a.ref_num WHERE v.ref_num LIKE '%$ref_param%' ORDER BY v.ref_num DESC";   
+
+                          $sql1 = "SELECT * FROM vouchertable v INNER JOIN agent_form_data a ON v.ref_num=a.ref_num WHERE v.ref_num LIKE '%$ref_param%' ORDER BY v.ref_num DESC"; 
+                           
                         }
                       else
                       {
-                        $sql1= "SELECT * FROM vouchertable v INNER JOIN agent_form_data a ON v.ref_num=a.ref_num ORDER BY v.ref_num DESC";
+                        $sql1= "SELECT * FROM vouchertable v INNER JOIN agent_form_data a ON v.ref_num=a.ref_num ORDER BY v.ref_num DESC
+
+                          ";
                         unset($_GET["search_voucher"]);
                       }
 
                       $res = $conn->query($sql1) ;
                     if ($res->num_rows)
 
-                    {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
+                    {     echo " <div class='table-responsive'> <table class='table table-hover table-bordered table-list' style='background-color: white;'>
                                   <tr>
                                   <th>GHRN NO</th>
                                   <th>Customer Name</th>
@@ -2309,19 +1450,26 @@ if($type='Admin' || $type='Accounts')
                                   <th>Status</th>
                                   <th></th>
                                 </tr>";
-                               $color = "";
+                               
                       while($row = $res->fetch_assoc()) 
                           {
                               $dateissued = date_create($row["issuedon"]);
                               $dateissued = date_format($dateissued,"d-M-Y");
-
-                              $downloaded = $row["downloaded"];
-                              if($downloaded == "yes"){
-                                $color = "background-color: #f1c40f";
-                              }else{
-                                $color = "background-color: #fff";
+                              $todaydate = date("d-M-Y");
+                              if($dateissued == $todaydate)
+                              {
+                                $dateissued = "<b style='color:green;'>TODAY</b>";
                               }
-                              echo " <tr style='".$color."'>
+                              // FOr user recog
+                                $issueduser = $row["userid"];
+                                if($issueduser == $userid)
+                                {
+                                  $issueduser = "<b style='color:RED;'>".$issueduser."</b>";
+                                }
+
+
+
+                              echo " <tr>
                                   <td>GHRN".(5000+$row["ref_num"])."</td>
                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["holi_dest"]."</td>
@@ -2331,8 +1479,6 @@ if($type='Admin' || $type='Accounts')
                                   <td>".$row["status"]."</td>
                                   <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='voucherwork.php?ref=".$row["ref_num"]."'>Manage Voucher</a></td>
                                 </tr>";
-
-                              
 
                           }
                           echo "</table></div>";
@@ -2347,11 +1493,6 @@ if($type='Admin' || $type='Accounts')
                       ?>
 
 
-
-
-
-             
-            
 </script>
 <script type="text/ng-template" id="pages/gallery.php"> 
               <h2>Gallery</h2>
@@ -2382,8 +1523,8 @@ if($type='Admin' || $type='Accounts')
                                
 
                               $gallerycontent.= "
-                                      <a href='../stuff/".$row["imgpath"]."'  data-fancybox='group' data-caption='".$row["imgname"]."'>
-                                       <img src='../stuff/".$row["imgpath"]."'>
+                                      <a href='stuff/".$row["imgpath"]."'  data-fancybox='group' data-caption='".$row["imgname"]."'>
+                                       <img src='stuff/".$row["imgpath"]."'>
                                        
                                       </a>
                                       
@@ -2442,7 +1583,7 @@ if($type='Admin' || $type='Accounts')
 
 <div class='col-md-6'>
 
-              <form method='POST' action='../uploadimage.php'  enctype="multipart/form-data">
+              <form method='POST' action='uploadimage.php'  enctype="multipart/form-data">
 
               <div class="form-group">
                <div class='alert alert-info' role='alert'>
@@ -2490,6 +1631,8 @@ if($type='Admin' || $type='Accounts')
 </script>
 
 
+
+
 <script type="text/ng-template" id="pages/pricecalc.php"> 
               <h2>Price Calculator</h2>
        
@@ -2533,7 +1676,7 @@ else
 
       <div class='col-md-12'> 
             <?php
-              include '../pricecalc.php';
+              include 'pricecalc.php';
             ?>
 
           </div>
@@ -2541,62 +1684,12 @@ else
 
             
 </script>
-
-
-<script type="text/ng-template" id="pages/gstdefault.php"> 
-              <h2>GST Setter</h2>
-
-              <?php 
-              //first query and get the current percenatage from itinerary_domestic
-              if(isset($_POST["gst"])){
-                //gst value is given from the input
-                //convert the given string value to int value
-                $gst = (int)$_POST["gst"];
-                $sql = "ALTER TABLE `itinerary_domestic` CHANGE `ser_tax_perc` `ser_tax_perc` INT(60) NOT NULL DEFAULT '$gst'";
-
-               if (($conn->query($sql))== true) {
-                 //success..
-                //update the international itinerary too.
-                $sql = "ALTER TABLE `itinerary_inter` CHANGE `ser_tax_perc` `ser_tax_perc` INT(60) NOT NULL DEFAULT '$gst'";
-                  if (($conn->query($sql))== true){
-                    echo "<p>success</p>";
-                  }
-
-               }else{
-                echo "<p>Error</p>";
-               }
-              }
-              
-
-
-              ?>
-             
-<div class ='row'>               
-<div class="col-md-6">
-<form method="POST" action="">
-  <div class="form-group">
-      <label><b>GST%</b></label>
-      <input type="number" name="gst" id="gst" class="form-control"><br>
-      <button class="btn btn-primary" type="submit">Update</button>
-    </div>
-</form>
-</div>
-
-</div>
-
-<br>
-            
-</script>
-
-
           
 <script type="text/ng-template" id="pages/currencyconv.php"> 
               <h2>Currency Calculator</h2>
               
             
   <div class="col-md-9">
-
-
   <form method="post" id="currency-form">     
     <div class="form-group">
     <label><b>From&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
@@ -2631,20 +1724,16 @@ else
 
 
 
-    
 
-       
-    </div>
+
+
 </div>
 
 
 
 </script>
 
-<script type="text/ng-template" id="pages/notification.php"> 
-              <h2>Notifications</h2>
-              
-</script>
+
 
 
 <script type="text/ng-template" id="pages/itsubmitted.php"> 
@@ -2658,7 +1747,7 @@ else
       <form method='GET' action=''>
       
       <div class="col-md-9">
-      <input type="text" placeholder='Type here...' name ='search_param_submitted' id='search_param_submitted' size='300' class="form-control" aria-label="...">
+      <input type="text" placeholder='Search here..' name ='search_param_submitted' id='search_param_submitted' size='300' class="form-control" aria-label="...">
       </div>
 
       <div class="col-md-3">
@@ -2673,33 +1762,29 @@ else
 
 </div>
 <br>
-
-       
                    
-<?php
+
+                     <?php
 
                     
                         if(isset($_GET["search_param_submitted"]))
                         {   
-
+                          
                           $search_param_submitted = $_GET["search_param_submitted"];
                           $search_param_submitted = explode("N", $search_param_submitted);
                           $param_ref = (int)$search_param_submitted[1];
                           $param_ref = $param_ref - 5000;
 
-                  
-
                           $sql1 = "SELECT * FROM agent_form_data INNER JOIN login WHERE
-                          (agent_form_data.currently_worked_by = login.userid) and
-                          (formstatus != 'pending' and formstatus != 'smashed') and 
+                          (agent_form_data.currently_worked_by = login.userid) and (formstatus != 'pending' and formstatus!= 'smashed' and holi_type = '".$handle_type."') and 
                           (ref_num LIKE '%".$param_ref."%')  
                           ORDER BY ref_num DESC";   
 
                         }
                       else
                       {
-                        $sql1= "SELECT * FROM agent_form_data INNER JOIN login WHERE
-                          (agent_form_data.currently_worked_by = login.userid) and formstatus != 'pending' and formstatus != 'smashed'
+                        $sql1= "SELECT * FROM agent_form_data INNER JOIN login
+                                WHERE agent_form_data.currently_worked_by = login.userid and  formstatus != 'pending' and formstatus!= 'smashed' and holi_type = '".$handle_type."' 
                                 ORDER BY ref_num DESC";
                         unset($_GET["search_param_submitted"]);
                       }
@@ -2708,7 +1793,7 @@ else
 
                       $res = $conn->query($sql1) ;
                     if ($res->num_rows) 
-                    {      echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
+                    {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
                                   <tr>
                                   <th>GHRN NO</th>
                                   <th>Customer Name</th>
@@ -2717,47 +1802,39 @@ else
                                   <th>Start Date</th>
                                   <th>End Date</th>
                                   <th>Employee</th>
-                                  <th>Actions</th>
                                   <th></th>
-                                  
+                                  <th></th>
+                                  <th></th>
                                 </tr>";
-                               
-                             $color = "";
 
+                                $color = "";
+                               
                       while($row = $res->fetch_assoc()) 
                           {
-                            
-                            if($row["formstatus"] == "confirmed"){
+                              if($row["formstatus"] == "confirmed"){
                                 $color = "#2ecc71";
                               }else{
                                 $color = "#FFF";
                               }
-
-                            echo " <tr style='background-color: $color;'>
-                                  <td>GHRN".(5000+$row["ref_num"])."</td>
-                                 <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
+                              echo " <tr style='background-color: $color;'>
+                                  <td>GHRN".(5000+(int)$row["ref_num"])."</td>
+                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["holi_dest"]."</td>
                                   <td>".$row["senttocustomerdate"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
                                   <td>".$row["return_date_of_travel"]."</td>
                                   <td>".$row["username"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view.php?q=".$row["ref_num"]."&r=".$row["holi_type"]."'>View</a></td>
-                                  <td><a class='btn btn-warning btn-sm' role='button' href='backend.php?qr=".$row["ref_num"]."'>Modify</a></td>";
-                                  if($row["formstatus"] != "confirmed")
-                                   
-                                  {
-                                    
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='admin/view.php?q=".$row["ref_num"]."&r=".$row["holi_type"]."'>View</a></td>
+                                  <td><a class='btn btn-danger btn-sm' role='button' href='edit_agentform.php?q=".$row["ref_num"]."'>Modify</a></td>
+                                  <td><a class='btn btn-warning btn-sm' role='button' href='duplicate_form.php?q=".$row["ref_num"]."'>Duplicate</a></td>";
+                                  /*if($row["formstatus"] == "confirmed")
                                     echo "
-                                    
+                                    <td>&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-ok' style='padding-right:15px;' aria-hidden='true'></span></td>
                                   </tr>";
-                                  }
-                                  else{
+                                  else
                                     echo "
-                                    
-                                  </tr>";
-                                  }
-
-
+                                    <td>&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class='btn btn-warning btn-sm' role='button' href='confirmpackage.php?qr=".$row["ref_num"]."'>Confirm</a></td>
+                                  </tr>";*/
 
                           }
                           echo "</table></div>";
@@ -2773,8 +1850,75 @@ else
 </script>
 
 
+<script type="text/ng-template" id="pages/itrecent.php"> 
+              <h2>Recent Itineraries</h2>
+
+<?php
+                    
+                     $sql = "SELECT * FROM agent_form_data AS a INNER JOIN pending_itineraries AS p
+                                ON p.ref_num = a.ref_num
+                                WHERE p.user_id = '".$userid."'
+                                ";
+                    $res = $conn->query($sql);
+                    if ($res->num_rows) 
+                    {     echo "<table class='table table-hover table-responsive' style='background-color: white;'>
+                                  <tr>
+                                    <th>GHRN number</th>
+                                    <th>Customer Name</th>
+                                    <th>Destination</th>
+                                    <th>Itinerary Created</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                  
+                                  </tr>";
+                                  
+                      while($row = $res->fetch_assoc()) 
+                          {
+                              
+                              echo " <tr>
+                                 
+                                  <td>".$row["ref_num"] ."</td>
+                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]." </td>
+                                  <td>".$row["holi_dest"]."</td>
+                                  <td>".$row["itinerary_created"]."</td>
+                                  <td>".$row["status"]."</td>
+                                <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_itinerary.php?q=".$row["ref_num"]."'>View</a></td>
+                                 <td><a class='btn btn-danger btn-sm' role='button' href='edit_agentform.php?q=".$row["ref_num"]."'>Modify</a></td>
+                               
+                                </tr>";
+
+                          }
+                          echo "</table><br><br>";
+                    }
+                    else
+                       echo "<table class='table table-hover table-responsive' style='background-color: white;'>
+                                  <tr>
+                                    <th>GHRN number</th>
+                                    <th>Customer Name</th>
+                                    <th>Destination</th>
+                                    <th>Itinerary Created</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                  
+                                  </tr>
+
+                                  </table>
+                                  <h4 style='text-align:center;'>No Previous Itineraries found</h4>
+                                  <br><br>";
+                              
+                       
+                    ?>
+
+
+
+
+</script>
+
+
 <script type="text/ng-template" id="pages/itsmashed.php"> 
-              <h3>Deleted Itineraries</h3>
+              <h2>Deleted Itineraries</h2>
 
 <div class ='row'>               
   <div class="col-md-9">
@@ -2813,17 +1957,19 @@ else
                         if(isset($_GET["search_param_smashed"]))
                         {   
                           $search_param_smashed = $_GET["search_param_smashed"];
+                          //$search_param_smashed = explode("N", $search_param_smashed);
                           $param_ref = (int)$search_param_smashed;
+
                           $sql1 = "SELECT * FROM agent_form_data WHERE
-                          (formstatus = 'smashed') and 
+                          (formstatus = 'smashed' and holi_type = '".$handle_type."') and 
                           (ref_num LIKE '%".$param_ref."%')  
                           ORDER BY ref_num DESC";   
                         }
                       else
                       {
-                        $sql1= "SELECT * FROM agent_form_data a LEFT JOIN deleted_itineraries d ON a.ref_num = d.ghrno
-                        WHERE a.formstatus = 'smashed'
-                        ORDER BY a.ref_num DESC";
+                        $sql1= "SELECT * FROM agent_form_data
+                        WHERE formstatus = 'smashed' and holi_type = '".$handle_type."'
+                        ORDER BY ref_num DESC";
                         unset($_GET["search_param_smashed"]);
                       }
 
@@ -2835,17 +1981,14 @@ else
 
                     {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
                                   <tr>
-                                  <th>Ref.no</th>
-                                  <th>Customer Name</th>
+                                  <th>GHRN NO</th>
                                   <th>Destination</th>
                                   <th>Start Date</th>
                                   <th>End Date</th>
                                   <th>Duration</th>
                                   <th>Type</th>
                                   <th></th>
-                                  
                                   <th></th>
-                                  <th>Reason</th>
                                 </tr>";
                                
                       while($row = $res->fetch_assoc()) 
@@ -2853,17 +1996,12 @@ else
                              
                               echo " <tr>
                                   <td>".$row["ref_num"]."</td>
-                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["holi_dest"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
                                   <td>".$row["return_date_of_travel"]."</td>
                                   <td>".$row["duration"]."</td>
                                   <td>".$row["holi_type"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_itinerary.php?q=".$row["ref_num"]."'>View</a></td>
-                                  
-                                  <td><a class='btn btn-danger btn-sm' role='button' href='smashit.php?qr=".$row["ref_num"]."'>Restore</a></td>
-                                  <td>".$row["reason"]."</td>
-
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_itinerary.php?q=".$row["ref_num"]."'>View</a></td>
                                 </tr>";
 
                               
@@ -2885,11 +2023,9 @@ else
 
 </script>
 
-
-
-
+              
 <script type="text/ng-template" id="pages/itpending.php"> 
-              <h3>Pending Itineraries</h3>
+              <h2>Pending Itineraries</h2>
               
 <div class ='row'>               
 
@@ -2912,82 +2048,36 @@ else
   </div><!-- /.col-lg-6 -->
 
 </div>
-<br>     
-
-<!-- Button trigger modal -->
-
-
-            <div class="modal fade" id="deleteitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog" role="documnent">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-              </div>
-              <div class="modal-body">
-                <p >Dear User, You are about to Delete the package,</p><p>please provide a valid reason, before confirming.</p>
-                <div class="form-group">
-                  <label for="deletereason"><b>Reason:</b></label><br>
-                  <textarea name="deletereason" id="deletereason" placeholder="Enter Reason for Deleting itinerary" cols="50" rows="6" autofocus required></textarea>
-                </div>
-                
-                <b><p id="pagetitleinmodal"></p></b>
-                <p id="pagetitledeleteError"></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" id="submitReason" class="btn btn-warning pull-left" onClick="#">Submit Reason</button>
-                <a href='#' type="button" id="pagedeleteYes" class="btn btn-danger" disabled="disabled">Delete</a>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-
-      <br>
-      <br>              
+<br>                   
 
                      <?php
-                     /*
-
-                       $sql1 = "SELECT * FROM agent_form_data
-                          WHERE holi_type= '".$handle_type."' AND 
-
-                          holi_dest LIKE '%".$search_param_pending."%'
-                          or ref_num LIKE '%".$search_param_pending."%'  
-                          ORDER BY ref_num DESC";   
-                          */
 
                     
                         if(isset($_GET["search_param_pending"]))
-                        {  
-
-
+                        {   
                           $search_param_pending = $_GET["search_param_pending"];
                           $search_param_pending = explode("N", $search_param_pending);
                           $ref_param = (int)$search_param_pending[1];
                           $ref_param = $ref_param - 5000;
-
-
                           $sql1 = "SELECT * FROM agent_form_data WHERE
                           (formstatus = 'pending') and 
                           (ref_num LIKE '%".$ref_param."%')  
                           ORDER BY ref_num DESC";   
                         }
-                      else
-                      {
-                        $sql1= "SELECT * FROM agent_form_data
-                        WHERE formstatus = 'pending'
-                        ORDER BY ref_num DESC";
-                        unset($_GET["search_param_pending"]);
-                      }
+                        else
+                        {
+                          $sql1= "SELECT * FROM agent_form_data
+                          WHERE holi_type ='".$handle_type."' and formstatus = 'pending'  
+                          ORDER BY ref_num DESC ";
+                          unset($_GET["search_param_pending"]);
+                        }
 
 
 
                       $res = $conn->query($sql1) ;
                     if ($res->num_rows)
-                    {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
+                    {     
+                      echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
                                   <tr>
                                   <th>GHRN no</th>
                                   <th>Customer Name</th>
@@ -2996,33 +2086,34 @@ else
                                   <th>End Date</th>
                                   <th>Duration</th>
                                   <th>Form Received on</th>
+                                  <th></th>
+                                  <th></th>
                                   <th>Currently worked by</th>
-                                  <th>View</th>
-                                  <th>Delete</th>
                                 </tr>";
                                
                       while($row = $res->fetch_assoc()) 
                           {
-                              
+                              $holi_type = $row["holi_type"];
+                              if($holi_type == $handle_type){
+                             
                                 $datesent =date_create($row["datesent"]);
                                 $datesent =date_format($datesent,"d-M-Y");
-                             
+
                               echo " <tr>
-                                  <td>GHRN".(5000+$row["ref_num"])."</td>
-                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
+                                  <td>GHRN".(5000+(int)$row["ref_num"])."</td>
+                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["holi_dest"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
                                   <td>".$row["return_date_of_travel"]."</td>
                                   <td>".$row["duration"]."</td>
                                   <td>".$datesent."</td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='view_itinerary.php?q=".$row["ref_num"]."'>View Form</a></td>
+                                  <td><a class='btn btn-success btn-sm' role='button' href='edit_agentform.php?q=".$row["ref_num"]."'>Create</a></td>
                                   <td>".$row["currently_worked_by"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_itinerary.php?q=".$row["ref_num"]."'>View Form</a></td>
-                                  
-                                  <td><button type='button' name='deleteit' id='deleteit' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#deleteitModal' role='button' onclick='passRefValue(".$row["ref_num"].");'>Delete</button></td>
 
                                 </tr>";
 
-                               
+                              }
 
                           }
                           echo "</table></div>";
@@ -3050,7 +2141,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
   animationEnabled: true,
   theme: "light2",
   title:{
-    text: ""
+    text: "Itineraries"
   },
   axisX:{
     valueFormatString: "MMM YYYY",
@@ -3098,7 +2189,7 @@ var chart1 = new CanvasJS.Chart("chartContainer1", {
   animationEnabled: true,
   theme: "light2",
   title:{
-    text: ""
+    text: "Volume"
   },
   axisX:{
     valueFormatString: "MMM YYYY",
@@ -3142,39 +2233,6 @@ var chart1 = new CanvasJS.Chart("chartContainer1", {
 });
 chart1.render();
 
-
-
-
-
-
-
-var chart2 = new CanvasJS.Chart("chartContainer2", {
-  animationEnabled: true, 
-  theme: "light2", 
-  title:{
-    text: "COMPANY NET PROFITS"
-  },
-  axisY: {
-      crosshair: {
-      enabled: true
-    },
-    stripLines: [{
-      value: <?php echo "$avgprofit";?>,
-      label: "Average"
-    }]
-  },
-  data: [{
-    yValueFormatString: "#,### INR",
-    xValueFormatString: "YYYY",
-    type: "spline",
-    dataPoints: <?php echo "$profit_graphdata";?>
-  }]
-});
-chart2.render();
-
-
-
-
 function toogleDataSeries(e){
   if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
     e.dataSeries.visible = false;
@@ -3184,38 +2242,24 @@ function toogleDataSeries(e){
   chart.render();
 }
 
+
+
+
 });
+
+
 </script>
-   
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src='js/appp.js'></script>
 
 <script type="text/javascript">
-  
-  $(document).on("focus", "input[name='trans_date']", function() {
-
-
-     //hotels checkindate daterangepicker          
-  $("input[name='trans_date']").daterangepicker({
-        singleDatePicker: true,
-        startDate: moment(),
-        showDropdowns: true,
-        locale: {
-            format: 'YYYY-MM-DD'
-        }
-    }, 
-    function(start, end, label) {
-        var years = moment().diff(start, 'years');
-        console.log("Year:" + years);
-        //change the selected date range of that picker
-
-    });
-
-});
-
-
-
+    $("[data-fancybox]").fancybox({ });
 </script>
 
+
+
+
+<!--<script src='js/dashboard.js'></script>-->
+   
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src='js/app.js'></script>
 </body>
 </html>
