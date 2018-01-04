@@ -17,6 +17,91 @@ if(isset($_SESSION["ref_value"]))
  {
       $ref_value=$_SESSION["ref_value"];
       $ref_type=$_SESSION["ref_type"];
+
+      $partnersno = "";
+      $partnertype = "";
+
+      $superpartnername = "";
+      $holidaypartnername = "";
+      $salespartnername = "";
+
+      $superPartnerDropDown = "";
+      $holidayPartnerDropDown = "";
+      $salesPartnerDropDown = "";
+      //get sno of partner
+      //here sales_partner_name = sno & holi_partner_name = partnertype
+
+      $sql1= "SELECT sales_partner_name, holi_partner_name FROM agent_form_data
+              WHERE ref_num ='".$_SESSION["ref_value"]."'   
+              ";
+      $res = $conn->query($sql1);
+         if ($res->num_rows) 
+         {  
+           if($row = $res->fetch_assoc()){
+            $partnersno = $row["sales_partner_name"];
+            $partnertype = $row["holi_partner_name"];
+           }
+        }
+
+        if($partnersno != "" && $partnertype != ""){
+          switch ($partnertype) {
+            case "salespartner":
+              //need to get his holiday partner and super partner
+                $sql = "SELECT s.name AS superpartnername, h.name AS holidaypartnername, sl.name AS salespartnername from salespartners sl 
+                  inner join holidaypartners h on (sl.holiday_partner_sno = h.sno)
+                  inner join superpartners s on (h.super_partner_sno = s.sno) 
+                  where sl.sno = '".$partnersno."'";
+
+                 $res = $conn->query($sql);
+                 if ($res->num_rows) 
+                 {  
+                   if($row = $res->fetch_assoc()){
+                    $superpartnername = $row["superpartnername"];
+                    $holidaypartnername = $row["holidaypartnername"];
+                    $salespartnername = $row["salespartnername"];
+
+                   }
+                }   
+
+              break;
+              case "holidaypartner":
+            //need to get his super partner
+              $sql = "SELECT s.name AS superpartnername, h.name AS holidaypartnername from holidaypartners h 
+                inner join superpartners s on (h.super_partner_sno = s.sno) 
+                where h.sno = '".$partnersno."'";
+
+               $res = $conn->query($sql);
+               if ($res->num_rows) 
+               {  
+                 if($row = $res->fetch_assoc()){
+                  $superpartnername = $row["superpartnername"];
+  
+                 }
+              }   
+
+            break;
+
+          case "superpartner":
+            //need to get only his name
+              $sql = "SELECT s.name AS superpartnername FROM superpartners s
+                      where s.sno = '".$partnersno."'";
+
+               $res = $conn->query($sql);
+               if ($res->num_rows) 
+               {  
+                 if($row = $res->fetch_assoc()){
+                  $superpartnername = $row["superpartnername"];
+  
+                 }
+              }   
+
+            break;
+            
+            default:
+              # code...
+              break;
+          }
+        } 
   } 
 
   $pricing_set =""; 
@@ -992,7 +1077,107 @@ $baggagecost = 0;
               
 
 }
- 
+
+
+ //get the super partners
+  $sql = "SELECT name, sno FROM superpartners ORDER BY sno";
+                      
+               $res = $conn->query($sql);
+               if ($res->num_rows) 
+               {  
+                $superPartnerDropDown .= "<option value=''>Select Super Partner</option>";
+                 while($row = $res->fetch_assoc()){
+                  //$superpartnername = $row["superpartnername"];
+                    //echo "supname:".$supname."superpartnername : ".$superpartnername;
+                   if($supname == "" && $superpartnername == $row["name"]){
+                    //salname is empty so input from the agent form data
+                    //$salname = $salespartnername;
+                    $superPartnerDropDown .= "<option value='".$row["sno"]."' selected>".$row["name"]."</option>";
+                   }else if($supname != "" && $supname == $row["sno"]){
+                    $superPartnerDropDown .= "<option value='".$row["sno"]."' selected>".$row["name"]."</option>";
+                   }
+
+                   else{
+                    $superPartnerDropDown .= "<option value='".$row["sno"]."'>".$row["name"]."</option>";
+                   }
+                     
+                 }
+              }else{
+                  $superPartnerDropDown .= "<option value=''>Select Super Partner</option>";
+                 }
+
+
+//get the holiday partners
+  $sql = "SELECT name, sno FROM holidaypartners ORDER BY sno";
+                      
+               $res = $conn->query($sql);
+               if ($res->num_rows) 
+               {  
+                 $holidayPartnerDropDown .= "<option value=''>Select Holiday Partner</option>";
+
+                 while($row = $res->fetch_assoc()){
+                  //$holidaypartnername = $row["holidaypartnername"];
+
+                   if($holiname == "" && $row["name"] == $holidaypartnername){
+                    //holiname is empty so input from the agent form data
+                    //$holiname = $holidaypartnername;
+                    $holidayPartnerDropDown .= "<option value='".$row["sno"]."' selected>".$row["name"]."</option>";
+                   }else if($holiname != "" && $row["sno"] == $holiname){
+                    $holidayPartnerDropDown .= "<option value='".$row["sno"]."' selected>".$row["name"]."</option>";
+                   }
+
+                   else{
+                    $holidayPartnerDropDown .= "<option value='".$row["sno"]."'>".$row["name"]."</option>";
+                   }
+                     
+                 }
+              }else{
+                  $holidayPartnerDropDown .= "<option value=''>Select Holiday Partner</option>";
+                 }
+
+//get the sales partners
+  $sql = "SELECT name, sno FROM salespartners ORDER BY sno";
+                      
+               $res = $conn->query($sql);
+               if ($res->num_rows) 
+               {  
+                 $salesPartnerDropDown .= "<option value=''>Select Sales Partner</option>";
+
+                 while($row = $res->fetch_assoc()){
+                  //$holidaypartnername = $row["holidaypartnername"];
+
+                   if($salname == "" && $row["name"] == $salespartnername){
+                    //holiname is empty so input from the agent form data
+                    //$holiname = $holidaypartnername;
+                    $salesPartnerDropDown .= "<option value='".$row["sno"]."' selected>".$row["name"]."</option>";
+                   }else if($salname != "" && $row["sno"] == $salname){
+                    $salesPartnerDropDown .= "<option value='".$row["sno"]."' selected>".$row["name"]."</option>";
+                   }
+                   else{
+                    $salesPartnerDropDown .= "<option value='".$row["sno"]."'>".$row["name"]."</option>";
+                   }
+
+
+                     
+                 }
+              }else{
+                  $salesPartnerDropDown .= "<option value=''>Select Sales Partner</option>";
+                 }
+
+/* if($salname == ""){
+  //salname is not empty so load data from the itinerary_domestic or international
+  $salname = $salespartnername;
+ }
+ if($holiname == ""){
+  //salname is empty so input from the agent form data
+  $holiname = $holidaypartnername;
+ }
+ if($supname == ""){
+  //salname is empty so input from the agent form data
+  $supname = $superpartnername;
+ }*/
+
+
 echo " 
 <form ng-app='mynapp' ng-controller='myctrl' action='' method='POST' class='form-inline'>
 <br>
@@ -1002,7 +1187,12 @@ echo "
                     <div class ='row'>
                       <div class='form-group'>
                         <label for='superpartner'>Super Partner &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
-                        <input type='text' class='form-control' id='superpartner' name='supname' value='".$supname."' required >
+
+                        <select name='supname' id='superpartner' onChange='getHolidayPartner(this.value)'>
+                          ".$superPartnerDropDown."
+                        </select>
+
+                        
                       </div>
                       <div class='input-group mb-2 mr-sm-2 mb-sm-0'>
                         
@@ -1015,7 +1205,12 @@ echo "
                      <div class ='row'>
                       <div class='form-group'>
                         <label for='holidaypartner'>Holiday Partner :&nbsp;&nbsp;&nbsp;</label>
-                        <input type='text' class='form-control' id='holidaypartner' name='holiname' value='".$holiname."' required>
+
+                         <select name='holiname' id='holidaypartner' onChange='getSalesPartner(this.value)'>
+                          ".$holidayPartnerDropDown."
+                        </select>
+
+                        
                       </div>
                       <div class='input-group mb-2 mr-sm-2 mb-sm-0'>
                         <input type='number' onkeypress='return event.charCode >= 48' min='0' class='form-control' size='13' ng-model='y3' name='holiperc'  ng-init='y3=".$holiperc."'  value='".$holiperc."' required>
@@ -1026,7 +1221,11 @@ echo "
                      <div class ='row'>
                       <div class='form-group'>
                         <label for='salespartner'>Sales Partner &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
-                        <input type='text' class='form-control' id='salespartner' name='salesname'  value='".$salname."' required>
+
+                         <select name='salesname' id='salespartner'>
+                          ".$salesPartnerDropDown."
+                        </select>
+                        
                       </div>
                       <div class='input-group mb-2 mr-sm-2 mb-sm-0'>
                         
