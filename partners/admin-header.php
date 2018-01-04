@@ -114,7 +114,16 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="dist/img/userdefault.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Gogaga User</span>
+              <span class="hidden-xs">
+                <?php if(isset($_SESSION['username'])){
+                  $username = $_SESSION['username'];
+                echo $username;
+              }else{
+                echo "Gogaga User";
+              }
+                ?>
+                  
+                </span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -122,8 +131,17 @@ desired effect
                 <img src="dist/img/userdefault.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Gogaga User - Partner
-                  <small>Member since Nov. 2012</small>
+                  <?php echo $username; ?>
+
+                  <small>
+                    <?php
+                    if(isset($_SESSION["type"])){
+                      $type = $_SESSION["type"];
+                      echo $type;
+                    }
+                    ?>
+
+                    </small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -136,7 +154,7 @@ desired effect
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="../logout.php" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

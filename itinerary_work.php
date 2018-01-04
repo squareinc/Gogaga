@@ -580,7 +580,7 @@ $(function(){
   </head>
 <body >
 
-	<?php
+  <?php
       include "navbar.php";
     ?>
 
@@ -989,7 +989,7 @@ $baggagecost = 0;
   <div id="converted_amount"></div>
 </div>
 </fieldset>';
-			        
+              
 
 }
  

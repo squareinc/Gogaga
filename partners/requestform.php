@@ -1,4 +1,66 @@
 <?php 
+include "../config.php";
+session_start();
+
+if(!isset($_SESSION["userid"]))
+{
+  header('Location:../index.php');
+}else{
+    $userid = $_SESSION["userid"];
+    $username = $_SESSION['username'];
+    $password = $_SESSION["password"];
+    $type = $_SESSION["type"];
+
+    $sno = "";
+    $district = "";
+    $state = "";
+
+    //get the sno of the partner
+    switch ($type) {
+      case "salespartner":
+        $sql = "SELECT sno, district, state FROM salespartners WHERE email = '$userid'";
+        $res = $conn->query($sql);
+         if ($res->num_rows) 
+         {  
+           if($row = $res->fetch_assoc()){
+            $sno = $row["sno"];
+            $district = $row["district"];
+            $state = $row["state"];
+           }
+        } 
+        break;
+
+       case "holidaypartner":
+        $sql = "SELECT sno, district, state FROM holidaypartners WHERE email = '$userid'";
+        $res = $conn->query($sql);
+         if ($res->num_rows) 
+         {  
+           if($row = $res->fetch_assoc()){
+            $sno = $row["sno"];
+            $district = $row["district"];
+            $state = $row["state"];
+           }
+        } 
+        break;
+
+      case "superpartner":
+        $sql = "SELECT sno, district, state FROM superpartners WHERE email = '$userid'";
+        $res = $conn->query($sql);
+         if ($res->num_rows) 
+         {  
+           if($row = $res->fetch_assoc()){
+            $sno = $row["sno"];
+            $district = $row["district"];
+            $state = $row["state"];
+           }
+        } 
+        break;
+          
+      default:
+        # code...
+        break;
+    }
+}
 
 include "admin-header.php";
 include "admin-sidebar.php";
@@ -31,7 +93,7 @@ include "admin-sidebar.php";
 
       <div class="row">
 
-      	<form  method='POST' action="form_insert.php" class="form-horizontal">
+      	<form  method='POST' action="../form_insert.php" class="form-horizontal">
       		<div class="col-md-8 col-md-push-2">
 
 
@@ -50,55 +112,50 @@ include "admin-sidebar.php";
    		<div class="box-body">
 
         <div class="form-group">
-                   <label for="formfilledby" class="col-sm-4">Form filled by <span class='redmark'>*</span>
+                   <label for="formfilledby" class="col-sm-4">Partner Name <span class='redmark'>*</span>
                    </label>
                    <div class="col-sm-8">
-                   <input type="text" class="form-control" size='40' name='first_1' placeholder="Enter name" required>
+                   <input type="text" class="form-control" size='40' name='first_1' value="<?php if(isset($username)) echo $username; ?>" required readonly>
                    </div>  
               </div>      
               <br>
 
-            
-               <div class="form-group">
-                   <label for="holidaypartnername" class="col-sm-4">Holiday Partner Name  <b class='redmark'>*</b>
+         <div class="form-group">
+                    <label class="col-sm-4">Partner Sno <span class='redmark'>*</span>
                    </label>
+
                    <div class="col-sm-8">
-                   <input type="text" class="form-control" name='first_2' size='40' placeholder="Enter name" required>
-               	   </div>
-              </div>   
+                   <input type="text" class="form-control" size='40' name='first_4' value="<?php if(isset($sno)) echo $sno; ?>" required readonly>
+                   </div>  
+              </div>      
               <br>
+
+            <div class="form-group hidden">
+                    <label class="col-sm-4">Partner type <span class='redmark'>*</span>
+                   </label>
+
+                   <div class="col-sm-8">
+                   <input type="text" class="form-control" size='40' name='first_2' value="<?php if(isset($type)) echo $type; ?>" required readonly>
+                   </div>  
+              </div>      
+              <br>
+
+
              
             
                <div class="form-group">
-                   <label for="holidaypartnerlocation" class="col-sm-4">Holiday Partner Location <b class='redmark'>*</b>  
+                   <label for="partnerlocation" class="col-sm-4">Partner Location <b class='redmark'>*</b>  
                    </label>
                    <div class="col-sm-8">
-                   <input type="text" class="form-control" size='40' name='first_3' placeholder="Enter Location" required>
+                   <input type="text" class="form-control" size='40' name='first_5' value="<?php if(isset($district)) echo $district; ?>" readonly>
                	   </div>
               </div>
               <br>
 
 
-               <div class="form-group">
-                   <label for="salespartnername" class="col-sm-4">Sales Partner Name  <b class='redmark'>*</b>  </label>
-                   <div class="col-sm-8">
-                   <input type="text" class="form-control" size='40' name='first_4' placeholder="Enter name" required>
-               		</div>
-              </div>
-      
-              <br>
 
 
-               <div class="form-group">
-                   <label for="salespartnerlocation" class="col-sm-4">Sales Partner Location  <b class='redmark'>*</b>  
-                   </label>
-                   <div class="col-sm-8">
-                   <input type="text" class="form-control" size='40' name='first_5' placeholder="Enter Location" required>
-               		</div>
-              </div>
-          
-              <br>
-
+              
     	</div>
        </div>
 

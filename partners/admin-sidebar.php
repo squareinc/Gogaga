@@ -11,7 +11,11 @@
           <img src="dist/img/userdefault.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Gogaga User</p>
+          <p><?php if(isset($_SESSION['username'])){
+                  $username = $_SESSION['username'];
+                echo $username;
+              } ?>
+          </p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -47,9 +51,9 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Requested Itineraries</a></li>
-            <li><a href="#">Received Itineraries</a></li>
-            <li><a href="#">Confirmed Itineraries</a></li>
+            <li><a href="requesteditineraries.php">Requested Itineraries</a></li>
+            <li><a href="receiveditineraries.php">Received Itineraries</a></li>
+            <li><a href="confirmeditineraries.php">Confirmed Itineraries</a></li>
           </ul>
         </li>
 
@@ -60,8 +64,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Currency Converter</a></li>
-            <li><a href="#">Maps</a></li>
+            <li><a href="currencyconverter.php">Currency Converter</a></li>
+            <li><a href="https://www.google.com/maps" target="_blank">Maps</a></li>
           </ul>
         </li>
 
@@ -72,7 +76,7 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Pending Statements</a></li>
+            
             <li><a href="#">Issued Statements</a></li>
           </ul>
         </li>
