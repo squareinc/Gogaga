@@ -74,13 +74,15 @@ if(isset($_GET["ref"]))
         //error in updating the designdetails
         //that's why we are inserting it as a new entry
 
-         $sql = "INSERT INTO  designdetails (ghrno ,  pckgtitle ,  imgname ,  imgdesc ,  pckghl ,  pckgincl ,  pckgexcl ,  honeyincl  ) 
+         $sql = "INSERT INTO  designdetails (ghrno,  pckgtitle,  imgname,  imgdesc ,  pckghl ,  pckgincl,  pckgexcl,  honeyincl  ) 
                  VALUES ('$ref_value','$holiarea','$search_image','$imgdesc','$pckg','$inclusion','$exclusion','$honeyincl')";
                             if(($conn->query($sql))== true)
                             {                       
                                //successfully inserted new entry
                                //$response_array["status"] == "success";  
                                $status = 1; 
+
+
                             }
                              else{
                               //error
@@ -188,6 +190,20 @@ if(isset($_GET["ref"]))
           //header('Content-type: application/json');
           //echo json_encode($response_array);
           echo "<script>$('status').text('success');</script>";
+          //Update Itinerary as Submitted from Pending
+                                $sql ="UPDATE agent_form_data
+                                        SET formstatus = 'submitted' 
+                                        WHERE ref_num = '".$ref_value."' AND formstatus = 'pending'
+                                      ";
+                                if($conn->query($sql) == true)
+                                {
+                                    
+                                }
+                                else
+                                {
+                                
+                                }
+                                
           $removeClass = "removed";
           header("Location:designitinerary.php?ref=$ref_value&saved=true");
          }else{
