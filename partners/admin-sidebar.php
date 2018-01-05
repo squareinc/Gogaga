@@ -77,7 +77,7 @@
           </a>
           <ul class="treeview-menu">
             
-            <li><a href="#">Issued Statements</a></li>
+            <li><a href="partnerstatements.php">Issued Statements</a></li>
           </ul>
         </li>
 
