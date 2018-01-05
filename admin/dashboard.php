@@ -389,6 +389,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                     <a href="dashboard1.php"  id='sample' class="list-group-item"><span class='glyphicon glyphicon-home' style='padding-right:15px;' aria-hidden='true'></span>Dashboard</a> 
                     <a href="javascript:void(0):#itinerary5" class="list-group-item list-group-item" data-toggle="collapse" data-parent="#MainMenu"><span class='glyphicon glyphicon-tasks' style='padding-right:15px;' aria-hidden='true'></span>Itineraries<span class="caret" style='position:absolute;top:17px;right:30px;'></span></a>
                             <div class="collapse" id="itinerary5">
+                              <a href="../form2.php" class="list-group-item list-group-item" style='padding-left:30px;'>Request Form</a>
                               <a href="#/itsubmitted" class="list-group-item list-group-item" style='padding-left:30px;'>Submitted</a>
                               <a href="#/itpending" class="list-group-item list-group-item" style='padding-left:30px;'>Pending <span class="badge"><?php echo "$count_pending";?></span> </a>
                               <a href='#/itsmashed' class='list-group-item list-group-item' style='padding-left:30px;'>Deleted <span class="badge"><?php echo "$count_smashed";?></span> </a>
