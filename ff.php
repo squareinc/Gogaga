@@ -171,11 +171,11 @@ if($ref_type=="International")
                             {
                               $ivquoted = $totcostfl;
 
-                              $myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
-                              $
+                              /*$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+                              
                               fwrite($myfile, $sql);
                               
-                              fclose($myfile);
+                              fclose($myfile);*/
                             }  
 
 
