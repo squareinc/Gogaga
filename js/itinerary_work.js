@@ -524,8 +524,44 @@ function getSalesPartner(val) {
   });
 }
 
+function getAllPartner(partnertype){
+  $.ajax({
+  type: "POST",
+  url: "get_all_sales_partner.php",
+  data: 'partnertype='+partnertype,
+  success: function(data){
+    $("#partner").html(data);
+  }
+  });
+}
 
 
+function getPartner(val){
+if(val!=""){
+  //val is not empty
+  switch(val){
+    case "salespartner":
+    getAllPartner("salespartners");
+    break;
+
+    case "holidaypartner":
+    getAllPartner("holidaypartners");
+    break;
+
+    case "superpartner":
+    getAllPartner("superpartners");
+    break;
+  }
+}
+}
+
+
+function setPartner(){
+ 
+  var name = $("#partner option:selected").text();
+  $("#partnername").val(name);
+
+}
                    
 
               
