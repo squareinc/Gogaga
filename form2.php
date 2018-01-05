@@ -74,9 +74,9 @@
 
             <div class ='row'>
                <div class="form-group">
-                   <label for="formfilledby" class="col-sm-4">Partner Name <span class='redmark'>*</span>
-                   </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   <input type="text" class="form-control" size='30' style="margin-left: 35px;" id="partnername" name='first_1'  required readonly>
+                   <label for="formfilledby" >Partner Name <span class='redmark'>*</span>
+                   </label>
+                   <input type="text" class="form-control" size='30' id="partnername" name='first_1'  required readonly>
                    </div>  
                    
               </div>
