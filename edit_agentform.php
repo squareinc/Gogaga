@@ -359,7 +359,7 @@ if(isset($_GET["q"]))
  echo "<form  method='POST' action='' class='form-inline'>
 
 
-      <fieldset class='partnerdetails1'>
+      <fieldset class='partnerdetails1 hidden'>
           
           <h3><span class='glyphicon glyphicon-user' aria-hidden='true'></span> &nbsp;&nbsp;&nbsp;Partner Details</h3>
           <hr class='hr'>
@@ -386,7 +386,7 @@ if(isset($_GET["q"]))
             <div class ='row'>
                <div class='form-group'>
                    <label for='holidaypartnerlocation'>Holiday Partner Location <b class='redmark'>*</b>  </label>
-                   <input type='text' class='form-control' size='40' name='first_3' placeholder='Enter Location' value= '".$holi_partner_loc."' required>
+                   <input type='text' class='form-control' size='40' name='first_3' placeholder='Enter Location' value= '".$holi_partner_loc."'>
               </div>
               </div>
               <br>
@@ -404,7 +404,7 @@ if(isset($_GET["q"]))
             <div class ='row'>
                <div class='form-group'>
                    <label for='salespartnerlocation'>Sales Partner Location  <b class='redmark'>*</b>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                   <input type='text' class='form-control' size='40' name='first_5' placeholder='Enter Location' value= '".$sales_partner_loc."' required>
+                   <input type='text' class='form-control' size='40' name='first_5' placeholder='Enter Location' value= '".$sales_partner_loc."'>
               </div>
               </div>
               <br>
