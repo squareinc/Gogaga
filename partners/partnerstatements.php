@@ -2,6 +2,7 @@
 include "../config.php";
 session_start();
 
+
 if(!isset($_SESSION["userid"]))
 {
   header('Location:../index.php');
@@ -93,25 +94,47 @@ include "admin-sidebar.php";
 
       <div class="row">
 
-      	<form  method='POST' action="../form_insert.php" class="form-horizontal">
+      	
       		<div class="col-md-12">
 
-
-      <div class='partnerdetails1 box box-info box-solid'>
-          <div class="box-header with-border">
-              <h3 class="box-title">Requested Itineraries</h3>
-           </div><!-- /.box-header -->
-
            <?php
+           switch ($type) {
+             case "salespartner":
+             //echo "salespartner selected";
+               $sql1= "
+              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest,c.sal AS commission 
+              FROM agent_form_data a 
+              INNER JOIN commissions c ON(a.ref_num = c.ghrno)
+              WHERE a.sales_partner_name = '".$sno."' AND c.status = 'pending'";
 
-           $sql1= "SELECT * FROM agent_form_data
-                   WHERE sales_partner_name ='".$sno."' and formstatus = 'pending'  
-                  ORDER BY ref_num DESC ";
+               break;
+
+            case "holidaypartner":
+               $sql1= "
+              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest,c.hol AS commission 
+              FROM agent_form_data a 
+              INNER JOIN commissions c ON(a.ref_num = c.ghrno)
+              WHERE a.sales_partner_name = '".$sno."' AND c.status = 'confirmed'";
+              
+               break;
+
+            case "superpartner":
+               $sql1= "
+              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest,c.sup AS commission
+              FROM agent_form_data a 
+              INNER JOIN commissions c ON(a.ref_num = c.ghrno)
+              WHERE a.sales_partner_name = '".$sno."' AND c.status = 'pending'";
+              
+               break;
+             
+             default:
+               # code...
+               break;
+           }
 
            ?>
 
-   		<div class="box-body">   
-        <div class="row">
+   		
         <div class="col-xs-12">
           <div class="box">
             
@@ -120,43 +143,36 @@ include "admin-sidebar.php";
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tbody><tr>
+                  <th>Sno</th>
                   <th>GHRNO</th>
                   <th>Customer Name</th>
+                  <th>Holiday Type</th>
                   <th>Destination</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Duration</th>
-                  <th>Form Requested on</th>
+                  <th>Commission</th>
+                  
                 </tr>
                 <?php
                 $res = $conn->query($sql1) ;
                     if ($res->num_rows)
                     {     
-                          
+                        $sno = 1; 
+                        
                       while($row = $res->fetch_assoc()) 
                           {
-                             /* $holi_type = $row["holi_type"];
-                              if($holi_type == $handle_type){*/
-                             
-                                $datesent =date_create($row["datesent"]);
-                                $datesent =date_format($datesent,"d-M-Y");
-
+                                 
                               echo " <tr>
+                                  <td>".$sno++."</td>
                                   <td>GHRN".(5000+(int)$row["ref_num"])."</td>
-                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
-                                  <td>".$row["holi_dest"]."</td>
-                                  <td>".$row["date_of_travel"]."</td>
-                                  <td>".$row["return_date_of_travel"]."</td>
-                                  <td>".$row["duration"]."</td>
-                                  <td>".$datesent."</td>
-                                
-
+                                  <td>".$row["clientname"]."</td>
+                                  <td>".$row["holitype"]."</td>
+                                  <td>".$row["holidest"]."</td>
+                                  <td>".$row["commission"]."</td>
+                                  
+                              
                                 </tr>";
 
-                              //}
-
                           }
-                          //echo "</table></div>";
+                       
                     }
                     else
                       echo " <tr><td>No results found</td></tr>";
@@ -171,8 +187,7 @@ include "admin-sidebar.php";
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-        </div>
-      </div>    
+       
               
     	</div>
        </div>
