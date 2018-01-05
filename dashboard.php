@@ -56,10 +56,17 @@ else
 
             
            for ($i=1; $i <=12 ; $i++) { 
+            if($i >= 10){
              $profile_totiq = $profile_totiq + (int)$row['itq'.$i];
              $profile_totic = $profile_totic + (int)$row['itc'.$i];
              $profile_totvq = $profile_totvq + (int)$row['ivq'.$i];
              $profile_totvc = $profile_totvc + (int)$row['ivc'.$i];
+             }else{
+             $profile_totiq = $profile_totiq + (int)$row['itq0'.$i];
+             $profile_totic = $profile_totic + (int)$row['itc0'.$i];
+             $profile_totvq = $profile_totvq + (int)$row['ivq0'.$i];
+             $profile_totvc = $profile_totvc + (int)$row['ivc0'.$i];
+              }
            }
 
 
