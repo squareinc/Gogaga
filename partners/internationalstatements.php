@@ -80,7 +80,7 @@ include "admin-sidebar.php";
      <center>
       <h1><strong>
          Issued Statements  
-      </strong></h1>
+      </strong>(International)</h1>
       </center>
  
     </section>

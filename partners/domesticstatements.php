@@ -80,7 +80,7 @@ include "admin-sidebar.php";
      <center>
       <h1><strong>
          Issued Statements  
-      </strong></h1>
+      </strong>(Domestic)</h1>
       </center>
  
     </section>
@@ -111,7 +111,7 @@ include "admin-sidebar.php";
               <table class="table table-hover">
                 <tbody>
                 <?php
-
+                
                      switch ($type) {
              case "salespartner":
              //echo "salespartner selected";
@@ -123,51 +123,52 @@ include "admin-sidebar.php";
                   <th>Holiday Type</th>
                   <th>Destination</th>
                   <th>Sales Partner</th>
+                  <th>View</th>
                   
-                </tr>";
+                </tr>";  
 
+                //domestic
 
-               $sql1 = "
+                    $sql2 = "
               SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest, c.sal
               FROM agent_form_data a 
-              INNER JOIN itinerary_inter it ON(a.ref_num = it.ghrno)
-              INNER JOIN commissions c ON(it.ghrno = c.ghrno)
-              WHERE it.salname = '".$sno."' AND c.status = 'confirmed'";
+              INNER JOIN itinerary_domestic id ON(a.ref_num = id.ghrnno)
+              INNER JOIN commissions c ON(id.ghrnno = c.ghrno)
+              WHERE id.salname = '".$sno."' AND c.status = 'confirmed'";
 
-              $res = $conn->query($sql1);
+
+              $res = $conn->query($sql2);
               //print_r($res);
                     if ($res->num_rows)
                     {     
+                        //echo "success domestic";
+
                         $sno = 1; 
                         
-                      while($row = $res->fetch_assoc()) 
+                      while($row2 = $res->fetch_assoc()) 
                           {
                                  
                               echo " <tr>
                                   <td>".$sno++."</td>
-                                  <td>GHRN".(5000+(int)$row["ref_num"])."</td>
-                                  <td>".$row["clientname"]."</td>
-                                  <td>".$row["holitype"]."</td>
-                                  <td>".$row["holidest"]."</td>
+                                  <td>GHRN".(5000+(int)$row2["ref_num"])."</td>
+                                  <td>".$row2["clientname"]."</td>
+                                  <td>".$row2["holitype"]."</td>
+                                  <td>".$row2["holidest"]."</td>
                                  
-                                  <td>".$row["sal"]."</td>
+                                  <td>".$row2["sal"]."</td>
+                                  <td><a class='btn btn-info' href='viewstatement.php?q='>VIEW</a></td>
 
                                  </tr>";
 
                           }
-
-
-
                        
                     }
                     else{
-                      echo " <tr><td>No results found</td></tr>";
-                    }
-                   
-                    //$conn->close();
+                     // echo " <tr><td>No results found</td></tr>";
+                      echo "error";
+                      }
 
-
-
+                      $res->close();
                break;
 
             case "holidaypartner":
@@ -183,20 +184,23 @@ include "admin-sidebar.php";
                   
                 </tr>";
              
-              $sql1 = "
-              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest, c.hol, c.sal
+        
+                    //domestic
+
+                    $sql2 = "
+              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest,c.hol, c.sal
               FROM agent_form_data a 
-              INNER JOIN itinerary_inter it ON(a.ref_num = it.ghrno)
-              INNER JOIN commissions c ON(it.ghrno = c.ghrno)
+              INNER JOIN itinerary_domestic it ON(a.ref_num = it.ghrnno)
+              INNER JOIN commissions c ON(it.ghrnno = c.ghrno)
               WHERE it.holiname = '".$sno."' AND c.status = 'confirmed'";
 
-              $res = $conn->query($sql1) ;
-                    if ($res->num_rows)
+
+              $res2 = $conn->query($sql2);
+                    if ($res2->num_rows)
                     {     
                         $sno = 1; 
-
                         
-                      while($row = $res->fetch_assoc()) 
+                      while($row = $res2->fetch_assoc()) 
                           {
                                  
                               echo " <tr>
@@ -214,10 +218,8 @@ include "admin-sidebar.php";
                        
                     }
                     else
-                      //echo " <tr><td>No results found</td></tr>";
+                     // echo " <tr><td>No results found</td></tr>";
                       echo "";
-
-
               
                break;
 
@@ -236,19 +238,21 @@ include "admin-sidebar.php";
                   
                 </tr>";
 
-               $sql1 = "
+             
+               $sql2 = "
               SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest,c.sup,c.hol, c.sal
               FROM agent_form_data a 
-              INNER JOIN itinerary_inter it ON(a.ref_num = it.ghrno)
-              INNER JOIN commissions c ON(it.ghrno = c.ghrno)
+              INNER JOIN itinerary_domestic it ON(a.ref_num = it.ghrnno)
+              INNER JOIN commissions c ON(it.ghrnno = c.ghrno)
               WHERE it.supname = '".$sno."' AND c.status = 'confirmed'";
 
-              $res = $conn->query($sql1) ;
-                    if ($res->num_rows)
+
+              $res2 = $conn->query($sql2);
+                    if ($res2->num_rows)
                     {     
                         $sno = 1; 
                         
-                      while($row = $res->fetch_assoc()) 
+                      while($row = $res2->fetch_assoc()) 
                           {
                                  
                               echo " <tr>
@@ -269,8 +273,6 @@ include "admin-sidebar.php";
                     else
                      // echo " <tr><td>No results found</td></tr>";
                       echo "";
-
-               
               
                break;
              
@@ -278,8 +280,7 @@ include "admin-sidebar.php";
            }
 
 
- 
-
+          
                 
                               
                        
