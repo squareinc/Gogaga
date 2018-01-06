@@ -400,6 +400,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                             <a href="#/pricecalc" class="list-group-item" style='padding-left:30px;'>Price Calculator</a>
                             <a href="#/currencyconv" class="list-group-item" style='padding-left:30px;'>Currency Converter</a>
                             <a href="#/gstdefault" class="list-group-item" style='padding-left:30px;'>GST Setter</a>
+                            
 
                           </div>
 
@@ -411,6 +412,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                             <a href="#/superpartner" class="list-group-item" style='padding-left:30px;'>Super Partners</a>
                             <a href="#/holidaypartner" class="list-group-item" style='padding-left:30px;'>Holiday Partners</a>
                             <a href="#/salespartner" class="list-group-item" style='padding-left:30px;'>Sales Partners</a>
+                            <a href="#/uploadedquotations" class="list-group-item" style='padding-left:30px;'>Uploaded Quotations</a>
 
                           </div>
 
@@ -2582,6 +2584,59 @@ else
     </div>
 </form>
 </div>
+
+</div>
+
+<br>
+            
+</script>
+
+
+
+<script type="text/ng-template" id="pages/uploadedquotations.php"> 
+              <h2>Uploaded Quotations</h2>
+
+              <?php 
+              
+              $sql1= "SELECT * FROM uploadedquotations ORDER BY date DESC";
+                     
+
+                      $res = $conn->query($sql1) ;
+                    if ($res->num_rows) 
+                    {      echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
+                                  <tr>
+                                  <th>Sno</th>
+                                  <th>Partner Name</th>
+                                  <th>Uploaded File</th>
+                                  <th>File Description</th>
+                                  <th>Uploaded Date</th>
+                                  
+                                </tr>";
+                               
+                             
+                                $sno = 1;
+                      while($row = $res->fetch_assoc()) 
+                          {
+
+                            echo " <tr style='background-color: $color;'>
+                                  <td>".$sno++."</td>
+                                 <td>".$row["partnername"]."</td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' href='../partners/uploads/".$row["file_location"]."'>View</a></td>
+                                  <td>".$row["file_desc"]."</td>
+                                  <td>".$row["date"]."</td>
+                                  ";
+
+                          }
+                          echo "</table></div>";
+                    }
+                    else
+                      echo " No results found";
+
+
+              ?>
+             
+<div class ='row'>               
+
 
 </div>
 
