@@ -66,6 +66,8 @@ if(!isset($_SESSION["userid"]))
         break;
     }
 
+    $_SESSION["partnersno"] = $sno;
+
 
 }
 

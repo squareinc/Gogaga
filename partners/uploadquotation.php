@@ -9,6 +9,7 @@ if(!isset($_SESSION["userid"]))
     $username = $_SESSION['username'];
     $password = $_SESSION["password"];
     $type = $_SESSION["type"];
+    $partnersno = $_SESSION["partnersno"];
 }
 
 include "admin-header.php";
@@ -19,9 +20,19 @@ $class = "";
 
 if(isset($_POST["submit"])) {
 
+  include "../config.php";
+  $username = $_SESSION['username'];
+  $file_desc = "";
+  if(isset($_POST["description"])) {
+    $file_desc = mysqli_real_escape_string($conn, $_POST["description"]);
+  }
+
+  $date = date('Y-m-d');
+
   $target_dir = "uploads/";
   $target_file = $target_dir . basename($_FILES["quotation"]["name"]);
   $uploadOk = 1;
+  $filename = basename($_FILES["quotation"]["name"]);
   $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     // Allow certain file formats
   if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx") {
@@ -32,7 +43,8 @@ if(isset($_POST["submit"])) {
   // Check if file already exists
   if (file_exists($target_file)) {
       $randomizer = rand(1,100000);
-    $target_file = $target_dir . $randomizer . $_FILES["quotation"]["name"];
+      $target_file = $target_dir . $randomizer . $_FILES["quotation"]["name"];
+      $filename = $randomizer . $_FILES["quotation"]["name"];
   }
 
   // Check file size approx 10 mb
@@ -51,7 +63,17 @@ if(isset($_POST["submit"])) {
   } else {
       if (move_uploaded_file($_FILES["quotation"]["tmp_name"], $target_file)) {
           //echo "The file ". basename( $_FILES["quotation"]["name"]). " has been uploaded.";
-        $msg .= "The File has been uploaded successfully!<br>";
+
+        
+        //now post this info in database..
+
+        $sql = "INSERT INTO uploadedquotations (partnersno, partnername, file_location, file_desc, date) VALUES('$partnersno','$username','$filename','$file_desc','$date')";
+
+        if($conn->query($sql) == true){
+          //inserted successfully
+          $msg .= "The File has been uploaded successfully!<br>";
+        }
+
       } else {
           //echo "Sorry, there was an error uploading your file.";
         $msg .= "Sorry, there was an error uploading your file.<br>";
@@ -109,7 +131,11 @@ if(isset($_POST["submit"])) {
           <form action="" method="post" enctype="multipart/form-data" role="form">
             <div class="form-group">
               <label for="quotation">Word/PDF/JPG/PNG File:</label>
-              <input type="file" name="quotation" id="quotation" class="form-control"><br>
+              <input type="file" name="quotation" id="quotation" class="form-control" required><br>
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <input type="text" name="description" id="description" placeholder="Enter some optional description regarding quotation" class="form-control"><br>
             </div>
             <div class="box-footer">
               <input type="submit" value="Upload" name="submit" class="btn btn-success">
