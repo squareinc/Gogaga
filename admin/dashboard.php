@@ -1970,13 +1970,6 @@ if($type='Admin' || $type='Accounts')
 
 
 
-
-
-
-
-
-
-
 <script type="text/ng-template" id="pages/account_settings.php"> 
               <h2>Account Settings</h2>
               
@@ -2064,6 +2057,123 @@ if($type='Admin' || $type='Accounts')
                                       <td>".$row["userid"]."</td>
                                       <td><a class='btn btn-primary btn-sm' role='button' href='reset.php?uid=".$row["userid"]."'>RESET PWD</a></td>
                                       <td>".$button_val."</td>
+                                    </tr>";
+                                    $i++;
+
+                              
+
+
+
+
+
+                              }     
+                          }
+                          echo "</table></div>";
+                    }
+                    else
+                      echo " No results found";
+                              
+                       
+
+
+
+                      ?>
+
+
+
+            
+</script>
+
+
+<script type="text/ng-template" id="pages/agentaccounts.php"> 
+              <h2>Agent Account Requests</h2>
+              
+<div class ='row'>               
+
+  <div class="col-md-9">
+    <div class="input-group">
+      <form method='GET' action=''>
+      
+      <div class="col-md-9">
+      <input type="text" placeholder='Search user account...' size='300' name ='search_param_acc' class="form-control" aria-label="...">
+      </div>
+
+      <div class="col-md-3">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </span>
+      </div>
+      </form>
+    
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+
+</div>
+<br>
+
+                     <?php
+
+                    
+                        if(isset($_GET["search_param_acc"]))
+                        {   
+                          $search_param_acc = $_GET["search_param_acc"];
+                          $sql3 = "SELECT * FROM login
+                          WHERE username  LIKE '%".$search_param_acc."%'
+                          or userid LIKE '%".$search_param_acc."%'  
+                          or handle_type LIKE '%".$search_param_acc."%'
+                          or type LIKE '%".$search_param_acc."%'  
+                          ORDER BY type";   
+                        }
+                      else
+                      {
+                        $sql3= "SELECT * FROM login WHERE acc_status = 'inactive' AND joindate >= '2018-01-06' AND (type = 'superpartner' OR type = 'holidaypartner' OR type = 'salespartner')
+                        ORDER BY joindate DESC";
+
+                        unset($_GET["search_param_acc"]);
+                      }
+
+                      $res = $conn->query($sql3) ;
+                    if ($res->num_rows) 
+                    {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
+                                  <tr>
+                                  <th>S.no</th>
+                                  <th>User name</th>
+                                  <th>Type</th>
+                                  
+                                  <th>User ID</th>
+                                  <th></th>
+                                  <th></th> 
+                                </tr>";
+                       
+                              $i=1;    
+                      while($row = $res->fetch_assoc()) 
+                        {    if($row["acc_status"]=="Active")
+                                {$kval="danger";$but = "Disable";}
+                             else
+                                {$kval="success";$but="Enable";}   
+                            
+
+                             if(!empty($userid))
+                             {       
+
+
+                                $button_val ="<form action='account_settings.php' method='POST'>
+                                                        <input type='hidden' name='endis' value='".$but."'>
+                                                        <input type='hidden' name='endisuser' value='".$row["userid"]."'>
+                                                        <span class='input-group-btn'>
+                                                          <button class='btn btn-".$kval."' type='submit'>".$but."</button>
+                                                        </span>
+                                              </form>";
+
+                                if($row["type"] != 'Admin')           
+                                  echo "<tr>
+                                      <td>".$i."</td>
+                                      <td>".$row["username"]."</td>
+                                      <td>".$row["type"]."</td>
+                                     
+                                      <td>".$row["userid"]."</td>
+                                      <td><a class='btn btn-primary' role='button' href='viewagent.php?uid=".$row["userid"]."'>VIEW</a></td>
+                                      
                                     </tr>";
                                     $i++;
 

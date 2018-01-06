@@ -11,26 +11,26 @@ include "config.php";
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>GoGaGa</title>
   <!-- Bootstrap -->
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- slimscroll -->
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/jquery.slimscroll.css" rel="stylesheet">
+  <link href="css/jquery.slimscroll.css" rel="stylesheet">
   <!-- Fontes -->
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/font-awesome.min.css" rel="stylesheet">
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/glyphicons.css" rel="stylesheet">
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/simple-line-icons.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/glyphicons.css" rel="stylesheet">
+  <link href="css/simple-line-icons.css" rel="stylesheet">
   <!-- all buttons css -->
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/buttons.css" rel="stylesheet">
+  <link href="css/buttons.css" rel="stylesheet">
   <!-- animate css -->
-<link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/animate.css" rel="stylesheet">
+<link href="css/animate.css" rel="stylesheet">
 <!-- The Wolf main css -->
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/main.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
   <!-- theme css -->
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/theme.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
   <!-- media css for responsive  -->
-  <link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/main.media.css" rel="stylesheet">
+  <link href="css/main.media.css" rel="stylesheet">
 
 <!-- demo  -->
-<link href="http://thewolf.bittyfox.com/vertical-menu-nav-dark/LTR/assets/css/appdemo.css" rel="stylesheet">
+<link href="css/appdemo.css" rel="stylesheet">
   <!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
   <!--[if lt IE 9]> <script src="dist/html5shiv.js"></script> <![endif]-->
 
@@ -165,7 +165,7 @@ include "config.php";
         
         <a href="http://www.gogagaholidays.com/" style="margin-top: 10px;" class="btn btn-sm btn-white btn-block">Visit Gogagaholidays.com</a>
       </form>
-      <p class="top15"> <small> &copy; 2016-2017 GoGaGa</small> </p>
+      <p class="top15"> <small> &copy; 2016-2018 GoGaGa</small> </p>
     </div>
   </div>
 

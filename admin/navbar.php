@@ -54,6 +54,7 @@ if(isset($_GET["n"]))
             <ul class='dropdown-menu'>
               <li><a href='dashboard.php#/create_user'>Create Account</a></li>
               <li><a href='dashboard.php#/account_settings'>Account settings</a></li>
+              <li><a href='dashboard.php#/agentaccounts'>Agent Accounts</a></li>
               <li role='separator' class='divider'></li>
               <li><a href='dashboard.php#/agentreport'>Agent Commission Reports</a></li>
               <li><a href='dashboard.php#/fintran'>Financial Transactions</a></li>

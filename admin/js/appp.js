@@ -55,6 +55,10 @@ app.config(function($routeProvider) {
     templateUrl : 'pages/uploadedquotations.php',
     controller  : 'uploadedquotationsController'
   })
+.when('/agentaccounts', {
+    templateUrl : 'pages/agentaccounts.php',
+    controller  : 'agentaccountsController'
+  })
 
 .when('/currencyconv', {
     templateUrl : 'pages/currencyconv.php',
@@ -176,6 +180,10 @@ app.controller('gstdefaultController', function($scope) {
 app.controller('uploadedquotationsController', function($scope) {
   $scope.message = 'Hello from uploadedquotationsController';
 });
+
+app.controller('agentaccountsController', function($scope) {
+  $scope.message = 'Hello from agentaccountsController';
+}); 
 app.controller('CurrencyController', function($scope) {
   $scope.message = 'Hello from CurrencyController';
 });
