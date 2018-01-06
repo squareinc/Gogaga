@@ -1,3 +1,236 @@
+<?php
+
+include "../config.php";
+
+$ghrno = "GHRN";
+$cname = "";
+$dest = "";
+$holitype = "";
+$partnername = "";
+$partnersno = "";
+$partnerTypeWithSpaces = "";
+$baseprice = "";
+$commPerc = "";
+$grossVal = "";
+$tds = "";
+$netPayable = "";
+
+$location = "";
+$partnercode = "";
+$bankac = "";
+
+if(isset($_GET["q"])){
+	$ghrno .= (5000+(int)$_GET["q"]);
+}
+
+if(isset($_GET["cname"])){
+	$cname = $_GET["cname"];
+}
+
+if(isset($_GET["dest"])){
+	$dest = $_GET["dest"];
+}
+
+if(isset($_GET["partnername"])){
+	$partnername = $_GET["partnername"];
+}
+
+if(isset($_GET["partnertype"]) && isset($_GET["partnersno"])){
+	$partnerTypeWithSpaces = $_GET["partnertype"];
+	$partnerTypeWithSpaces = strtoupper($partnerTypeWithSpaces);
+
+	$partnersno = $_GET["partnersno"];
+
+
+
+	//now we have partnersno and parterner type.. we just need to dive
+	//into specific table and digg out their information
+	switch ($_GET["partnertype"]) {
+		case "superpartner":
+
+			$sql = "SELECT * FROM superpartners WHERE sno = '".$partnersno."'";
+
+			$res = $conn->query($sql);
+			if($res->num_rows){
+				if($row = $res->fetch_assoc()){
+					//get location
+					//get bank account number
+					$location = $row["district"];
+					$bankac = $row["bankac"];
+				}
+			}
+
+			//partnercode
+			$partnercode = "GHPLSUP".($partnersno-2000);
+
+			break;
+
+		case "holidaypartner":
+
+			$sql = "SELECT * FROM holidaypartners WHERE sno = '".$partnersno."'";
+
+			$res = $conn->query($sql);
+			if($res->num_rows){
+				if($row = $res->fetch_assoc()){
+					//get location
+					//get bank account number
+					$location = $row["district"];
+					$bankac = $row["bankac"];
+				}
+			}
+
+			//partnercode
+			$partnercode = "GHPLHP".($partnersno-4000);
+
+			break;
+	
+		case "salespartner":
+
+			$sql = "SELECT * FROM salespartners WHERE sno = '".$partnersno."'";
+
+			$res = $conn->query($sql);
+			if($res->num_rows){
+				if($row = $res->fetch_assoc()){
+					//get location
+					//get bank account number
+					$location = $row["district"];
+					$bankac = $row["bankac"];
+				}
+			}
+
+			//partnercode
+			$partnercode = "GHPLSP".($partnersno-6000);
+
+			break;
+		
+		default:
+			# code...
+			break;
+	}
+
+}
+
+if(isset($_GET["holitype"]) && isset($_GET["partnertype"]) ){
+	$holitype = $_GET["holitype"];
+	$partnertype = $_GET["partnertype"];
+
+	if($holitype == "International"){
+		//search in itinerary_inter table
+		$ref = $_GET["q"];
+		$sql = "SELECT landcost, gghperc, supperc, holiperc, salperc FROM itinerary_inter WHERE ghrno = '".$ref."'";
+
+		$res = $conn->query($sql);
+
+		if($res->num_rows){
+			if($row = $res->fetch_assoc()){
+				$landcost = $row["landcost"];
+				//echo $landcost;
+				$gghperc = $row["gghperc"];
+				//echo $gghperc;
+
+				$percAmnt = ($landcost * $gghperc) / 100;
+				$baseprice = $landcost + $percAmnt;
+				//echo "baseprice :".$baseprice;
+
+				$supperc = $row["supperc"];
+				$holiperc = $row["holiperc"];
+				$salperc = $row["salperc"];
+
+				//get partnertype
+				switch ($partnertype) {
+					case "superpartner":
+						$commPerc = $supperc;
+						$grossVal = ($baseprice * $commPerc) / 100;
+						$tds = $baseprice * 0.002;
+						$netPayable = $grossVal - $tds;
+						break;
+					case "holidaypartner":
+						$commPerc = $holiperc;
+						$grossVal = ($baseprice * $commPerc) / 100;
+						$tds = $baseprice * 0.002;
+						$netPayable = $grossVal - $tds;
+						break;
+					case "salespartner":
+						$commPerc = $salperc;
+						$grossVal = ($baseprice * $commPerc) / 100;
+						$tds = $baseprice * 0.002;
+						$netPayable = $grossVal - $tds;
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+
+
+			}
+		}
+
+
+
+
+	}else if($holitype == "Domestic"){
+		//search in itinerary_domestic table
+
+		$ref = $_GET["q"];
+		$sql = "SELECT landcost, gghperc, supperc, holiperc, salperc FROM itinerary_domestic WHERE ghrnno = '".$ref."'";
+
+		$res = $conn->query($sql);
+
+		if($res->num_rows){
+			if($row = $res->fetch_assoc()){
+				$landcost = $row["landcost"];
+				//echo $landcost;
+				$gghperc = $row["gghperc"];
+				//echo $gghperc;
+
+				$percAmnt = ($landcost * $gghperc) / 100;
+				$baseprice = $landcost + $percAmnt;
+				//echo "baseprice :".$baseprice;
+
+				$supperc = $row["supperc"];
+				$holiperc = $row["holiperc"];
+				$salperc = $row["salperc"];
+
+				//get partnertype
+				switch ($partnertype) {
+					case "superpartner":
+						$commPerc = $supperc;
+						$grossVal = ($baseprice * $commPerc) / 100;
+						$tds = $baseprice * 0.002;
+						$netPayable = $grossVal - $tds;
+						break;
+					case "holidaypartner":
+						$commPerc = $holiperc;
+						$grossVal = ($baseprice * $commPerc) / 100;
+						$tds = $baseprice * 0.002;
+						$netPayable = $grossVal - $tds;
+						break;
+					case "salespartner":
+						$commPerc = $salperc;
+						$grossVal = ($baseprice * $commPerc) / 100;
+						$tds = $baseprice * 0.002;
+						$netPayable = $grossVal - $tds;
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+
+
+			}
+		}
+
+	}
+}
+
+
+
+?>
+
+
+
 <html xmlns:v="urn:schemas-microsoft-com:vml"
 xmlns:o="urn:schemas-microsoft-com:office:office"
 xmlns:x="urn:schemas-microsoft-com:office:excel"
@@ -55,7 +288,7 @@ x:publishsource="Excel">
    <tr>
     <td colspan=11 rowspan=2 height=78 class=xl8122597 width=1120
     style='border-right:.5pt solid #D9D9D9;border-bottom:.5pt solid #D9D9D9;
-    height:58.5pt;width:843pt'><?php echo "";?>HOLIDAY PARTNER COMMISSION INVOICE</td>
+    height:58.5pt;width:843pt'><?php echo $partnerTypeWithSpaces; ?> COMMISSION INVOICE</td>
    </tr>
   </table>
   </span></td>
@@ -65,31 +298,30 @@ x:publishsource="Excel">
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl8822597 style='height:35.1pt'>INVOICE TO<span
   style='mso-spacerun:yes'> </span></td>
-  <td colspan=8 class=xl8922597 style='border-left:none'>C.R.Pavankumar
-  Vutharkar</td>
+  <td colspan=8 class=xl8922597 style='border-left:none'><?php echo $partnername; ?></td>
  </tr>
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl8922597 style='height:35.1pt'>DESIGNATION</td>
-  <td colspan=8 class=xl7622597 style='border-left:none'>HOLIDAY PARTNER</td>
+  <td colspan=8 class=xl7622597 style='border-left:none'><?php echo $partnerTypeWithSpaces; ?></td>
  </tr>
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl7622597 style='height:35.1pt'>LOCATION</td>
-  <td colspan=8 class=xl7622597 style='border-left:none'>#REF!</td>
+  <td colspan=8 class=xl7622597 style='border-left:none'><?php echo $location; ?></td>
  </tr>
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl7622597 style='height:35.1pt'>PARTNER CODE</td>
-  <td colspan=8 class=xl7622597 style='border-left:none'>#REF!</td>
+  <td colspan=8 class=xl7622597 style='border-left:none'><?php echo $partnercode; ?></td>
  </tr>
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl7622597 style='height:35.1pt'>BANK ACCOUNT
   NUMBER</td>
-  <td colspan=8 class=xl8722597 style='border-left:none'>#REF!</td>
+  <td colspan=8 class=xl8722597 style='border-left:none'><?php echo $bankac; ?></td>
  </tr>
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=2 rowspan=2 height=92 class=xl7622597 style='height:70.2pt'>AMOUNT
   PAYABLE</td>
   <td rowspan=2 class=xl9422597 style='border-top:none'><span
-  style='mso-spacerun:yes'> </span>INR 4,583.14 </td>
+  style='mso-spacerun:yes'> </span>INR <?php echo $netPayable; ?> </td>
   <td colspan=3 class=xl7622597 style='border-left:none'>INVOICE NUMBER</td>
   <td colspan=3 class=xl7622597 style='border-left:none'>INVOICE DATE</td>
   <td colspan=2 class=xl7622597 style='border-left:none'>VOUCHERED MONTH</td>
@@ -97,8 +329,7 @@ x:publishsource="Excel">
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl7622597 style='height:35.1pt;border-left:
   none'>HPCOM/ST43105</td>
-  <td colspan=3 class=xl9122597 style='border-left:none'>Friday, January 05,
-  2018</td>
+  <td colspan=3 class=xl9122597 style='border-left:none'><?php echo date('D, M d, Y'); ?></td>
   <td colspan=2 class=xl9022597 style='border-left:none'>January-18</td>
  </tr>
  <tr height=19 style='mso-height-source:userset;height:14.25pt'>
@@ -123,81 +354,37 @@ x:publishsource="Excel">
  </tr>
  <tr class=xl6522597 height=53 style='mso-height-source:userset;height:39.95pt'>
   <td height=53 class=xl6622597 style='height:39.95pt;border-top:none'>1</td>
-  <td class=xl6922597 style='border-top:none;border-left:none'>GHRN5067</td>
+  <td class=xl6922597 style='border-top:none;border-left:none'><?php echo $ghrno; ?></td>
+
   <td class=xl7022597 style='border-top:none;border-left:none'>January-18</td>
+
   <td class=xl7122597 width=108 style='border-top:none;border-left:none;
-  width:81pt'>RAGARJUNA RAGARJUNA</td>
-  <td class=xl6622597 style='border-top:none;border-left:none'>SHIMLA MANALI</td>
+  width:81pt'><?php echo $cname; ?></td>
+
+  <td class=xl6622597 style='border-top:none;border-left:none'><?php echo $dest; ?></td>
+
   <td class=xl7222597 style='border-top:none;border-left:none'><span
   style='mso-spacerun:yes'> </span>INR<span style='mso-spacerun:yes'>      
-  </span>40,203.00 </td>
-  <td class=xl7322597 style='border-top:none;border-left:none'>4%</td>
+  </span><?php echo $baseprice; ?> </td>
+
+  <td class=xl7322597 style='border-top:none;border-left:none'><?php echo $commPerc; ?></td>
+
   <td colspan=2 class=xl7222597 style='border-left:none'><span
   style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>               </span>1,608.12 </td>
+  style='mso-spacerun:yes'>               </span><?php echo $grossVal; ?> </td>
+
   <td class=xl7222597 style='border-top:none;border-left:none'><span
   style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>                 </span>80.41 </td>
+  style='mso-spacerun:yes'>                 </span><?php echo $tds; ?> </td>
+
   <td class=xl7822597 style='border-top:none;border-left:none'><span
   style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>                       </span>1,527.71 </td>
+  style='mso-spacerun:yes'>                       </span><?php echo $netPayable; ?> </td>
+
  </tr>
- <tr class=xl6522597 height=53 style='mso-height-source:userset;height:39.95pt'>
-  <td height=53 class=xl6622597 style='height:39.95pt;border-top:none'>2</td>
-  <td class=xl6922597 style='border-top:none;border-left:none'>GHRN5067</td>
-  <td class=xl7022597 style='border-top:none;border-left:none'>January-18</td>
-  <td class=xl7122597 width=108 style='border-top:none;border-left:none;
-  width:81pt'>RAGARJUNA RAGARJUNA</td>
-  <td class=xl6622597 style='border-top:none;border-left:none'>SHIMLA MANALI</td>
-  <td class=xl7222597 style='border-top:none;border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span style='mso-spacerun:yes'>      
-  </span>40,203.00 </td>
-  <td class=xl7322597 style='border-top:none;border-left:none'>4%</td>
-  <td colspan=2 class=xl7222597 style='border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>               </span>1,608.12 </td>
-  <td class=xl7222597 style='border-top:none;border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>                 </span>80.41 </td>
-  <td class=xl7822597 style='border-top:none;border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>                       </span>1,527.71 </td>
- </tr>
- <tr class=xl6522597 height=53 style='mso-height-source:userset;height:39.95pt'>
-  <td height=53 class=xl6622597 style='height:39.95pt;border-top:none'>3</td>
-  <td class=xl6922597 style='border-top:none;border-left:none'>GHRN5067</td>
-  <td class=xl7022597 style='border-top:none;border-left:none'>January-18</td>
-  <td class=xl7122597 width=108 style='border-top:none;border-left:none;
-  width:81pt'>RAGARJUNA RAGARJUNA</td>
-  <td class=xl6622597 style='border-top:none;border-left:none'>SHIMLA MANALI</td>
-  <td class=xl7222597 style='border-top:none;border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span style='mso-spacerun:yes'>      
-  </span>40,203.00 </td>
-  <td class=xl7322597 style='border-top:none;border-left:none'>4%</td>
-  <td colspan=2 class=xl7222597 style='border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>               </span>1,608.12 </td>
-  <td class=xl7222597 style='border-top:none;border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>                 </span>80.41 </td>
-  <td class=xl7822597 style='border-top:none;border-left:none'><span
-  style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>                       </span>1,527.71 </td>
- </tr>
- <tr class=xl6522597 height=0 style='display:none;mso-height-source:userset;
-  mso-height-alt:799'>
-  <td class=xl6622597 style='border-top:none'>4</td>
-  <td class=xl6922597 style='border-top:none;border-left:none'>#VALUE!</td>
-  <td class=xl7022597 style='border-top:none;border-left:none'>January-18</td>
-  <td class=xl7422597 width=108 style='border-top:none;border-left:none;
-  width:81pt'>0</td>
-  <td class=xl6622597 style='border-top:none;border-left:none'>0</td>
-  <td class=xl7222597 style='border-top:none;border-left:none'>#VALUE!</td>
-  <td class=xl7322597 style='border-top:none;border-left:none'>#VALUE!</td>
-  <td colspan=2 class=xl7222597 style='border-left:none'>#VALUE!</td>
-  <td class=xl7222597 style='border-top:none;border-left:none'>#VALUE!</td>
-  <td class=xl7822597 style='border-top:none;border-left:none'>#VALUE!</td>
- </tr>
+
+
+
  <tr class=xl6522597 height=0 style='display:none;mso-height-source:userset;
   mso-height-alt:799'>
   <td class=xl6622597 style='border-top:none'>5</td>
@@ -265,7 +452,7 @@ x:publishsource="Excel">
   <td colspan=3 class=xl9522597 style='border-left:none'>NET VALUE PAYABLE</td>
   <td class=xl6822597 style='border-top:none;border-left:none'><span
   style='mso-spacerun:yes'> </span>INR<span
-  style='mso-spacerun:yes'>                       </span>4,583.14 </td>
+  style='mso-spacerun:yes'>                       </span><?php echo $netPayable; ?> </td>
  </tr>
  <![if supportMisalignedColumns]>
  <tr height=0 style='display:none'>

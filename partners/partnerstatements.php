@@ -123,6 +123,7 @@ include "admin-sidebar.php";
                   <th>Holiday Type</th>
                   <th>Destination</th>
                   <th>Sales Partner</th>
+                  <th></th>
                   
                 </tr>";
 
@@ -136,19 +137,20 @@ include "admin-sidebar.php";
               //print_r($res);
                     if ($res->num_rows)
                     {     
-                        $sno = 1; 
+                        $snoK = 1; 
                         
                       while($row = $res->fetch_assoc()) 
                           {
                                  
                               echo " <tr>
-                                  <td>".$sno++."</td>
+                                  <td>".$snoK++."</td>
                                   <td>GHRN".(5000+(int)$row["ghrno"])."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]."</td>
                                   <td>".$row["holidest"]."</td>
                                  
                                   <td>".$row["sal"]."</td>
+                                  <td><a href='viewstatement.php?q=".$row["ghrno"]."&cname=".$row["clientname"]."&dest=".$row["holidest"]."&holitype=".$row["holitype"]."&partnertype=".$type."&partnername=".$username."&partnersno=".$sno."' class='btn btn-info'>VIEW</a></td>
 
                                  </tr>";
 
@@ -178,6 +180,7 @@ include "admin-sidebar.php";
                   <th>Destination</th>
                   <th>Holiday Partner</th>
                   <th>Sales Partner</th>
+                  <th></th>
                   
                 </tr>";
              
@@ -189,20 +192,21 @@ include "admin-sidebar.php";
               $res = $conn->query($sql1) ;
                     if ($res->num_rows)
                     {     
-                        $sno = 1; 
+                        $snoK = 1; 
 
                         
                       while($row = $res->fetch_assoc()) 
                           {
                                  
                               echo " <tr>
-                                  <td>".$sno++."</td>
+                                  <td>".$snoK++."</td>
                                   <td>GHRN".(5000+(int)$row["ghrno"])."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]."</td>
                                   <td>".$row["holidest"]."</td>
                                   <td>".$row["hol"]."</td>
                                   <td>".$row["sal"]."</td>
+                                  <td><a href='viewstatement.php?q=".$row["ghrno"]."&cname=".$row["clientname"]."&dest=".$row["holidest"]."&holitype=".$row["holitype"]."&partnertype=".$type."&partnername=".$username."&partnersno=".$sno."' class='btn btn-info'>VIEW</a></td>
 
                                  </tr>";
 
@@ -229,6 +233,7 @@ include "admin-sidebar.php";
                   <th>Super Partner</th>
                   <th>Holiday Partner</th>
                   <th>Sales Partner</th>
+                  <th></th>
                   
                 </tr>";
 
@@ -241,13 +246,13 @@ include "admin-sidebar.php";
               $res = $conn->query($sql1) ;
                     if ($res->num_rows)
                     {     
-                        $sno = 1; 
+                        $snoK = 1; 
                         
                       while($row = $res->fetch_assoc()) 
                           {
                                  
                               echo " <tr>
-                                  <td>".$sno++."</td>
+                                  <td>".$snoK++."</td>
                                   <td>GHRN".(5000+(int)$row["ghrno"])."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]."</td>
@@ -255,6 +260,7 @@ include "admin-sidebar.php";
                                   <td>".$row["sup"]."</td>
                                   <td>".$row["hol"]."</td>
                                   <td>".$row["sal"]."</td>
+                                  <td><a href='viewstatement.php?q=".$row["ghrno"]."&cname=".$row["clientname"]."&dest=".$row["holidest"]."&holitype=".$row["holitype"]."&partnertype=".$type."&partnername=".$username."&partnersno=".$sno."' class='btn btn-info'>VIEW</a></td>
 
                                  </tr>";
 
