@@ -94,15 +94,15 @@ include "admin-sidebar.php";
 
       <div class="row">
 
-      	
-      		<div class="col-md-12">
+        
+          <div class="col-md-12">
 
            <?php
       
 
            ?>
 
-   		
+      
         <div class="col-xs-12">
           <div class="box">
             
@@ -128,11 +128,9 @@ include "admin-sidebar.php";
 
 
                $sql1 = "
-              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest, c.sal
-              FROM agent_form_data a 
-              INNER JOIN itinerary_inter it ON(a.ref_num = it.ghrno)
-              INNER JOIN commissions c ON(it.ghrno = c.ghrno)
-              WHERE it.salname = '".$sno."' AND c.status = 'confirmed'";
+              SELECT ghrno, clientname, holitype, holidest, sal
+              FROM commissions
+              WHERE sal_sno = '".$sno."' AND status = 'confirmed'";
 
               $res = $conn->query($sql1);
               //print_r($res);
@@ -145,7 +143,7 @@ include "admin-sidebar.php";
                                  
                               echo " <tr>
                                   <td>".$sno++."</td>
-                                  <td>GHRN".(5000+(int)$row["ref_num"])."</td>
+                                  <td>GHRN".(5000+(int)$row["ghrno"])."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]."</td>
                                   <td>".$row["holidest"]."</td>
@@ -184,11 +182,9 @@ include "admin-sidebar.php";
                 </tr>";
              
               $sql1 = "
-              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest, c.hol, c.sal
-              FROM agent_form_data a 
-              INNER JOIN itinerary_inter it ON(a.ref_num = it.ghrno)
-              INNER JOIN commissions c ON(it.ghrno = c.ghrno)
-              WHERE it.holiname = '".$sno."' AND c.status = 'confirmed'";
+              SELECT ghrno, clientname, holitype, holidest, hol, sal
+              FROM commissions 
+              WHERE holi_sno = '".$sno."' AND status = 'confirmed'";
 
               $res = $conn->query($sql1) ;
                     if ($res->num_rows)
@@ -201,7 +197,7 @@ include "admin-sidebar.php";
                                  
                               echo " <tr>
                                   <td>".$sno++."</td>
-                                  <td>GHRN".(5000+(int)$row["ref_num"])."</td>
+                                  <td>GHRN".(5000+(int)$row["ghrno"])."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]."</td>
                                   <td>".$row["holidest"]."</td>
@@ -236,12 +232,11 @@ include "admin-sidebar.php";
                   
                 </tr>";
 
-               $sql1 = "
-              SELECT a.ref_num, a.holi_partner_name, c.clientname, c.holitype, c.holidest,c.sup,c.hol, c.sal
-              FROM agent_form_data a 
-              INNER JOIN itinerary_inter it ON(a.ref_num = it.ghrno)
-              INNER JOIN commissions c ON(it.ghrno = c.ghrno)
-              WHERE it.supname = '".$sno."' AND c.status = 'confirmed'";
+            
+              $sql1 = "
+              SELECT ghrno, clientname, holitype, holidest, sup, hol, sal
+              FROM commissions
+              WHERE sup_sno = '".$sno."' AND status = 'confirmed'";
 
               $res = $conn->query($sql1) ;
                     if ($res->num_rows)
@@ -253,7 +248,7 @@ include "admin-sidebar.php";
                                  
                               echo " <tr>
                                   <td>".$sno++."</td>
-                                  <td>GHRN".(5000+(int)$row["ref_num"])."</td>
+                                  <td>GHRN".(5000+(int)$row["ghrno"])."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]."</td>
                                   <td>".$row["holidest"]."</td>
@@ -294,7 +289,7 @@ include "admin-sidebar.php";
           <!-- /.box -->
        
               
-    	</div>
+      </div>
        </div>
 
       

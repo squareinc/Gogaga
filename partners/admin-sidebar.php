@@ -77,8 +77,8 @@
           </a>
           <ul class="treeview-menu">
             
-            <li><a href="domesticstatements.php">Domestic Statements</a></li>
-            <li><a href="internationalstatements.php">International Statements</a></li>
+            <li><a href="partnerstatements.php">Issued Statements</a></li>
+            
           </ul>
         </li>
 

@@ -272,8 +272,8 @@ if(isset($_GET["qr"]))
 
 
 			 $sql ="INSERT INTO commissions
-			 	(ghrno, clientname, holitype, holidest, commamt, sup, hol, sal, status) 
-			 	VALUES ('".$ref_value."','".$client_name."','".$ref_type."','".$holi_dest."','".$commamt."','".$supamt."','".$holiamt."','".$salamt."','pending')";
+			 	(ghrno, clientname, holitype, holidest, commamt, sup, hol, sal, sup_sno, holi_sno, sal_sno, status) 
+			 	VALUES ('".$ref_value."','".$client_name."','".$ref_type."','".$holi_dest."','".$commamt."','".$supamt."','".$holiamt."','".$salamt."','".$supname."','".$holiname."','".$salname."','pending')";
 			 if(($conn->query($sql))== true) {
 			 				header('Location:dashboard.php#/case');
 			 			}
