@@ -97,11 +97,8 @@ include "admin-sidebar.php";
       		<div class="col-md-12">
 
 
-      <div class='partnerdetails1 box box-info box-solid'>
-          <div class="box-header with-border">
-              <h3 class="box-title">Received Itineraries</h3>
-           </div><!-- /.box-header -->
-
+     
+       
            <?php
 
            $sql1= "SELECT * FROM agent_form_data
@@ -110,8 +107,6 @@ include "admin-sidebar.php";
 
            ?>
 
-   		<div class="box-body">   
-        <div class="row">
         <div class="col-xs-12">
           <div class="box">
             
@@ -172,13 +167,7 @@ include "admin-sidebar.php";
           </div>
           <!-- /.box -->
         </div>
-      </div>    
-              
-    	</div>
-       </div>
-
-      
-        
+   
       </div><!-- /.row -->
 
 
