@@ -1,5 +1,5 @@
 <?php
-include "config.php";
+include "../config.php";
 
 function test_input($data) {
         $data = trim($data);
@@ -175,7 +175,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                         }
                         else{}
 
-                   
+                    $ivquoted = (int)$budget;
 
                     $sql = "INSERT INTO designdetails (ghrno) 
                             VALUES ('$ref_num')";
@@ -185,22 +185,69 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                         }
                         else{}
 
-                        
+
+                          $cur_year = date("Y");
+                          $cur_month = date("m");
+
+
+                        //partner month wise data
+                   $sql = "SELECT * FROM user_monthly_data WHERE userid = '".$sales_partner_name."' AND year = '".$cur_year."' ";
+                    $res = $conn->query($sql) ;
+                    if ($res->num_rows) 
+                    {     //If row exists
+                       if($row = $res->fetch_assoc()) 
+                       {  
+                            $sql ="UPDATE user_monthly_data 
+                                   SET itq".$cur_month." = itq".$cur_month." +1,
+                                       ivq".$cur_month." = ivq".$cur_month." + ".$ivquoted."
+                                   WHERE userid = '".$sales_partner_name."' AND year = '".$cur_year."'
+                                    ";
+                            if(($conn->query($sql))== true)
+                            {
+                             // echo "updated user monthy data";
+                            }        
+                       }
+                    }
+                    else
+                    {
+                      // If row not exists
+                        $sql = "INSERT INTO user_monthly_data (userid,year) 
+                       VALUES('".$sales_partner_name."','".$cur_year."')";
+                       if(($conn->query($sql)) == true)
+                       {
+                        //echo "Added user_monthly_data";
+
+                          $sql ="UPDATE user_monthly_data 
+                                   SET itq".$cur_month." = itq".$cur_month." +1,
+                                   ivq".$cur_month." = ivq".$cur_month." + ".$ivquoted."
+                                   WHERE userid = '".$sales_partner_name."' AND year = '".$cur_year."'
+                                    ";
+                            if(($conn->query($sql))== true)
+                            {
+
+                            }   
+
+                       }
+
+                     }
+
+
+
                      $sql= "UPDATE login 
                             SET notif_count =notif_count + 1 
                             WHERE handle_type IN ('$holi_type','Both')
                             ";
                      if($conn->query($sql))
-                          header("Location:form_status.php?status=1");
+                          header("Location:../form_status.php?status=1");
                       else
-                        header("Location:form_status.php?status=0");
+                        header("Location:../form_status.php?status=0");
 
 
 
 
                       }
                   else
-                       header("Location:form_status.php?status=0");
+                       header("Location:../form_status.php?status=0");
                         
                    $conn->close();
 

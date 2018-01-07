@@ -93,7 +93,7 @@ include "admin-sidebar.php";
 
       <div class="row">
 
-      	<form  method='POST' action="../form_insert.php" class="form-horizontal">
+      	<form  method='POST' action="form_insert.php" class="form-horizontal">
       		<div class="col-md-8 col-md-push-2">
 
 
@@ -534,7 +534,7 @@ include "admin-sidebar.php";
                <div class="form-group">
                   <label for="budget" class="col-sm-4">Budget  <b class='redmark'>*</b>  </label>
                     <div class="col-sm-8">
-                   <input type="text" class="form-control" size='40' id="budget" name="fifth_8" placeholder="Ex. 150000" required>
+                   <input type="number" min="0" class="form-control" size='40' id="budget" name="fifth_8" placeholder="Ex. 150000" required>
                    <input type='hidden' value='newform' name='pagecontrol'>
               </div>
               </div>
