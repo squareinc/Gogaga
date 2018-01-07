@@ -83,7 +83,10 @@
         </li>
 
         <li id="sidebar-clients">
-          <a href="index.php"><i class="fa fa-users"></i> <span>Clients</span></a>
+          <a href="clients.php"><i class="fa fa-users"></i> <span>Clients</span></a>
+        </li>
+        <li id="sidebar-vouchers">
+          <a href="vouchers.php"><i class="fa fa-ticket"></i> <span>Vouchers</span></a>
         </li>
 
       </ul>
