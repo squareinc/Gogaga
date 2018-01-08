@@ -122,6 +122,7 @@ $numOfRows = 0;
            if($row = $res->fetch_assoc()) 
            { 
                     $clientname = $row["cust_firstname"] ." ".$row["cust_lastname"];
+                     $customer_phone = $row["contact_phone"];
               $adults =$row["no_of_adults"];
               $childs =$row["no_of_childs"];
               $infants =$row["no_of_infants"];
@@ -409,6 +410,11 @@ tr
                      <th style='width:400px;'>CLIENT NAME</th>
                      <td><?php echo "$clientname";?></td>
                </tr>
+                <tr>
+                     <th style='width:400px;'>CLIENT PHONE</th>
+                     <td><?php echo "$customer_phone";?></td>
+               </tr>
+
                <tr>
                      <th style='width:400px;'>NUMBER OF TRAVELLERS</th>
                      <td><?php echo "$nooftrav";?></td>
@@ -668,12 +674,12 @@ $sql = "SELECT * FROM flights_info WHERE ghrno = '".$ref_value."'  ORDER BY sno"
 <script type="text/javascript">
 
 
-/*$(document).ready(function(){
+$(document).ready(function(){
 
     window.print();
 
 
-});*/
+});
 
 
 
