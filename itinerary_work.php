@@ -231,7 +231,7 @@ if(isset($_POST["submit_but"]))
           //Code for calculation or price values
           if($ref_type =="International"){
 
-              $z = (float)$y + (float)$f + (float)$g + (float)$j + ((float)$ser_tax_perc/100) * $y;
+              $z = (int)$y + (int)$f + (int)$g + (int)$j + ((int)$ser_tax_perc/100) * $y;
 
               $crk = $h +$h * (($h2+$h4+$h6)/100);
               $z= $crk +$z;
@@ -241,7 +241,7 @@ if(isset($_POST["submit_but"]))
 
             elseif($ref_type =="Domestic"){ 
 
-              $z = (float)$y + (float)$j + ((float)$ser_tax_perc/100) * $y;
+              $z = (int)$y + (int)$j + ((int)$ser_tax_perc/100) * $y;
 
               $zflp = $z+$flp;
               //echo "<h1>TOtal cost = $z , With FLight : $zflp</h1>";
