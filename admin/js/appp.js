@@ -37,6 +37,15 @@ app.config(function($routeProvider) {
     templateUrl : 'pages/galleryupload.php',
     controller  : 'galleryupload'
   })
+
+.when('/marketingflyers', {
+    templateUrl : 'pages/marketingflyers.php',
+    controller  : 'marketingflyersController'
+  })
+.when('/marketingflyersupload', {
+    templateUrl : 'pages/galleryupload.php',
+    controller  : 'marketingflyersupload'
+  })
 .when('/maps', {
     templateUrl : 'pages/maps.php',
     controller  : 'MapsController'
@@ -166,6 +175,13 @@ app.controller('GalleryController', function($scope) {
 });
 app.controller('galleryupload', function($scope) {
   $scope.message = 'Hello from galleryupload';
+});
+
+app.controller('marketingflyersController', function($scope) {
+  $scope.message = 'Hello from marketingflyersController';
+});
+app.controller('marketingflyersupload', function($scope) {
+  $scope.message = 'Hello from marketingflyersupload';
 });
 
 app.controller('MapsController', function($scope) {
