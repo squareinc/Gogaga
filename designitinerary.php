@@ -188,6 +188,103 @@ if(isset($_GET["ref"]))
           //header('Content-type: application/json');
           //echo json_encode($response_array);
           echo "<script>$('status').text('success');</script>";
+          //now updating received count for partners
+
+                $cur_year = date("Y");
+                $cur_month = date("m");
+
+                $sales_partner_name = "";
+
+                $ivquoted = "";
+
+                //get partner sno from agent_form_data
+                $sql = "SELECT * FROM agent_form_data WHERE ref_num = '$ref_value'";
+
+                $res = $conn->query($sql);
+
+                if($res->num_rows){
+                  if($row = $res->fetch_assoc()){
+                    //get sales_partner_name from record number
+                    $sales_partner_name = $row["sales_partner_name"];
+                  }
+                }
+
+                //get totcostfl from itinerarydom_or inter
+                if($ref_type == "Domestic"){
+                  //look in itinerary_domestic table
+
+                  $sql = "SELECT * FROM itinerary_domestic WHERE ghrnno = '$ref_value'";
+
+                  $res = $conn->query($sql);
+
+                if($res->num_rows){
+                  if($row = $res->fetch_assoc()){
+                    //get sales_partner_name from record number
+                    $ivquoted = $row["totcostfl"];
+                  }
+                }
+
+                }else if($ref_type == "International"){
+                  //look in itinerary_inter table
+
+
+                  $sql = "SELECT * FROM itinerary_inter WHERE ghrno = '$ref_value'";
+
+                  $res = $conn->query($sql);
+
+                if($res->num_rows){
+                  if($row = $res->fetch_assoc()){
+                    //get sales_partner_name from record number
+                    $ivquoted = $row["totcostfl"];
+                  }
+                }
+                }
+
+                        //partner month wise data
+                   $sql = "SELECT * FROM user_monthly_data WHERE userid = '".$sales_partner_name."' AND year = '".$cur_year."' ";
+                    $res = $conn->query($sql) ;
+                    if ($res->num_rows) 
+                    {     //If row exists
+                       if($row = $res->fetch_assoc()) 
+                       {  
+                            $sql ="UPDATE user_monthly_data 
+                                   SET itq".$cur_month." = itq".$cur_month." +1,
+                                       ivq".$cur_month." = ivq".$cur_month." + ".$ivquoted."
+                                   WHERE userid = '".$sales_partner_name."' AND year = '".$cur_year."'
+                                    ";
+                            if(($conn->query($sql))== true)
+                            {
+                             // echo "updated user monthy data";
+                            }        
+                       }
+                    }
+                    else
+                    {
+                      // If row not exists
+                        $sql = "INSERT INTO user_monthly_data (userid,year) 
+                       VALUES('".$sales_partner_name."','".$cur_year."')";
+                       if(($conn->query($sql)) == true)
+                       {
+                        //echo "Added user_monthly_data";
+
+                          $sql ="UPDATE user_monthly_data 
+                                   SET itq".$cur_month." = itq".$cur_month." +1,
+                                   ivq".$cur_month." = ivq".$cur_month." + ".$ivquoted."
+                                   WHERE userid = '".$sales_partner_name."' AND year = '".$cur_year."'
+                                    ";
+                            if(($conn->query($sql))== true)
+                            {
+
+                            }   
+
+                       }
+
+                     }
+
+
+
+
+
           //Update Itinerary as Submitted from Pending
             $sql ="UPDATE agent_form_data
                   SET formstatus = 'submitted' 
