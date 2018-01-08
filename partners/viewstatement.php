@@ -234,6 +234,19 @@ if(isset($_GET["holitype"]) && isset($_GET["partnertype"]) ){
 		}
 
 	}
+	//get vouchered month details
+
+	$sql = "SELECT * FROM vouchertable WHERE ref_num = '$ref'";
+
+	$res = $conn->query($sql);
+
+		if($res->num_rows){
+			if($row = $res->fetch_assoc()){
+				$voucheredmonth = $row["issuedon"];
+				//$voucheredmonth = date();
+			}
+		}
+
 }
 
 
@@ -335,13 +348,13 @@ x:publishsource="Excel">
   style='mso-spacerun:yes'> </span>INR <?php echo $netPayable; ?> </td>
   <td colspan=3 class=xl7622597 style='border-left:none'>INVOICE NUMBER</td>
   <td colspan=3 class=xl7622597 style='border-left:none'>INVOICE DATE</td>
-  <td colspan=2 class=xl7622597 style='border-left:none'>VOUCHERED MONTH</td>
+  <td colspan=2 class=xl7622597 style='border-left:none'>VOUCHERED DATE</td>
  </tr>
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl7622597 style='height:35.1pt;border-left:
   none'><?php echo $invoiceNum; ?></td>
   <td colspan=3 class=xl9122597 style='border-left:none'><?php echo date('D, M d, Y'); ?></td>
-  <td colspan=2 class=xl9022597 style='border-left:none'>January-18</td>
+  <td colspan=2 class=xl9022597 style='border-left:none'><?php if(isset($voucheredmonth)){ echo $voucheredmonth; } ?></td>
  </tr>
  <tr height=19 style='mso-height-source:userset;height:14.25pt'>
   <td colspan=11 height=19 class=xl9222597 style='height:14.25pt'>&nbsp;</td>
