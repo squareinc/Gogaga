@@ -212,12 +212,12 @@ include "admin-sidebar.php";
                         {   
                           $search_image = $_GET["search_image"];
                           $sql = "SELECT * FROM marketing_flyers 
-                          WHERE location  LIKE '%".$search_image."%'  
+                          WHERE location LIKE '%".$search_image."%'  
                           ORDER BY img_id";   
                         }
                       else
                       {
-                      $sql= "SELECT * FROM marketing_flyers ORDER BY img_id";
+                      $sql= "SELECT * FROM marketing_flyers WHERE CURDATE() BETWEEN uploadeddate AND expirydate ORDER BY img_id";
                       unset($_GET["search_image"]);
                       }
                     

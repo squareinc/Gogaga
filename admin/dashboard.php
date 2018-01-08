@@ -240,7 +240,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 <link rel="stylesheet" type="text/css" href="https://bootswatch.com/3/paper/bootstrap.min.css">
 
 <!-- fancybox JS library -->
-<script src="../js/jquery.fancybox.js"></script>
+<script src="../js/jquery.fancybox2.js"></script>
 
 <script type="text/javascript" src="js/deleteitinerary.js"></script>
 
