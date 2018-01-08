@@ -61,9 +61,13 @@ if(isset($_POST["submitf"]))
 
   $sno=1;
     if(isset($_POST['hoteladdr'])){
+
+      //clean and santize the input data
+
       if($ref_type == "Domestic")
       {
            foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
+            $hoteladdr = mysqli_real_escape_string($conn,$hoteladdr);
                         $checkintime = $_POST['checkin'][$key];
                         $checkouttime = $_POST['checkout'][$key];
 
@@ -84,6 +88,7 @@ if(isset($_POST["submitf"]))
           else
           {
               foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
+                $hoteladdr = mysqli_real_escape_string($conn,$hoteladdr);
                         $checkintime = $_POST['checkin'][$key];
                         $checkouttime = $_POST['checkout'][$key];
 
