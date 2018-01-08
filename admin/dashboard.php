@@ -3065,6 +3065,7 @@ else
                                   <tr>
                                   <th>GHRN NO</th>
                                   <th>Customer Name</th>
+                                  <th>Customer Phone</th>
                                   <th>Destination</th>
                                   <th>Sent Date</th>
                                   <th>Start Date</th>
@@ -3089,6 +3090,7 @@ else
                             echo " <tr style='background-color: $color;'>
                                   <td>GHRN".(5000+$row["ref_num"])."</td>
                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
+                                  <td>".$row["contact_phone"]."</td>
                                   <td>".$row["holi_dest"]."</td>
                                   <td>".$row["senttocustomerdate"]."</td>
                                   <td>".$row["date_of_travel"]."</td>

@@ -505,6 +505,10 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                           {
                               $formstatus = $row["formstatus"];
 
+                              if($formstatus == "smashed"){
+                                $formstatus = "deleted";
+                              }
+
                               echo " <tr>
                                  
                                   <td>GHRN".(5000+(int)$row["ref_num"] )."</td>
@@ -1805,13 +1809,14 @@ else
                                   <tr>
                                   <th>GHRN NO</th>
                                   <th>Customer Name</th>
+                                  <th>Customer Phone</th>
                                   <th>Destination</th>
                                   <th>Sent Date</th>
                                   <th>Start Date</th>
                                   <th>End Date</th>
                                   <th>Employee</th>
                                   <th></th>
-                                  <th></th>
+                                  <th>Actions</th>
                                   <th></th>
                                 </tr>";
 
@@ -1827,6 +1832,7 @@ else
                               echo " <tr style='background-color: $color;'>
                                   <td>GHRN".(5000+(int)$row["ref_num"])."</td>
                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
+                                  <td>".$row["contact_phone"]."</td>
                                   <td>".$row["holi_dest"]."</td>
                                   <td>".$row["senttocustomerdate"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
