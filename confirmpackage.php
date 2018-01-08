@@ -282,7 +282,7 @@ if(isset($_GET["qr"]))
 			 				header('Location:dashbo2ard.php#/case2');
 			 			}
 
-
+			 	//partner tracking confirmed/converted
 			 	$cur_year = date("Y");
                 $cur_month = date("m");
 
