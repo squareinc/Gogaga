@@ -19,6 +19,8 @@ $location = "";
 $partnercode = "";
 $bankac = "";
 
+$invoiceNum = "";
+
 if(isset($_GET["q"])){
 	$ghrno .= (5000+(int)$_GET["q"]);
 }
@@ -63,6 +65,9 @@ if(isset($_GET["partnertype"]) && isset($_GET["partnersno"])){
 			//partnercode
 			$partnercode = "GHPLSUP".($partnersno-2000);
 
+				//invoice number
+			$invoiceNum = "SPCOM".date('ymdhi');
+
 			break;
 
 		case "holidaypartner":
@@ -82,6 +87,9 @@ if(isset($_GET["partnertype"]) && isset($_GET["partnersno"])){
 			//partnercode
 			$partnercode = "GHPLHP".($partnersno-4000);
 
+			//invoice number
+			$invoiceNum = "HPCOM".date('ymdhi');
+
 			break;
 	
 		case "salespartner":
@@ -100,6 +108,9 @@ if(isset($_GET["partnertype"]) && isset($_GET["partnersno"])){
 
 			//partnercode
 			$partnercode = "GHPLSP".($partnersno-6000);
+
+			//invoice number
+			$invoiceNum = "SLCOM".date('ymdhi');
 
 			break;
 		
@@ -328,7 +339,7 @@ x:publishsource="Excel">
  </tr>
  <tr height=46 style='mso-height-source:userset;height:35.1pt'>
   <td colspan=3 height=46 class=xl7622597 style='height:35.1pt;border-left:
-  none'>HPCOM/ST43105</td>
+  none'><?php echo $invoiceNum; ?></td>
   <td colspan=3 class=xl9122597 style='border-left:none'><?php echo date('D, M d, Y'); ?></td>
   <td colspan=2 class=xl9022597 style='border-left:none'>January-18</td>
  </tr>
