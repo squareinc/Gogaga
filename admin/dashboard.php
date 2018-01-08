@@ -776,6 +776,7 @@ var selectedHotelRow = "input[name='expirydate']";
                                   <th>Contact No.</th>
                                   <th>Total Package Cost</th>
                                   <th>Pending Payment</th>
+                                  <th>Balance Payment</th>
                                   <th>Destination</th>
                                   
                                   <th>Payment Status</th>
@@ -868,7 +869,7 @@ var selectedHotelRow = "input[name='expirydate']";
                                $agentst = "<a class='btn btn-danger btn-sm' role='button' href='agentconf.php?qr=".$row["ref_num"]."'>Pay</a>";
                               }
 
-                              
+                              $balancePayment = (int)$totalPackageCost - (int)$pendingPayment;
 
 
                               echo " <tr>
@@ -878,7 +879,8 @@ var selectedHotelRow = "input[name='expirydate']";
                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["contact_phone"]."</td>
                                   <td>".(int)$totalPackageCost."</td>
-                                  <td>".$pendingPayment."</td>
+                                  <td>".(int)$pendingPayment."</td>
+                                  <td>".$balancePayment."</td>
                                   <td>".$dest_place."</td>
                                   
                                   <td>".$pst."</td>
