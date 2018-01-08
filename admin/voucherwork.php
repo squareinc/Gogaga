@@ -2,6 +2,119 @@
 require("config.php");
 session_start();
 
+$removeClass = "";
+
+if(isset($_POST["save"]))
+{
+
+  $ref_value= $_GET["ref"];
+  $reftype = $_SESSION["vref_type"]; 
+  //$_SESSION["vref_val"] = $ref_value;
+
+  $tourmng = $_POST["tourmng"];
+  $confir_no = $_POST["confir_no"];
+  $paxnames = $_POST["paxnames"];
+
+ $sql = "UPDATE vouchertable 
+    SET tourmng='".$tourmng."',
+    confir_no='".$confir_no."',
+    paxnames='".$paxnames."'
+    WHERE ref_num ='".$ref_value."'";
+      if(($conn->query($sql))== true)
+      {
+      
+      }
+      else
+        header('Location:nopage.php');
+
+
+
+  $sno=1;
+    if(isset($_POST['hoteladdr'])){
+
+      //clean and santize the input data
+
+      if($reftype == "Domestic")
+      {
+           foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
+            $hoteladdr = mysqli_real_escape_string($conn,$hoteladdr);
+                        $checkintime = $_POST['checkin'][$key];
+                        $checkouttime = $_POST['checkout'][$key];
+
+                      $sql = "UPDATE hotels_domestic 
+                             SET hoteladdr ='".$hoteladdr."',
+                             checkintime ='".$checkintime."',
+                             checkouttime ='".$checkouttime."'
+                            WHERE ghrno ='".$ref_value."' and sno=".$sno." ";
+                            if(($conn->query($sql))== true)
+                            {
+                                $removeClass = "removed";
+                            }
+                              $sno++;
+
+                       }
+
+          }
+          else
+          {
+              foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
+                $hoteladdr = mysqli_real_escape_string($conn,$hoteladdr);
+                        $checkintime = $_POST['checkin'][$key];
+                        $checkouttime = $_POST['checkout'][$key];
+
+                      $sql = "UPDATE hotels_inter 
+                             SET hoteladdr ='".$hoteladdr."',
+                             checkintime ='".$checkintime."',
+                             checkouttime ='".$checkouttime."'
+                            WHERE ghrnno ='".$ref_value."' and sno=".$sno." ";
+                            if(($conn->query($sql))== true)
+                            {
+                             $removeClass = "removed";   
+                            }
+                              $sno++;
+
+                       }
+          }
+
+          header("Location: voucherwork.php?ref=$ref_value&saved=true");
+        }
+        else
+            echo "NOT PRESENT";
+
+
+
+}    
+
+
+//updating the status as vouchered
+
+if(isset($_POST["submitf"])){
+$ref_value= $_GET["ref"];
+
+ $sql = "UPDATE vouchertable 
+    SET status = 'Vouchered'
+    WHERE ref_num ='".$ref_value."'";
+      if(($conn->query($sql))== true)
+      {
+      
+      }
+      else
+        header('Location:nopage.php');
+
+      //
+
+  $sql = "UPDATE agent_form_data 
+         SET voucher_status ='Vouchered'
+        WHERE ref_num ='".$ref_value."' ";
+        if(($conn->query($sql))== true)
+        {
+        
+        }
+        else
+          header('Location:nopage.php');
+
+
+}
 
 
 if(isset($_GET["ref"]))
@@ -158,6 +271,9 @@ if($reftype == "International")
 
 }
 
+//save i.e, update data
+
+
 
 
 
@@ -193,7 +309,7 @@ if($reftype == "International")
 <body>
   <div class='container'>
     <h1>Voucher Design</h1>
-    <form action='voucherfinal.php' method='POST' class="form-inline" enctype="multipart/form-data">
+    <form method='POST' class="form-inline" enctype="multipart/form-data">
 
       <fieldset class='first_set'>
         <legend>Voucher Details</legend>     
@@ -243,13 +359,39 @@ if($reftype == "International")
       <br>
        <div class='row'>
               <div class ='col-md-3 col-md-push-5'>
-                <button type="submit" name='submitf' class="btn btn-primary">Submit</button>
+                <button type="submit" name='save' class="btn btn-success">Save</button>
+                <a href="voucherfinal.php" name='view' id="view" class="btn btn-warning" disabled="disabled">View</a>
+                <button type="submit" name='submitf' id="submit" class="btn btn-danger" disabled="disabled">Submit</button>
               </div>
         </div>
             
             <br><br>
 
   </div>
+
+<?php
+
+if($removeClass == "removed"){
+  echo "<script>//enable other buttons
+  $('#view').removeClass('disabled');
+  $('#submit').removeClass('disabled');
+
+</script>";
+}
+if (isset($_GET["saved"])) {
+  if($_GET["saved"] == "true"){
+    //saved i.e, clicked
+    echo "<script>
+    $('#view').attr('disabled',false);
+    $('#submit').attr('disabled',false);
+
+    </script>";
+  }
+
+}
+
+?>
+
 
 </body>
 </html>

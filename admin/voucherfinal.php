@@ -6,7 +6,10 @@ session_start();
  $ref_type = $_SESSION["vref_type"]; 
  $userid= $_SESSION["userid"];
 
- $sql = "SELECT * FROM login WHERE userid = '$userid'";
+
+
+//get the currently worked by employee name over jere
+ $sql = "SELECT * FROM login l INNER JOIN agent_form_data a ON a.currently_worked_by = l.userid WHERE a.ref_num = '$ref_value'";
         $res = $conn->query($sql) ;
         if ($res->num_rows) 
         {     
@@ -20,97 +23,28 @@ session_start();
            }
         }
 
+$tourmng = "";
+$confir_no = "";
+$paxnames = "";
+
+$sql = "SELECT * FROM vouchertable WHERE ref_num ='".$ref_value."'"; 
+
+$res = $conn->query($sql);
+
+  if($res->num_rows){
+    if($row = $res->fetch_assoc()){
+      $tourmng = $row["tourmng"];
+      $confir_no = $row["confir_no"];
+      $paxnames = $row["paxnames"];
+
+    }
+  }
+   
 
 
-     
-
-if(isset($_POST["submitf"]))
-{
-  $tourmng = $_POST["tourmng"];
+/*  $tourmng = $_POST["tourmng"];
   $confir_no = $_POST["confir_no"];
-  $paxnames = $_POST["paxnames"];
-
- $sql = "UPDATE vouchertable 
-    SET tourmng='".$tourmng."',
-    confir_no='".$confir_no."',
-    paxnames='".$paxnames."',
-    status = 'Vouchered',
-    downloaded = 'yes'
-    WHERE ref_num ='".$ref_value."'";
-      if(($conn->query($sql))== true)
-      {
-      
-      }
-      else
-        header('Location:nopage.php');
-
-      //
-
-      $sql = "UPDATE agent_form_data 
-             SET voucher_status ='Vouchered'
-            WHERE ref_num ='".$ref_value."' ";
-            if(($conn->query($sql))== true)
-            {
-            
-            }
-            else
-              header('Location:nopage.php');
-
-
-
-
-  $sno=1;
-    if(isset($_POST['hoteladdr'])){
-
-      //clean and santize the input data
-
-      if($ref_type == "Domestic")
-      {
-           foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
-            $hoteladdr = mysqli_real_escape_string($conn,$hoteladdr);
-                        $checkintime = $_POST['checkin'][$key];
-                        $checkouttime = $_POST['checkout'][$key];
-
-                      $sql = "UPDATE hotels_domestic 
-                             SET hoteladdr ='".$hoteladdr."',
-                             checkintime ='".$checkintime."',
-                             checkouttime ='".$checkouttime."'
-                            WHERE ghrno ='".$ref_value."' and sno=".$sno." ";
-                            if(($conn->query($sql))== true)
-                            {
-                                
-                            }
-                              $sno++;
-
-                       }
-
-          }
-          else
-          {
-              foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
-                $hoteladdr = mysqli_real_escape_string($conn,$hoteladdr);
-                        $checkintime = $_POST['checkin'][$key];
-                        $checkouttime = $_POST['checkout'][$key];
-
-                      $sql = "UPDATE hotels_inter 
-                             SET hoteladdr ='".$hoteladdr."',
-                             checkintime ='".$checkintime."',
-                             checkouttime ='".$checkouttime."'
-                            WHERE ghrnno ='".$ref_value."' and sno=".$sno." ";
-                            if(($conn->query($sql))== true)
-                            {
-                                
-                            }
-                              $sno++;
-
-                       }
-          }
-
-
-        }
-        else
-            echo "NOT PRESENT";
-
+  $paxnames = $_POST["paxnames"];*/
 
 
 $itpages = "";
@@ -177,7 +111,7 @@ $numOfRows = 0;
 
 
 
-}    
+    
         
 
 
