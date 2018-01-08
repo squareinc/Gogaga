@@ -938,16 +938,16 @@ var selectedHotelRow = "input[name='expirydate']";
                         if(isset($_GET["search_sup"]))
                         {   
                           $search_sup = $_GET["search_sup"];
-                          $sql = "SELECT * FROM superpartner 
+                          $sql = "SELECT * FROM superpartners 
                           WHERE name  LIKE '%".$search_sup."%'  
                           or phone LIKE '%".$search_sup."%' 
                           or email LIKE '%".$search_sup."%' 
-                          or suppartnercode LIKE '%".$search_sup."%' 
+                          or sno LIKE '%".$search_sup."%' 
                           ORDER BY name";   
                         }
                       else
                       {
-                        $sql= "SELECT * FROM superpartner ORDER BY name";
+                        $sql= "SELECT * FROM superpartners ORDER BY sno ASC";
                         unset($_GET["search_sup"]);
                       }
                     
@@ -968,11 +968,11 @@ var selectedHotelRow = "input[name='expirydate']";
                               
                               echo " <tr>
                                   <td>".$cnt_var++."</td>
-                                  <td>".$row["suppartnercode"]."</td>
+                                  <td>".$row["sno"]."</td>
                                   <td>".$row["name"]." </td>
                                   <td>".$row["phone"]."</td>
                                   <td>".$row["email"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_superpartner.php?q=".$row["suppartnercode"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_superpartner.php?q=".$row["sno"]."'>View</a></td>
                                 </tr>";
 
                           }
@@ -1017,16 +1017,16 @@ var selectedHotelRow = "input[name='expirydate']";
                         if(isset($_GET["search_holp"]))
                         {   
                           $search_holp = $_GET["search_holp"];
-                          $sql = "SELECT * FROM holidaypartner 
-                          WHERE nameoncard  LIKE '%".$search_holp."%'  
+                          $sql = "SELECT * FROM holidaypartners 
+                          WHERE name  LIKE '%".$search_holp."%'  
                           or contact LIKE '%".$search_holp."%' 
                           or email LIKE '%".$search_holp."%' 
-                          or holipartner LIKE '%".$search_holp."%' 
+                          or sno LIKE '%".$search_holp."%' 
                           ORDER BY nameoncard";   
                         }
                       else
                       {
-                        $sql= "SELECT * FROM holidaypartner ORDER BY nameoncard";
+                        $sql= "SELECT * FROM holidaypartners ORDER BY sno ASC";
                         unset($_GET["search_holp"]);
                       }
                     
@@ -1047,11 +1047,11 @@ var selectedHotelRow = "input[name='expirydate']";
                               
                               echo " <tr>
                                   <td>".$cnt_var++."</td>
-                                  <td>".$row["holipartner"]."</td>
-                                  <td>".$row["nameoncard"]." </td>
-                                  <td>".$row["contact"]."</td>
+                                  <td>".$row["sno"]."</td>
+                                  <td>".$row["name"]." </td>
+                                  <td>".$row["phone"]."</td>
                                   <td>".$row["email"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_holipartner.php?q=".$row["holipartner"]."'>View</a></td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_holipartner.php?q=".$row["sno"]."'>View</a></td>
                                 </tr>";
 
                           }
@@ -1095,16 +1095,16 @@ var selectedHotelRow = "input[name='expirydate']";
                         if(isset($_GET["search_sale"]))
                         {   
                           $search_sale = $_GET["search_sale"];
-                          $sql = "SELECT * FROM salespartner 
-                          WHERE salpartnercode  LIKE '%".$search_sale."%'  
-                          or persmail LIKE '%".$search_sale."%' 
-                          or salpartnername LIKE '%".$search_sale."%' 
+                          $sql = "SELECT * FROM salespartners 
+                          WHERE sno  LIKE '%".$search_sale."%'  
+                          or email LIKE '%".$search_sale."%' 
+                          or name LIKE '%".$search_sale."%' 
                           or phone LIKE '%".$search_sale."%' 
-                          ORDER BY salpartnercode DESC";   
+                          ORDER BY sno DESC";   
                         }
                       else
                       {
-                        $sql= "SELECT * FROM salespartner ORDER BY salpartnercode DESC";
+                        $sql= "SELECT * FROM salespartners ORDER BY sno ASC";
                         unset($_GET["search_sale"]);
                       }
                     
@@ -1125,11 +1125,11 @@ var selectedHotelRow = "input[name='expirydate']";
                               
                               echo " <tr>
                                   <td>".$cnt_var++."</td>
-                                   <td>".$row["salpartnercode"]." </td>
-                                  <td>".$row["salpartnername"]." </td>
+                                   <td>".$row["sno"]." </td>
+                                  <td>".$row["name"]." </td>
                                   <td>".$row["phone"]."</td>
-                                  <td>".$row["persmail"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_salespartner.php?q=".$row["salpartnercode"]."'>View</a></td>
+                                  <td>".$row["email"]."</td>
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='../view_salespartner.php?q=".$row["sno"]."'>View</a></td>
                                 </tr>";
 
                           }
