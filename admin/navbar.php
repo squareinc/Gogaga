@@ -46,12 +46,12 @@ if(isset($_GET["n"]))
       <ul class="nav navbar-nav navbar-right">
 
 
-      
+        
            <li class='dropdown'>
             <a href='' class='dropdown-toggle' data-toggle='dropdown' role='button' 
-            aria-haspopup='true' aria-expanded='false'> <?php echo $type ;?> panel  <span class='caret'></span></a>
+            aria-haspopup='true' id="adminButton" onclick="authPassword();" aria-expanded='false'> <?php echo $type ;?> panel  <span class='caret'></span></a>
 
-            <ul class='dropdown-menu'>
+            <ul class='dropdown-menu hidden' id="adminHidden" >
               <li><a href='dashboard.php#/create_user'>Create Account</a></li>
               <li><a href='dashboard.php#/account_settings'>Account settings</a></li>
               <li><a href='dashboard.php#/agentaccounts'>Agent Accounts</a></li>
@@ -178,7 +178,7 @@ if(isset($_GET["n"]))
             <li><a href="dashboard.php#/profile">Profile</a></li>
             <li><a href="dashboard.php#/settings">Settings</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="../logout.php"><span class='glyphicon glyphicon-log-in' style='padding-right:15px;' aria-hidden='true'></span>Logout</a></li>
+            <li><a href="../logout.php" onclick="logOutAdmin();"><span class='glyphicon glyphicon-log-in' style='padding-right:15px;' aria-hidden='true'></span>Logout</a></li>
           </ul>
 
         </li>
@@ -188,5 +188,45 @@ if(isset($_GET["n"]))
   </div><!-- /.container-fluid -->
 </nav>
 
+<script type="text/javascript">
+function authPassword(){
+   val = sessionStorage.getItem("SessionAdminPass");
+  if(val == "ok"){
+    console.log("logged in!");
+    $('#maincontrol').css("opacity", "1");
+    $("#passBox").addClass("hidden");
+    $("#adminHidden").removeClass("hidden");
+  }else{
+    console.log("not logged in!");
+    $('#maincontrol').css("opacity", "0.1");
+  $('#maincontrol').before('<div id="passBox" style="position: absolute; left: 50%; top: 50%;z-index: 1;"><h2 id="passwordlabel" style="color:red;"></h2><form onsubmit="authMain();" role="form"><label>Input Password</label><input type="password" id="adminPass" size="30" autofocus></form></div>');
+  } 
+  
 
+
+
+  //$("#adminHidden").removeClass("hidden");
+}
+
+function authMain(){
+  var pass = $("#adminPass").val();
+  console.log(pass);
+  if(pass == "somepassword"){
+    $('#maincontrol').css("opacity", "1");
+    $("#passBox").addClass("hidden");
+    $("#adminHidden").removeClass("hidden");
+    sessionStorage.setItem("SessionAdminPass","ok");
+  }else{
+    $("#passwordlabel").text("Error!");
+    sessionStorage.setItem("SessionAdminPass","error");
+  }
+return false;
+}
+
+
+function logOutAdmin(){
+  sessionStorage.setItem("SessionAdminPass","error");
+}
+
+</script>
 

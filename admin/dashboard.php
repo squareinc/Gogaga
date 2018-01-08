@@ -258,6 +258,26 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
   });
 
+$(document).on("focus", "input[name='expirydate']", function() {
+
+var selectedHotelRow = "input[name='expirydate']";
+
+    console.log("selectedHotelRow:"+selectedHotelRow);
+
+     //hotels checkoutdate daterangepicker          
+  $(selectedHotelRow).daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    }, 
+    function(start, end, label) {
+        var years = moment().diff(start, 'years');
+        console.log("Year:" + years);
+    });
+
+});
 
 
 </script>
@@ -366,8 +386,25 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 <script type="text/javascript" src="js/validation.min.js"></script>
 <script type="text/javascript" src="js/ajax.js"></script>
 
+<script type="text/javascript">
+  sessionStorage.SessionName = "SessionAdminPass";
+
+  $(document).ready(function(){
+    val = sessionStorage.getItem("SessionAdminPass");
+  if(val == "ok"){
+    console.log("logged in!");
+    $('#maincontrol').css("opacity", "1");
+    $("#passBox").addClass("hidden");
+  }else{
+    console.log("failure!");
+  } 
+  });
+ 
+</script>
+
 
 </head>
+
 <body ng-app='myApp' ng-controller="DashboardController" style='background-color:#FAF7F6;'>
  <!--Top Nav Bar-->
 
@@ -381,7 +418,9 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
           
 <!-- Main Content -->
 
-<div class="container-fluid">
+<div class="container-fluid" id="maincontrol">
+
+  
       <div class="row row-offcanvas row-offcanvas-right">
         <!-- Sidebar -->
         <div class="col-md-2 sidebar-offcanvas" id="sidebar">
@@ -419,7 +458,8 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 
                          <a href="#/clients" class="list-group-item"><span class='glyphicon glyphicon-briefcase' style='padding-right:15px;' aria-hidden='true'></span>Clients</a>
                         <a href="#/voucher" class="list-group-item"><span class='glyphicon glyphicon-search' style='padding-right:15px;' aria-hidden='true'></span>Vouchers</a>
-                        <a href="#/gallery" class="list-group-item"><span class='glyphicon glyphicon-picture' style='padding-right:15px;' aria-hidden='true'></span>Gallery</a>            
+                        <a href="#/gallery" class="list-group-item"><span class='glyphicon glyphicon-picture' style='padding-right:15px;' aria-hidden='true'></span>Gallery</a>   
+                        <a href="#/marketingflyers" class="list-group-item"><span class='glyphicon glyphicon-picture' style='padding-right:15px;' aria-hidden='true'></span>Marketing Flyers</a>            
                         <a href="https://www.google.co.in/maps" target='_blank' class="list-group-item"><span class='glyphicon glyphicon-map-marker' style='padding-right:15px;' aria-hidden='true'></span>Maps</a>
                             
 
@@ -2601,6 +2641,153 @@ if($type='Admin' || $type='Accounts')
 
        
 </script>
+
+
+
+
+<!--Marketing Flyers-->
+
+
+<script type="text/ng-template" id="pages/marketingflyers.php"> 
+              <h2>Marketing Flyers</h2>
+              
+
+               <?php
+               $gallerycontent="";
+              if(isset($_GET["search_image"]))
+                        {   
+                          $search_image = $_GET["search_image"];
+                          $sql = "SELECT * FROM marketing_flyers 
+                          WHERE location  LIKE '%".$search_image."%'  
+                          ORDER BY img_id";   
+                        }
+                      else
+                      {
+                      $sql= "SELECT * FROM marketing_flyers ORDER BY img_id";
+                      unset($_GET["search_image"]);
+                      }
+                    
+                    $res = $conn->query($sql);
+                    if ($res->num_rows) 
+                    //if(5<4)
+                    {    
+                                  
+                      while($row = $res->fetch_assoc()) 
+                          {
+                               
+
+                              $gallerycontent.= "
+                                      <a href='../marketingflyers/".$row["imgpath"]."'  data-fancybox='group' data-caption='".$row["location"]."'>
+                                       <img src='../marketingflyers/".$row["imgpath"]."'>
+                                       
+                                      </a>
+                                      
+                                    ";
+
+                          }
+                    }
+                    else
+                      $gallerycontent = "No results found";
+                       
+                       
+                    ?> 
+              <div class ='row'>               
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <form method='GET' action=''>
+                        
+                        <div class="col-md-9">
+                        <input type="text" placeholder='Search image...' name ='search_image'  size='300' class="form-control" aria-label="...">
+                        </div>
+
+                        <div class="col-md-3">
+                          <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                          </span>
+                          
+                        </div>
+
+                        </form>
+                          
+                      </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <a class='btn btn-danger btn-md' role='button' href='#/marketingflyersupload'>Upload</a>
+                  </div>
+                  <br> 
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+
+                <div class='gallery'>
+               <?php echo "$gallerycontent";?>
+             </div> <!--gallery end-->
+            </div>
+          </div>
+          </div> <!--container end-->
+            
+            
+</script>
+
+<script type="text/ng-template" id="pages/galleryupload.php"> 
+ 
+
+              <h2>Upload Marketing Flyers</h2>
+
+
+
+<div class='container'>
+
+<div class='col-md-6'>
+
+              <form method='POST' action='uploadmarketingflyers.php'  enctype="multipart/form-data">
+
+              <div class="form-group">
+               <div class='alert alert-info' role='alert'>
+                  <strong>Note</strong>: Only Entered Fields will be reflected.
+              </div>
+
+              <label for="location">Holiday Location</label>
+              <input type="text" class="form-control" name='location' placeholder="Enter Holiday Location" id="location" required>
+              </div>
+
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="text" class="pull-right" style="background: #fff; cursor: pointer;   width: 100%; margin-bottom: 10px;"  name="expirydate" placeholder="2017-09-01" size="7" required>
+
+              </div>
+
+             
+              <div class="form-group">
+              <label for="fileToUpload">Choose Image</label>
+                <input type="file" name="fileToUpload" id="fileToUpload">
+              </div>
+              <div id="image_feedback" style="color: red;"><p><b>Note:</b> The Image size must not exceed 3MB.</p></div>
+
+              <div class="col-md-3">
+                  <span class="input-group-btn">
+                     <button class="btn btn-primary" name='submit' type="submit">Upload</button>
+                  </span>
+              </div>    
+
+<script>
+  $('#imgdesc').ready(function() {
+    var text_max = 450;
+    $('#textarea_feedback').html(text_max + ' characters remaining');
+
+
+    $('#imgdesc').keyup(function() {
+        var text_length = $('#imgdesc').val().length;
+        var text_remaining = text_max - text_length;
+
+        $('#textarea_feedback').html(text_remaining + ' characters remaining');
+    });
+});
+</script>
+
+       
+</script>
+
+
 
 
 <script type="text/ng-template" id="pages/pricecalc.php"> 
