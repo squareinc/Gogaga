@@ -6,7 +6,10 @@ session_start();
  $ref_type = $_SESSION["vref_type"]; 
  $userid= $_SESSION["userid"];
 
- $sql = "SELECT * FROM login WHERE userid = '$userid'";
+
+
+//get the currently worked by employee name over jere
+ $sql = "SELECT * FROM login l INNER JOIN agent_form_data a ON a.currently_worked_by = l.userid WHERE a.ref_num = '$ref_value'";
         $res = $conn->query($sql) ;
         if ($res->num_rows) 
         {     
@@ -20,120 +23,77 @@ session_start();
            }
         }
 
+$tourmng = "";
+$confir_no = "";
+$paxnames = "";
+
+$sql = "SELECT * FROM vouchertable WHERE ref_num ='".$ref_value."'"; 
+
+$res = $conn->query($sql);
+
+  if($res->num_rows){
+    if($row = $res->fetch_assoc()){
+      $tourmng = $row["tourmng"];
+      $confir_no = $row["confir_no"];
+      $paxnames = $row["paxnames"];
+
+    }
+  }
+   
 
 
-     
-
-if(isset($_POST["submitf"]))
-{
-  $tourmng = $_POST["tourmng"];
+/*  $tourmng = $_POST["tourmng"];
   $confir_no = $_POST["confir_no"];
-  $paxnames = $_POST["paxnames"];
-
- $sql = "UPDATE vouchertable 
-    SET tourmng='".$tourmng."',
-    confir_no='".$confir_no."',
-    paxnames='".$paxnames."',
-    status = 'Vouchered'
-    WHERE ref_num ='".$ref_value."'";
-      if(($conn->query($sql))== true)
-      {
-      
-      }
-      else
-        header('Location:nopage.php');
-
-      //
-
-      $sql = "UPDATE agent_form_data 
-             SET voucher_status ='Vouchered'
-            WHERE ref_num ='".$ref_value."' ";
-            if(($conn->query($sql))== true)
-            {
-            
-            }
-            else
-              header('Location:nopage.php');
-
-
-
-
-  $sno=1;
-    if(isset($_POST['hoteladdr'])){
-      if($ref_type == "Domestic")
-      {
-           foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
-                        $checkintime = $_POST['checkin'][$key];
-                        $checkouttime = $_POST['checkout'][$key];
-
-                      $sql = "UPDATE hotels_domestic 
-                             SET hoteladdr ='".$hoteladdr."',
-                             checkintime ='".$checkintime."',
-                             checkouttime ='".$checkouttime."'
-                            WHERE ghrno ='".$ref_value."' and sno=".$sno." ";
-                            if(($conn->query($sql))== true)
-                            {
-                                
-                            }
-                              $sno++;
-
-                       }
-
-          }
-          else
-          {
-              foreach ( $_POST['hoteladdr'] as $key=>$hoteladdr) {
-                        $checkintime = $_POST['checkin'][$key];
-                        $checkouttime = $_POST['checkout'][$key];
-
-                      $sql = "UPDATE hotels_inter 
-                             SET hoteladdr ='".$hoteladdr."',
-                             checkintime ='".$checkintime."',
-                             checkouttime ='".$checkouttime."'
-                            WHERE ghrnno ='".$ref_value."' and sno=".$sno." ";
-                            if(($conn->query($sql))== true)
-                            {
-                                
-                            }
-                              $sno++;
-
-                       }
-          }
-
-
-        }
-        else
-            echo "NOT PRESENT";
-
+  $paxnames = $_POST["paxnames"];*/
 
 
 $itpages = "";
 
+$hotelcheckintime = array();
+$hotelcheckouttime = array();
+$hotelnameArr = array();
+$i = 0;
+$numOfRows = 0;
+
  $sql = "SELECT * FROM itdaywise WHERE ghrnno = '$ref_value' ORDER BY day";
         $res = $conn->query($sql) ;
         if ($res->num_rows) 
-        {     
+        { 
+              
+
            while($row = $res->fetch_assoc()) 
            {
+             
               $itpages .= " <div class='panel panel-default'>
                                                   <div class='panel-heading'>
                                                         <div class='row'>
                                                           <div class='col-md-3'>&nbsp;&nbsp;&nbsp;<strong>Day ".$row["day"]." :</strong> ".$row["date"]."</div>
+                                                          
                                                         </div> 
                                                   </div>
                                                   <div class='panel-body'>
+                                                        <div class='row'>
                                                         
-                                                        <div class='ro2w' style='float:left;'>
-                                                           <div class='col-md-3'><strong>".$row["title"]."</strong></div>
-                                                        </div> <br>
-                                                         <div class='row1' style='float:left;'>
-                                                           <div class='col-md-3'><strong>".$row["hotelname"]."</strong></div>
+                                                           <div class='col-md-4'><strong>".$row["title"]."</strong></div>
+                                                        
+                                                         
+                                                           <div class='col-md-4'><strong>".$row["hotelname"]."</strong></div>
+                                                      
+                                                       
+                                                           <div class='col-md-4'><strong>".$row["mealplan"]."</strong></div>
+                                                       
+
                                                         </div>
-                                                        <div class='row1' style='float:left;'>
-                                                           <div class='col-md-3'><strong>".$row["mealplan"]."</strong></div>
-                                                        </div> 
                                                          
                                                         <br>
+
+                                                        <div class='row' style='float:left;'>
+                                                            <div class='col-md-12'>
+                                                              <br>
+                                                              ".$row["hoteladdr"]."
+                                                            </div>
+                                                        </div>
+
                                                         <div class='row' style='float:left;'>
                                                             <div class='col-md-12'>
                                                               <br>
@@ -143,6 +103,7 @@ $itpages = "";
 
                                                   </div>
                                         </div> ";
+                                        $i++;
            }
         }
 
@@ -150,7 +111,7 @@ $itpages = "";
 
 
 
-}    
+    
         
 
 
@@ -280,12 +241,12 @@ else
 
 <html>
 <head>
-	  <title>Format</title>
+    <title>Format</title>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--CSS Tags-->
-  <link rel="icon" href="images/logo_icon.png"/>
+  <link rel="icon" href="../images/logo_icon.png"/>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -303,11 +264,18 @@ else
 
     };
   </script>
-	<style>@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');</style>
+  <style>@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');</style>
+
+   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <style type="text/css">
-.*{
-	padding: 0px;
-	margin: 0px;
+.* h1 h2 h3 h4 p div tr th table{
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Lato', sans-serif !important;
+}
+
+body h1 h2 h3 h4 p div tr th table{
+  font-family: 'Lato', sans-serif !important;
 }
 .top_part
 {
@@ -315,53 +283,60 @@ else
   top: 5px;
   left: 40px;
   width: 70%;
+  font-family: 'Lato', sans-serif !important;
 }
 .logo
 {
-	position: absolute;
-	right: 10px;
-	top: 0px;
+  position: absolute;
+  right: 10px;
+  top: 0px;
 }
 
 .top_heading
 {
-	position:absolute;
-	top: -20px;
-	left:20px;
-	
-	width: 300px;
+  position:absolute;
+  top: -20px;
+  left:20px;
+  width: 300px;
+  font-family: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif !important;
 }
 .content
 {
-	position: absolute;
-	top: 70px;
-	left: 50px;
-	font-family: 'Source Sans Pro', sans-serif; 
+  position: absolute;
+  /*top: 470px;*/
+  left: 50px;
+  font-family: 'Lato', sans-serif; 
+
 
 }
 tr
 {
-	height: 40px;
+  height: 40px;
+  font-family: 'Lato', sans-serif !important;
 }
 .table1
 {
-	position: absolute;
-	left: 100px;
+  position: absolute;
+  left: 100px;
+  font-family: 'Lato', sans-serif !important;
 }
 .top_section
-{	
-	position: absolute;
-	top: 60px;
-	float: left;
+{ 
+  position: absolute;
+  top: 60px;
+  float: left;
+  font-family: 'Lato', sans-serif !important;
 
 }
 .bot_travel
-{	position: absolute;
-	top: 900px;
+{ position: absolute;
+  top: 900px;
   left: 50px;
   padding-right: 100px;
-	height: 100px;
-	width: 100%;
+  height: 100px;
+  width: 100%;
+  font-family: 'Lato', sans-serif !important;
 }
 .holipic
 {
@@ -379,6 +354,7 @@ tr
   height: 30px;
   padding-left: 10px;
   width: 50px;
+  font-family: 'Lato', sans-serif !important;
 }
 .ithead
 {
@@ -386,6 +362,7 @@ tr
   height: 30px;
   padding-left: 10px;
   width: 250px;
+  font-family: 'Lato', sans-serif !important;
 }
 .ithotel
 {
@@ -393,6 +370,7 @@ tr
   height: 30px;
   padding-left: 10px;
   width: 250px;
+  font-family: 'Lato', sans-serif !important;
 }
 .itmeal
 {
@@ -400,6 +378,7 @@ tr
   height: 30px;
   padding-left: 10px;
   width: 150px;
+  font-family: 'Lato', sans-serif !important;
 }
 .itdate
 {
@@ -407,6 +386,7 @@ tr
   height: 30px;
   padding-left: 10px;
   width: 150px;
+  font-family: 'Lato', sans-serif !important;
 }
 </style>
 
@@ -470,9 +450,8 @@ tr
                     <td><?php echo "$return_date_of_travel";?></td>
                </tr>
         
-  </table>
-  <br>
-  <table class='table table-responsive' style='border:none;background-color: white;'>
+<br><br>
+<tr></tr>
                  <tr>
                      <th style='width:400px;'>ITINERARY MANAGER</th>
                      <td><?php echo "$username";?></td>
@@ -495,6 +474,7 @@ tr
                </tr>
         
   </table>
+
   <p style='font-size:12px;'>
   Thank you for using Gogaga Holidays to book your Holiday Package / Hotel Accommodations. Please  Kindly note, your booking is CONFIRMED and required to contact the hotel or Gogaga Holidays to reconfirm the same. You will need to carry a copy of this
    e-mail and present it at the hotel at the time of check in with valid ID proof for all the pax.  We hope you have a pleasant stay and look forward to assisting again!</p>
@@ -688,19 +668,12 @@ $sql = "SELECT * FROM flights_info WHERE ghrno = '".$ref_value."'  ORDER BY sno"
 <script type="text/javascript">
 
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 
     window.print();
 
 
-});
-
-
-
-
-
-
-
+});*/
 
 
 
