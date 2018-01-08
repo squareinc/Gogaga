@@ -114,7 +114,7 @@ include "admin-sidebar.php";
           switch ($type) {
                       case "salespartner":
                         //insert into salespartner
-                          $sql = "UPDATE salespartners SET name = '$name', phone = '$phone', bankac = '$bankac', bankname = '$bankname', district = '$district', state = '$state'";
+                          $sql = "UPDATE salespartners SET name = '$name', phone = '$phone', bankac = '$bankac', bankname = '$bankname', district = '$district', state = '$state' WHERE email = '$userid'";
                                           
                             //echo $sql;
                           if($conn->query($sql) == true)
@@ -141,7 +141,7 @@ include "admin-sidebar.php";
 
                       case "holidaypartner":
                         //insert into salespartner
-                          $sql = "UPDATE holidaypartners SET name = '$name', phone = '$phone', bankac = '$bankac', bankname = '$bankname', district = '$district', state = '$state'";
+                          $sql = "UPDATE holidaypartners SET name = '$name', phone = '$phone', bankac = '$bankac', bankname = '$bankname', district = '$district', state = '$state' WHERE email = '$userid'";
 
                           if($conn->query($sql) == true)
                           {
@@ -166,7 +166,7 @@ include "admin-sidebar.php";
 
                       case "superpartner":
                         //insert into salespartner
-                          $sql = "UPDATE superpartners SET name = '$name', phone = '$phone', bankac = '$bankac', bankname = '$bankname', district = '$district', state = '$state'";
+                          $sql = "UPDATE superpartners SET name = '$name', phone = '$phone', bankac = '$bankac', bankname = '$bankname', district = '$district', state = '$state' WHERE email = '$userid'";
 
                           if($conn->query($sql) == true)
                           {
