@@ -211,7 +211,7 @@ function authPassword(){
 function authMain(){
   var pass = $("#adminPass").val();
   console.log(pass);
-  if(pass == "somepassword"){
+  if(pass == "GOGAGAHO15122015"){
     $('#maincontrol').css("opacity", "1");
     $("#passBox").addClass("hidden");
     $("#adminHidden").removeClass("hidden");
