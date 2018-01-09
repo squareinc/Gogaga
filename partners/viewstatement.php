@@ -152,19 +152,19 @@ if(isset($_GET["holitype"]) && isset($_GET["partnertype"]) ){
 					case "superpartner":
 						$commPerc = $supperc;
 						$grossVal = ($baseprice * $commPerc) / 100;
-						$tds = $baseprice * 0.002;
+						$tds = $grossVal * 0.05;
 						$netPayable = $grossVal - $tds;
 						break;
 					case "holidaypartner":
 						$commPerc = $holiperc;
 						$grossVal = ($baseprice * $commPerc) / 100;
-						$tds = $baseprice * 0.002;
+						$tds = $grossVal * 0.05;
 						$netPayable = $grossVal - $tds;
 						break;
 					case "salespartner":
 						$commPerc = $salperc;
 						$grossVal = ($baseprice * $commPerc) / 100;
-						$tds = $baseprice * 0.002;
+						$tds = $grossVal * 0.05;
 						$netPayable = $grossVal - $tds;
 						break;
 					
@@ -208,19 +208,19 @@ if(isset($_GET["holitype"]) && isset($_GET["partnertype"]) ){
 					case "superpartner":
 						$commPerc = $supperc;
 						$grossVal = ($baseprice * $commPerc) / 100;
-						$tds = $baseprice * 0.002;
+						$tds = $grossVal * 0.05;
 						$netPayable = $grossVal - $tds;
 						break;
 					case "holidaypartner":
 						$commPerc = $holiperc;
 						$grossVal = ($baseprice * $commPerc) / 100;
-						$tds = $baseprice * 0.002;
+						$tds = $grossVal * 0.05;
 						$netPayable = $grossVal - $tds;
 						break;
 					case "salespartner":
 						$commPerc = $salperc;
 						$grossVal = ($baseprice * $commPerc) / 100;
-						$tds = $baseprice * 0.002;
+						$tds = $grossVal * 0.05;
 						$netPayable = $grossVal - $tds;
 						break;
 					
