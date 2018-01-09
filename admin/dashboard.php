@@ -1194,16 +1194,21 @@ var selectedHotelRow = "input[name='expirydate']";
     <div class="input-group">
       <form method='GET' action=''>
       
-      <div class="col-md-9">
+      <div class="col-md-6">
       <input type="text" placeholder='Search Commission...' size='300' name ='search_pcomm' class="form-control" aria-label="...">
       </div>
 
       <div class="col-md-3">
         <span class="input-group-btn">
           <button class="btn btn-primary" type="submit">Search</button>
-        </span>
+        </span>        
+      </div>
 
-      
+       <div class="col-md-3">
+
+          Super Partner Amount<p id="supAmount"></p>
+           Holiday Partner Amount<p id="holAmount"></p>
+            Sales Partner Amount<p id="salAmount"></p>       
       </div>
     
     </div><!-- /input-group -->
@@ -1236,6 +1241,7 @@ var selectedHotelRow = "input[name='expirydate']";
                     if ($res->num_rows) 
                     {     echo "<div class='table-responsive'><table class='table table-hover table-list' style='background-color: white;'>
                                   <tr>
+                                    <th></th>
                                     <th>Sno</th>
                                     <th>Client Name</th>
                                     <th>Holiday Type</th>
@@ -1289,6 +1295,7 @@ var selectedHotelRow = "input[name='expirydate']";
                               }
 
                               echo " <tr>
+                                  <td><input type='checkbox' class='paybill' sup='".$row["sup"]."' hol='".$row["hol"]."' sal='".$row["sal"]."'></td>
                                   <td>".$cnt_var++."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]." </td>
@@ -1339,16 +1346,21 @@ var selectedHotelRow = "input[name='expirydate']";
     <div class="input-group">
       <form method='GET' action=''>
       
-      <div class="col-md-9">
+      <div class="col-md-6">
       <input type="text" placeholder='Search Commission...' size='300' name ='search_pcomm' class="form-control" aria-label="...">
       </div>
 
-      <div class="col-md-3">
+     <div class="col-md-3">
         <span class="input-group-btn">
           <button class="btn btn-primary" type="submit">Search</button>
-        </span>
+        </span>        
+      </div>
 
-      
+       <div class="col-md-3">
+
+          Super Partner Amount<p id="supAmountX"></p>
+           Holiday Partner Amount<p id="holAmountX"></p>
+            Sales Partner Amount<p id="salAmountX"></p>       
       </div>
     
     </div><!-- /input-group -->
@@ -1381,6 +1393,7 @@ var selectedHotelRow = "input[name='expirydate']";
                     if ($res->num_rows) 
                     {     echo "<table class='table table-hover table-list' style='background-color: white;'>
                                   <tr>
+                                    <th></th>
                                     <th>Sno</th>
                                     <th>Client Name</th>
                                     <th>Holiday Type</th>
@@ -1397,6 +1410,7 @@ var selectedHotelRow = "input[name='expirydate']";
                           {
                               
                               echo " <tr>
+                              <td><input type='checkbox' class='paybillX' sup='".$row["sup"]."' hol='".$row["hol"]."' sal='".$row["sal"]."'></td>
                                   <td>".$cnt_var++."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]." </td>
@@ -3451,6 +3465,225 @@ else
 
 
 
+<script>
+$(document).ready(function(){
+
+  var supK = 0;
+  var holK = 0;
+  var salK = 0;
+        $(".paybill").change(function() {
+          console.log("clicked");
+               if($(this).is(":checked")) {
+                //'checked' event code
+                 console.log("checked");
+              var sup = $(this).attr("sup");         // Retrieves the text within <td>
+              var hol = $(this).attr("hol");         // Retrieves the text within <td>
+
+              var sal = $(this).attr("sal");       // Retrieves the text within <td>
+
+              console.log("got this sup amount ");
+              console.log(sup);
+              console.log("got this hol amount ");
+              console.log(hol);
+
+              console.log("got this sal amount ");
+              console.log(sal);
+
+              supK = supK + parseInt(sup); 
+              holK = holK + parseInt(hol); 
+              salK = salK + parseInt(sal); 
+              //now add and display
+
+              $("#supAmount").text(supK);
+              $("#holAmount").text(holK);
+              $("#salAmount").text(salK);
+
+                  
+             
+                return;
+             }else if(!($(this).is(":checked"))){
+              //'unchecked' event code
+              //empty the json object
+         console.log("unchecked");
+              var sup = $(this).attr("sup");         // Retrieves the text within <td>
+              var hol = $(this).attr("hol");         // Retrieves the text within <td>
+
+              var sal = $(this).attr("sal");       // Retrieves the text within <td>
+
+
+
+
+              //subtract them on uncheck
+
+              supK = supK - parseInt(sup); 
+              holK = holK - parseInt(hol); 
+              salK = salK - parseInt(sal);
+
+
+                //now add and display
+
+              $("#supAmount").text(supK);
+              $("#holAmount").text(holK);
+              $("#salAmount").text(salK); 
+                  
+
+              //make the values as zero of sup, hol, sal
+              console.log("got this sup amount ");
+              console.log(sup);
+              console.log("got this hol amount ");
+              console.log(hol);
+
+              console.log("got this sal amount ");
+              console.log(sal);
+
+      
+
+
+             }
+             
+
+
+          });
+});  
+
+
+
+$(document).ready(function(){
+
+  var supX = 0;
+  var holX = 0;
+  var salX = 0;
+        $(".paybillX").change(function() {
+          console.log("clicked");
+               if($(this).is(":checked")) {
+                //'checked' event code
+                 console.log("checked");
+              var sup = $(this).attr("sup");         // Retrieves the text within <td>
+              var hol = $(this).attr("hol");         // Retrieves the text within <td>
+
+              var sal = $(this).attr("sal");       // Retrieves the text within <td>
+
+              console.log("got this sup amount ");
+              console.log(sup);
+              console.log("got this hol amount ");
+              console.log(hol);
+
+              console.log("got this sal amount ");
+              console.log(sal);
+
+              supX = supX + parseInt(sup); 
+              holX = holX + parseInt(hol); 
+              salX = salX + parseInt(sal); 
+              //now add and display
+
+              $("#supAmountX").text(supX);
+              $("#holAmountX").text(holX);
+              $("#salAmountX").text(salX);
+
+                  
+             
+                return;
+             }else if(!($(this).is(":checked"))){
+              //'unchecked' event code
+              //empty the json object
+         console.log("unchecked");
+              var sup = $(this).attr("sup");         // Retrieves the text within <td>
+              var hol = $(this).attr("hol");         // Retrieves the text within <td>
+
+              var sal = $(this).attr("sal");       // Retrieves the text within <td>
+
+
+
+
+              //subtract them on uncheck
+
+              supX = supX - parseInt(sup); 
+              holX = holX - parseInt(hol); 
+              salX = salX - parseInt(sal);
+
+
+                //now add and display
+
+              $("#supAmountX").text(supX);
+              $("#holAmountX").text(holX);
+              $("#salAmountX").text(salX); 
+                  
+
+              //make the values as zero of sup, hol, sal
+              console.log("got this sup amount ");
+              console.log(sup);
+              console.log("got this hol amount ");
+              console.log(hol);
+
+              console.log("got this sal amount ");
+              console.log(sal);
+
+      
+
+
+             }
+             
+
+
+          });
+});  
+
+
+
+
+$(".paybill").change(function() {
+          console.log("clicked");
+               if($(this).is(":checked")) {
+                //'checked' event code
+                 console.log("checked");
+              var sup = $(this).closest("tr")   // Finds the closest row <tr> 
+                                 .find("sup")     // Gets a descendent with class="nr"
+                                 .text();         // Retrieves the text within <td>
+              var hol = $(this).closest("tr")   // Finds the closest row <tr> 
+                                 .find("hol")     // Gets a descendent with class="nr"
+                                 .text();         // Retrieves the text within <td>
+
+              var sal = $(this).closest("tr")   // Finds the closest row <tr> 
+                                 .find("sal")     // Gets a descendent with class="nr"
+                                 .text();         // Retrieves the text within <td>
+
+              console.log("got this sup amount ");
+              console.log(sup);
+              console.log("got this hol amount ");
+              console.log(hol);
+
+              console.log("got this sal amount ");
+              console.log(sal);
+                  
+             
+                return;
+             }else if(!($(this).is(":checked"))){
+              //'unchecked' event code
+              //empty the json object
+              var uniqueno = $(this).closest("tr")   // Finds the closest row <tr> 
+                                 .find(".uniqueno")     // Gets a descendent with class="nr"
+                                 .text();         // Retrieves the text within <td>
+              var bill_date = $(this).closest("tr")   // Finds the closest row <tr> 
+                                 .find(".bill_date")     // Gets a descendent with class="nr"
+                                 .text();         // Retrieves the text within <td>
+
+              console.log("got this uniqueno ");
+              console.log(uniqueno);
+              console.log("got this bill_date ");
+              console.log(bill_date);
+                  
+      
+
+
+             }
+             
+
+
+          });
+
+</script>
+
+
 
 <script>
 
@@ -3628,6 +3861,8 @@ function toogleDataSeries(e){
 
 
 </script>
+
+
 
 </body>
 </html>
