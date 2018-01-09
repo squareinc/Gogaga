@@ -776,7 +776,7 @@ var selectedHotelRow = "input[name='expirydate']";
                                   <th>Contact No.</th>
                                   <th>Total Package Cost</th>
                                   <th>Pending Payment</th>
-                                  <th>Balance Payment</th>
+                                  <th>Amount Received</th>
                                   <th>Destination</th>
                                   
                                   <th>Payment Status</th>
@@ -1234,7 +1234,7 @@ var selectedHotelRow = "input[name='expirydate']";
                     
                       $res = $conn->query($sql) ;
                     if ($res->num_rows) 
-                    {     echo "<table class='table table-hover table-list' style='background-color: white;'>
+                    {     echo "<div class='table-responsive'><table class='table table-hover table-list' style='background-color: white;'>
                                   <tr>
                                     <th>Sno</th>
                                     <th>Client Name</th>
@@ -1242,37 +1242,92 @@ var selectedHotelRow = "input[name='expirydate']";
                                     <th>Destination</th>
                                     <th>Commission</th>
                                     <th>Super Partner</th>
+                                    <th>Amount</th>
+                                    <th></th>
                                     <th>Holiday Partner</th>
+                                    <th>Amount</th>
+                                    <th></th>
                                     <th>Sales Partner</th>
+                                    <th>Amount</th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                   </tr>";
                                   $cnt_var=1;
+                                   $supname = "";
+                                   $holiname = "";
+                                   $salname = "";
                       while($row = $res->fetch_assoc()) 
                           {
-                              
+                              $sup_sno = $row["sup_sno"];
+                              $holi_sno = $row["holi_sno"];
+                              $sal_sno = $row["sal_sno"];
+                             
+
+                              $sql2 = "SELECT name FROM superpartners WHERE sno = '$sup_sno'";
+
+                              $res2 = $conn->query($sql2);
+
+                              if($row2 = $res2->fetch_assoc()){
+                                $supname = $row2["name"];
+                              }
+
+                              $sql3 = "SELECT name FROM holidaypartners WHERE sno = '$holi_sno'";
+
+                              $res3 = $conn->query($sql3);
+
+                              if($row3 = $res3->fetch_assoc()){
+                                $holiname = $row3["name"];
+                              }
+
+                              $sql4 = "SELECT name FROM salespartners WHERE sno = '$sal_sno'";
+
+                              $res4 = $conn->query($sql4);
+
+                              if($row4 = $res4->fetch_assoc()){
+                                $salname = $row4["name"];
+                              }
+
                               echo " <tr>
                                   <td>".$cnt_var++."</td>
                                   <td>".$row["clientname"]."</td>
                                   <td>".$row["holitype"]." </td>
                                   <td>".$row["holidest"]."</td>
                                   <td><b style='color:red;'>".$row["commamt"]." INR</b></td>
-                                  <td>".$row["sup"]."</td>
-                                  <td>".$row["hol"]."</td>
-                                  <td>".$row["sal"]."</td>
-                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href=''>View</a></td>
-                                  <td><a class='btn btn-success btn-sm' role='button' target='_blank' href=''>Download</a></td>
-                                </tr>";
+                                  <td>".$supname."</td>
 
+                                  <td>".$row["sup"]."</td>
+                                  
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='viewstatement.php?q=".$row["ghrno"]."&cname=".$row["clientname"]."&dest=".$row["holidest"]."&holitype=".$row["holitype"]."&partnertype=superpartner&partnersno=".$row["sup_sno"]."'>View</a></td>
+                                  <td>".$holiname." </td>
+
+                                  <td>".$row["hol"]." </td>
+                                  
+                                  <td><a class='btn btn-primary btn-sm' role='button' target='_blank' href='viewstatement.php?q=".$row["ghrno"]."&cname=".$row["clientname"]."&dest=".$row["holidest"]."&holitype=".$row["holitype"]."&partnertype=holidaypartner&partnersno=".$row["holi_sno"]."'>View</a>
+                                  </td>
+
+                                  <td>".$salname." </td>
+
+                                  <td>".$row["sal"]." </td>
+
+                                  
+
+                                  <td> <a class='btn btn-primary btn-sm' role='button' target='_blank' href='viewstatement.php?q=".$row["ghrno"]."&cname=".$row["clientname"]."&dest=".$row["holidest"]."&holitype=".$row["holitype"]."&partnertype=salespartner&partnersno=".$row["sal_sno"]."'>View</a></td>
+                                  <td><a class='btn btn-danger btn-sm' role='button' href='agentconf2.php?qr=".$row["ghrno"]."'>Download</a>
+                                  
+                                </tr>";
+                                $supname = "";
+                                 $holiname = "";
+                                 $salname = "";
                           }
                     }
                     else
                       echo "No results found";
-                              
+                            
                        
                     ?> 
             
-
+</div>
 </script>
 
 <script type="text/ng-template" id="pages/issuedstat.php"> 
