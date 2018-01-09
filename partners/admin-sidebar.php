@@ -98,6 +98,9 @@
         <li id="sidebar-inter-sim-cards">
           <a href="inter-sim-cards.php"><i class="fa fa-link"></i> <span>International Sim Cards</span></a>
         </li>
+        <li id="sidebar-travel-guide">
+          <a href="travel-guide.php"><i class="fa fa-link"></i> <span>Travel Guide</span></a>
+        </li>
         <li id="sidebar-travel-insurance">
           <a href="travel-insurance.php"><i class="fa fa-link"></i> <span>Travel Insurance</span></a>
         </li>
