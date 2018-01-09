@@ -78,6 +78,14 @@ app.config(function($routeProvider) {
     templateUrl : 'pages/itsubmitted.php',
     controller  : 'SubmittedItinerariesController'
   })
+.when('/itdsr', {
+    templateUrl : 'pages/itdsr.php',
+    controller  : 'itdsrController'
+  })
+  .when('/itsalecancelled', {
+    templateUrl : 'pages/itsalecancelled.php',
+    controller  : 'itsalecancelledController'
+  })  
 .when('/itpending', {
     templateUrl : 'pages/itpending.php',
     controller  : 'PendingItinerariesController'
@@ -207,6 +215,16 @@ app.controller('CurrencyController', function($scope) {
 app.controller('SubmittedItinerariesController', function($scope) {
   $scope.message = 'Hello from SubmittedItinerariesController';
 });
+
+app.controller('itdsrController', function($scope) {
+  $scope.message = 'Hello from itdsrController';
+});
+
+app.controller('itsalecancelledController', function($scope) {
+  $scope.message = 'Hello from itsalecancelledController';
+});
+
+
 app.controller('PendingItinerariesController', function($scope, $location) {
   $scope.message = 'Hello from PendingItinerariesController';  
 });

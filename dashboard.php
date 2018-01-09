@@ -231,6 +231,9 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
 <!-- fancybox JS library -->
 <script src="js/jquery.fancybox.js"></script>
 
+<!-- fancybox JS library -->
+<script src="js/dsr.js"></script>
+
 <script type="text/javascript">
   $('#notifbut').click(function(e)
   {
@@ -370,6 +373,7 @@ $sql1= "SELECT COUNT(*) as cntt FROM agent_form_data
                     <a href="javascript:void(0):#itinerary5" class="list-group-item list-group-item" data-toggle="collapse" data-parent="#MainMenu"><span class='glyphicon glyphicon-tasks' style='padding-right:15px;' aria-hidden='true'></span>Itineraries<span class="caret" style='position:absolute;top:17px;right:30px;'></span></a>
                             <div class="collapse" id="itinerary5">
                               <a href="form2.php" class="list-group-item list-group-item" style='padding-left:30px;'>Request Form</a>
+                              <a href="#/itdsr" class="list-group-item list-group-item" style='padding-left:30px;'>DSR</a>
                               <a href="#/itsubmitted" class="list-group-item list-group-item" style='padding-left:30px;'>Submitted</a>
                               <a href="#/itpending" class="list-group-item list-group-item" style='padding-left:30px;'>Pending <span class="badge"><?php echo "$count_pending";?></span> </a>
                               <a href="#/itsmashed" class="list-group-item list-group-item" style='padding-left:30px;'>Deleted <span class="badge"><?php echo "$count_smashed";?></span> </a>
@@ -1811,6 +1815,7 @@ else
                                   <th>Customer Name</th>
                                   <th>Customer Phone</th>
                                   <th>Destination</th>
+                                  <th>Sales Manager</th>
                                   <th>Sent Date</th>
                                   <th>Start Date</th>
                                   <th>End Date</th>
@@ -1829,11 +1834,16 @@ else
                               }else{
                                 $color = "#FFF";
                               }
+
+                              if($row["remarkstatus"] == "accepted"){
+                                $color = "#f1c40f";
+                              }
                               echo " <tr style='background-color: $color;'>
                                   <td>GHRN".(5000+(int)$row["ref_num"])."</td>
                                   <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
                                   <td>".$row["contact_phone"]."</td>
                                   <td>".$row["holi_dest"]."</td>
+                                  <td>".$row["salesmanager"]."</td>
                                   <td>".$row["senttocustomerdate"]."</td>
                                   <td>".$row["date_of_travel"]."</td>
                                   <td>".$row["return_date_of_travel"]."</td>
@@ -1862,6 +1872,172 @@ else
 
                       ?>
 </script>
+
+
+
+<script type="text/ng-template" id="pages/itdsr.php"> 
+              <h2>Daily Sales Record</h2>
+              
+
+<!-- Button trigger modal -->
+
+
+            <div class="modal fade" id="deleteitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="documnent">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Remark</h4>
+              </div>
+              <div class="modal-body">
+                <p >Please Provide the remark</p>
+                <div class="form-group">
+                  <label for="deletereason"><b>Remark:</b></label><br>
+                  <textarea name="deletereason" id="deletereason" placeholder="Enter Remarks for the itinerary" cols="50" rows="6" autofocus required></textarea>
+                </div>
+                
+                <b><p id="pagetitleinmodal"></p></b>
+                <p id="pagetitledeleteError"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="modalCloseButton" class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+
+                <button type="button" id="submitReason" class="btn btn-warning pull-left" onClick="#">Submit Remark</button>
+                
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+      <br>
+      <br>      
+
+
+<div class ='row'>               
+
+  <div class="col-md-9">
+    <div class="input-group">
+      <form method='GET' action=''>
+      
+      <div class="col-md-9">
+      <input type="text" placeholder='Search here..' name ='search_param_submitted' id='search_param_submitted' size='300' class="form-control" aria-label="...">
+      </div>
+
+      <div class="col-md-3">
+        <span class="input-group-btn">
+          <button class="btn btn-danger" type="submit">Search</button>
+        </span>
+      </div>
+      </form>
+    
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+
+</div>
+<br>
+                   
+
+                     <?php
+
+                    
+                        if(isset($_GET["search_param_submitted"]))
+                        {   
+                          
+                          $search_param_submitted = $_GET["search_param_submitted"];
+                          $search_param_submitted = explode("N", $search_param_submitted);
+                          $param_ref = (int)$search_param_submitted[1];
+                          $param_ref = $param_ref - 5000;
+
+                          $sql1 = "SELECT * FROM agent_form_data INNER JOIN login WHERE
+                          (agent_form_data.currently_worked_by = login.userid) and (formstatus != 'pending' and formstatus!= 'smashed' and holi_type = '".$handle_type."') and (datesent = CURDATE()) and
+                          (ref_num LIKE '%".$param_ref."%')  
+                          ORDER BY ref_num DESC";   
+
+                        }
+                      else
+                      {
+                        $sql1= "SELECT * FROM agent_form_data INNER JOIN login
+                                WHERE agent_form_data.currently_worked_by = login.userid and  (formstatus != 'pending' and formstatus!= 'smashed') and (remarkstatus = 'pending') and datesent = CURDATE() and holi_type = '".$handle_type."'
+                                ORDER BY ref_num DESC";
+                        unset($_GET["search_param_submitted"]);
+                      }
+
+
+
+                      $res = $conn->query($sql1) ;
+                    if ($res->num_rows) 
+                    {     echo " <div class='table-responsive'> <table class='table table-hover table-list' style='background-color: white;'>
+                                  <tr>
+                                  <th>GHRN NO</th>
+                                  <th>Customer Name</th>
+                                  <th>Customer Phone</th>
+                                  <th>Destination</th>
+                                  <th>Sent Date</th>
+                                  <th>Start Date</th>
+                                  <th>End Date</th>
+                                  <th>Employee</th>
+                                  
+                                  <th>Actions</th>
+                                  
+                                </tr>";
+
+                                $color = "";
+                                $remarksubmitted = "";
+                                $button = "";
+                               
+                      while($row = $res->fetch_assoc()) 
+                          {
+                              if($row["formstatus"] == "confirmed"){
+                                $color = "#2ecc71";
+                              }else{
+                                $color = "#FFF";
+                              }
+                              $remarksubmitted = $row["remarkstatus"];
+                              if($remarksubmitted == "submitted"){
+                                //then hide the buttons and show as submitted
+                                $button = "<button type='button' class='btn btn-danger btn-sm' role='button'>Remark Submitted</button>";
+                              }else{
+                                //show the remark button
+                                $button = "<button type='button' name='deleteit' id='deleteit' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#deleteitModal' role='button' onclick='passRefValue(".$row["ref_num"].");'>Remark</button>";
+                              }
+                              echo " <tr style='background-color: $color;'>
+                                  <td>GHRN".(5000+(int)$row["ref_num"])."</td>
+                                  <td>".$row["cust_firstname"]." ".$row["cust_lastname"]."</td>
+                                  <td>".$row["contact_phone"]."</td>
+                                  <td>".$row["holi_dest"]."</td>
+                                  <td>".$row["senttocustomerdate"]."</td>
+                                  <td>".$row["date_of_travel"]."</td>
+                                  <td>".$row["return_date_of_travel"]."</td>
+                                  <td>".$row["username"]."</td>
+                                  
+                                  <td>".$button."</td>
+                                  ";
+                                  /*if($row["formstatus"] == "confirmed")
+                                    echo "
+                                    <td>&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-ok' style='padding-right:15px;' aria-hidden='true'></span></td>
+                                  </tr>";
+                                  else
+                                    echo "
+                                    <td>&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class='btn btn-warning btn-sm' role='button' href='confirmpackage.php?qr=".$row["ref_num"]."'>Confirm</a></td>
+                                  </tr>";*/
+
+                          }
+                          echo "</table></div>";
+                    }
+                    else
+                      echo " No results found";
+                              
+                       
+
+
+
+                      ?>
+</script>
+
+
 
 
 <script type="text/ng-template" id="pages/itrecent.php"> 

@@ -63,6 +63,10 @@ app.config(function($routeProvider) {
     templateUrl : 'pages/itsubmitted.php',
     controller  : 'SubmittedItinerariesController'
   })
+.when('/itdsr', {
+    templateUrl : 'pages/itdsr.php',
+    controller  : 'itdsrController'
+  })
 .when('/itpending', {
     templateUrl : 'pages/itpending.php',
     controller  : 'PendingItinerariesController'
@@ -142,6 +146,9 @@ app.controller('MailSentController', function($scope) {
 });
 app.controller('SubmittedItinerariesController', function($scope) {
   $scope.message = 'Hello from SubmittedItinerariesController';
+});
+app.controller('itdsrController', function($scope) {
+  $scope.message = 'Hello from itdsrController';
 });
 app.controller('PendingItinerariesController', function($scope, $location) {
   $scope.message = 'Hello from PendingItinerariesController';  
