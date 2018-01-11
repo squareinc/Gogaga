@@ -1960,7 +1960,7 @@ else
                       else
                       {
                         $sql1= "SELECT * FROM agent_form_data INNER JOIN login
-                                WHERE agent_form_data.currently_worked_by = login.userid and  (formstatus != 'pending' and formstatus!= 'smashed') and (remarkstatus = 'pending') and datesent = CURDATE() and holi_type = '".$handle_type."'
+                                WHERE agent_form_data.currently_worked_by = login.userid and  (formstatus != 'pending' and formstatus!= 'smashed') and (remarkstatus = 'pending') and datesent = CURDATE() and holi_type = '".$handle_type."' and currently_worked_by = '".$userid."'
                                 ORDER BY ref_num DESC";
                         unset($_GET["search_param_submitted"]);
                       }
