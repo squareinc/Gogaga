@@ -214,14 +214,18 @@ else
 
 }
 
-/*(ghrno,sno,airline,airport,arrdep,airdur,airdates,airtrav,airprice)
+/*
 
-,$sno,'$airline','$airport','$arrdep','$airdur','$airdates','$airtrav','$airprice')";
+(ghrno,sno,airline,airport,arrdep,airdur,airdates,airtrav,airprice)
+
+$'sno','$airline','$airport','$arrdep','$airdur','$airdates','$airtrav','$airprice')";
 
 */
+
 $flightcontent = "";
 $baggageweight = "";
 $flightCount = 0;
+
         $sql = "SELECT * FROM flights_info WHERE ghrno = '".$ref_value."' ORDER BY sno";
                         
         $res = $conn->query($sql);
@@ -231,6 +235,7 @@ $flightCount = 0;
               $addFlightLoading = $flightloadedprice/(int)$flightCount;
            while($row = $res->fetch_assoc()) 
            {
+              
               $calcairtrav = (int)$row["airtrav"];
               $calcairprice = (int)$row["airprice"];
               //$flightloadingtobeadded = $flight_loadperc*;
@@ -263,6 +268,9 @@ $flightCount = 0;
                 }else{
                   $baggageweightreturn = "";
                 }
+
+
+
                 $flightcontent.= "<tr style='font-size:12px;text-align:center;'>
                                   <td>".$airline[0]."</td>
                                   <td>".$airport[0]."</td>
@@ -858,7 +866,7 @@ tr
 <br>
 <?php
 
-  if($fls=="yes")
+  if($fls=="yes" && $calcairprice != "0")
   {
 ?>
   <h2 style='text-align:center;'>FLIGHT DETAILS</h2>
@@ -880,6 +888,7 @@ tr
 
           
       </tr>
+
       <?php echo "$flightcontent";?>
 
   </table>
@@ -921,7 +930,7 @@ if($calc_chosed_by == "By Person")
 <?php
   }
                 //$calc_chosed_by  = $row["calc"];
-  if($fls=="yes")
+  if($fls=="yes" && $calcairprice != "0")
   {
     $fl_cost = (float)$totcostfl - (float)$totcost;
     $fl_cost = (int)$fl_cost;

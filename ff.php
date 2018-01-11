@@ -983,7 +983,7 @@ tr
 <br>
 <?php
 
-  if($fls=="yes")
+  if($fls=="yes" && $calcairprice != "0")
   {
 ?>
   <h2 style='text-align:center;'>FLIGHT DETAILS</h2>
@@ -1046,7 +1046,7 @@ if($calc_chosed_by == "By Person")
 <?php
   }
                 //$calc_chosed_by  = $row["calc"];
-  if($fls=="yes")
+  if($fls=="yes" && $calcairprice != "0")
   {
     $fl_cost = (float)$totcostfl - (float)$totcost;
     $fl_cost = (int)$fl_cost;
