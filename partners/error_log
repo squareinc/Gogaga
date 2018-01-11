@@ -1,4 +1,3 @@
-[08-Jan-2018 18:10:05 Etc/GMT] PHP Notice:  Undefined index: first_3 in /home/gogagx2b/public_html/partners/form_insert.php on line 19
-[09-Jan-2018 07:42:10 Etc/GMT] PHP Notice:  Undefined variable: type in /home/gogagx2b/public_html/partners/partnerstatements.php on line 116
-[09-Jan-2018 07:42:10 Etc/GMT] PHP Notice:  Undefined variable: type in /home/gogagx2b/public_html/partners/partnerstatements.php on line 173
-[09-Jan-2018 07:42:10 Etc/GMT] PHP Notice:  Undefined variable: type in /home/gogagx2b/public_html/partners/partnerstatements.php on line 224
+[10-Jan-2018 10:52:42 Etc/GMT] PHP Notice:  Undefined variable: sno in /home/gogagx2b/public_html/partners/dashboard.php on line 89
+[10-Jan-2018 10:52:42 Etc/GMT] PHP Notice:  Undefined variable: sno in /home/gogagx2b/public_html/partners/dashboard.php on line 229
+[10-Jan-2018 10:54:29 Etc/GMT] PHP Notice:  Undefined variable: sno in /home/gogagx2b/public_html/partners/vouchers.php on line 131
