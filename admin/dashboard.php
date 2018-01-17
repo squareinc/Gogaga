@@ -3340,16 +3340,16 @@ else
                           $param_ref = $param_ref - 5000;
 
                           $sql1 = "SELECT * FROM agent_form_data INNER JOIN login WHERE
-                          (agent_form_data.currently_worked_by = login.userid) and (formstatus != 'pending' and formstatus!= 'smashed' and holi_type = '".$handle_type."') and (datesent = CURDATE()) and
+                          (agent_form_data.currently_worked_by = login.userid) and (formstatus != 'pending' and formstatus!= 'smashed' and remarkstatus = 'submitted') and
                           (ref_num LIKE '%".$param_ref."%')  
-                          ORDER BY ref_num DESC";   
+                          ORDER BY senttocustomerdate DESC";   
 
                         }
                       else
                       {
                         $sql1= "SELECT * FROM agent_form_data INNER JOIN login
                                 WHERE agent_form_data.currently_worked_by = login.userid and  (formstatus != 'pending' and formstatus!= 'smashed') and (remarkstatus = 'submitted')
-                                ORDER BY datesent DESC";
+                                ORDER BY senttocustomerdate DESC";
                         unset($_GET["search_param_submitted"]);
                       }
 
